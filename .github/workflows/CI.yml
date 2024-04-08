@@ -1,4 +1,4 @@
-name: pothole CI
+name: pothole Build & Test
 
 on:
   pull_request:
