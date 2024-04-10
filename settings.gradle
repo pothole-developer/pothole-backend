@@ -1,4 +1,4 @@
 rootProject.name = 'pothole_backend'
-include 'pothole-controlsystem-api'
-include 'pothole-contractor-api'
+include 'pothole-manager-api'
+include 'pothole-worker-api'
 include 'pothole-core'
