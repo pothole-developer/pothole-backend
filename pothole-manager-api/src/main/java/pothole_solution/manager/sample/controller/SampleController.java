@@ -20,7 +20,7 @@ public class SampleController {
 
     @PostMapping
     public ResponseEntity<Long> register(){
-        Pothole sample = Pothole.builder().point(geometryFactory.createPoint(new Coordinate(126.93427307071744, 37.38609685274056))).build();
+        Pothole sample = Pothole.builder().location(geometryFactory.createPoint(new Coordinate(126.93427307071744, 37.38609685274056))).build();
         Pothole pothole = sampleService.register(sample);
 
         return ResponseEntity.ok().body(pothole.getPothole_id());
