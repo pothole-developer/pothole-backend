@@ -1,15 +1,11 @@
 name: pothole CD
 
 on:
-  pull_request:
+  push:
     branches: [ "develop" ]
-    types:
-      - closed
 
 jobs:
   deploy:
-    if: github.event.pull_request.merged == true
-
     name: Deploy
     runs-on: ubuntu-latest
 
