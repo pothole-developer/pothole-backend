@@ -32,8 +32,6 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: pothole-dev
-          AWS_DEFAULT_REGION: ap-northeast-2
-          AWS_REGION: ap-northeast-2
 
         run: |
           # Get current UTC time as image tag
