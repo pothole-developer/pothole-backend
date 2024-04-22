@@ -23,8 +23,9 @@ public class Pothole {
     private Progress progress;
 
     @Builder
-    public Pothole(Point location) {
+    public Pothole(Point location, Progress progress) {
         this.location = location;
+        this.progress = progress;
     }
 
     public void changeProgress(Progress progress) {

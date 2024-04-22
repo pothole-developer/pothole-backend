@@ -13,8 +13,8 @@ public class PointDto {
 
     public PointDto(Pothole pothole) {
         this.pothole_id = pothole.getPothole_id();
-        this.lat = pothole.getLocation().getX();
-        this.lon = pothole.getLocation().getY();
+        this.lat = pothole.getLocation().getY();
+        this.lon = pothole.getLocation().getX();
         this.progress = pothole.getProgress();
     }
 }

@@ -7,20 +7,22 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pothole_solution.core.PointDto;
 import pothole_solution.core.Pothole;
+import pothole_solution.core.Progress;
 import pothole_solution.manager.sample.service.SampleService;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@RestController
 @RequiredArgsConstructor
-public class SampleController {
+@RestController
+@RequestMapping("/pothole/v1/manager")
+public class SampleManagerController {
     private final SampleService sampleService;
     private final GeometryFactory geometryFactory = new GeometryFactory();
 
     @PostMapping
     public ResponseEntity<Long> register(){
-        Pothole sample = Pothole.builder().location(geometryFactory.createPoint(new Coordinate(126.93427307071744, 37.38609685274056))).build();
+        Pothole sample = Pothole.builder().location(geometryFactory.createPoint(new Coordinate(126.93427307071744, 37.38609685274056))).progress(Progress.READY).build();
         Pothole pothole = sampleService.register(sample);
 
         return ResponseEntity.ok().body(pothole.getPothole_id());
