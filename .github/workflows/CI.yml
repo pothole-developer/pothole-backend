@@ -21,14 +21,20 @@ jobs:
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v3
 
-    - name: Pothole Manager Module Build with Gradle
+    - name: Pothole [Core] Module Build with Gradle
+      run: ./gradlew clean pothole-core:bootJar -x test
+
+    - name: Pothole [Core] Module test
+      run: ./gradlew clean pothole-core:test
+
+    - name: Pothole [Manager] Module Build with Gradle
       run: ./gradlew clean pothole-manager-api:bootJar -x test
 
-    - name: Pothole Manager Module test
+    - name: Pothole [Manager] Module test
       run: ./gradlew clean pothole-manager-api:test
     
-    - name: Pothole Worker Module Build with Gradle
+    - name: Pothole [Worker] Module Build with Gradle
       run: ./gradlew clean pothole-worker-api:bootJar -x test
 
-    - name: Pothole Worker Module test
+    - name: Pothole [Worker] Module test
       run: ./gradlew clean pothole-worker-api:test
