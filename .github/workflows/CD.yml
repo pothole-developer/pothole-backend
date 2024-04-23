@@ -1,11 +1,17 @@
 name: pothole CD
 
 on:
-  push:
-    branches: [ "develop" ]
+  pull_request:
+    branches:
+      - 'develop'
+    types:
+      - closed
+#  push:
+#    branches: [ "develop" ]
 
 jobs:
   build:
+    if: github.event.pull_request.merged == true
     name: build
     runs-on: ubuntu-latest
 
@@ -31,6 +37,7 @@ jobs:
       - name: 현재 디렉토리 출력
         run: |
           echo ${{ github.workspace }}
+          ls -l
 
       - name: github.head_ref 출력
         run: echo ${{ github.head_ref }}
