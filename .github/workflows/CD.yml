@@ -1,16 +1,16 @@
 name: pothole CD
 
 on:
-  pull_request:
-    branches: [ "develop" ]
-    types:
-      - closed
-#  push:
+#  pull_request:
 #    branches: [ "develop" ]
+#    types:
+#      - closed
+  push:
+    branches: [ "develop" ]
 
 jobs:
   if_merged:
-    if: github.event.pull_request.merged == true
+#    if: github.event.pull_request.merged == true
     name: build
     runs-on: ubuntu-latest
 
