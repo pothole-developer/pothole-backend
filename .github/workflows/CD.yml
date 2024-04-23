@@ -29,7 +29,8 @@ jobs:
           ./gradlew clean pothole-worker-api:bootJar -x test
 
       - name: 현재 디렉토리 출력
-        run: echo pwd
+        run: |
+          echo ${{ github.workspace }}
 
       - name: github.head_ref 출력
         run: echo ${{ github.head_ref }}
