@@ -2,6 +2,7 @@ name: pothole CD
 
 on:
   pull_request:
+    branches: [ "develop" ]
     types:
       - closed
 #  push:
