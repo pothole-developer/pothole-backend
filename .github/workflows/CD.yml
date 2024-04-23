@@ -28,6 +28,12 @@ jobs:
           ./gradlew clean pothole-manager-api:bootJar -x test
           ./gradlew clean pothole-worker-api:bootJar -x test
 
+      - name: 현재 디렉토리 출력
+        run: echo pwd
+
+      - name: github.head_ref 출력
+        run: echo ${{ github.head_ref }}
+
   deploy:
     if: contains(github.head_ref, 'manager') || contains(github.head_ref, 'core')
     needs: build
