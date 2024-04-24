@@ -60,4 +60,7 @@ jobs:
 
           echo "Pushing image to ECR..."
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY
+          docker push pothole-manager-api:$IMAGE_TAG
+          docker push pothole-manager-api
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
