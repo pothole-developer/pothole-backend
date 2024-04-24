@@ -29,10 +29,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v3
 
       - name: pothole build
-        run: |
-#          ./gradlew clean pothole-core:bootJar -x test
-          ./gradlew clean pothole-manager-api:bootJar -x test
-#          ./gradlew clean pothole-worker-api:bootJar -x test
+        run: ./gradlew clean pothole-manager-api:bootJar -x test
 
       - name: 현재 디렉토리 출력
         run: |
