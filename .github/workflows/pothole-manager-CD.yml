@@ -63,3 +63,12 @@ jobs:
         run: |
           echo ${{ github.workspace }}
           ls -l
+
+      - name: EC2에서 도커 이미지를 가져오기
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_IP }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            sudo docker pull $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
