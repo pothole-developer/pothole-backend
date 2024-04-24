@@ -73,8 +73,7 @@ jobs:
           script: |
             docker-compose stop pothole-manager
             docker-compose rm pothole-manager
-            docker images -q | xargs -r docker rmi
-            docker system prune -af
+            docker image prune -f
 
       - name: EC2에서 도커 이미지를 가져오기
         uses: appleboy/ssh-action@master
