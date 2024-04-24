@@ -7,7 +7,7 @@ on:
 #    types:
 #      - closed
   push:
-    branches: [ "develop" ]
+    branches: [ "develop", "**/manager/**" ]
 
 jobs:
   call-build-workflow:
