@@ -8,13 +8,12 @@ on:
         required: true
 
 permissions:
-  id-token: write
   contents: read
 
 jobs:
   deploy:
     name: deploy ${{ inputs.env }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
       - name: GitHub Repository Checkout
@@ -31,9 +30,9 @@ jobs:
 
       - name: pothole build
         run: |
-          ./gradlew clean pothole-core:bootJar -x test
+#          ./gradlew clean pothole-core:bootJar -x test
           ./gradlew clean pothole-manager-api:bootJar -x test
-          ./gradlew clean pothole-worker-api:bootJar -x test
+#          ./gradlew clean pothole-worker-api:bootJar -x test
 
       - name: 현재 디렉토리 출력
         run: |
