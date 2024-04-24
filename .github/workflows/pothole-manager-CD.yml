@@ -64,6 +64,18 @@ jobs:
           echo ${{ github.workspace }}
           ls -l
 
+      - name: EC2 접속, 컨테이너 종료, 삭제, 이미지 삭제
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_IP }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          script: |
+            docker-compose stop pothole-manager
+            docker-compose rm pothole-manager
+            docker images -q | xargs -r docker rmi
+            docker system prune -af
+
       - name: EC2에서 도커 이미지를 가져오기
         uses: appleboy/ssh-action@master
         with:
