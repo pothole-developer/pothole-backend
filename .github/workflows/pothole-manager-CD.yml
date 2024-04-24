@@ -10,10 +10,6 @@ on:
     branches: [ "develop", "**/manager/**" ]
 
 jobs:
-  call-build-workflow:
-    name: call pothole build workflow
-    uses: ./.github/workflows/build.yml
-
   deploy:
     #    if: github.event.pull_request.merged == true
 #    if: contains(github.head_ref, 'manager') || contains(github.head_ref, 'core')
@@ -23,6 +19,9 @@ jobs:
       working-directory: ./pothole-manager-api
 
     steps:
+      - name: Call build.yml
+        uses: ./.github/workflows/build.yml
+
       - name: 현재 디렉토리 출력
         run: |
           echo ${{ github.workspace }}
