@@ -71,9 +71,7 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            docker-compose stop pothole-manager
-            docker-compose rm pothole-manager
-            docker image prune -f
+            docker compose down pothole-manager
 
       - name: EC2에서 도커 이미지를 가져오기
         uses: appleboy/ssh-action@master
@@ -92,3 +90,4 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             docker-compose up -d pothole-manager
+            docker image prune -f
