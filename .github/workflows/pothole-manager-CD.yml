@@ -30,9 +30,6 @@ jobs:
           echo ${{ github.workspace }}
           ls -l
 
-      - name: github.head_ref 출력
-        run: echo ${{ github.head_ref }}
-
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
         with:
@@ -57,6 +54,9 @@ jobs:
 
           # Build a Docker container and push it to ECR
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY .
+          docker build -t pothole-manager-api:$IMAGE_TAG .
+          docker build -t pothole-manager-api .
 
           echo "Pushing image to ECR..."
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
