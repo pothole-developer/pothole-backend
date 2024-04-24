@@ -47,9 +47,8 @@ jobs:
     needs: build
     name: deploy_manager
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: pothole-manager-api
+    env:
+      working-directory: ./pothole-manager-api
 
     steps:
       - name: 현재 디렉토리 출력
