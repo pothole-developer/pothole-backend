@@ -16,7 +16,7 @@ jobs:
 
   deploy:
     #    if: github.event.pull_request.merged == true
-    if: contains(github.head_ref, 'manager') || contains(github.head_ref, 'core')
+#    if: contains(github.head_ref, 'manager') || contains(github.head_ref, 'core')
     name: deploy_manager
     runs-on: ubuntu-latest
     env:
