@@ -71,8 +71,8 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           script: |
-            docker-compose stop pothole-manager || ture
-            docker-compose rm pothole-manager || ture
+            docker-compose stop pothole-manager || true
+            docker-compose rm pothole-manager || true
             sudo docker images -q | xargs -r docker rmi
             sudo docker system prune -af
 
