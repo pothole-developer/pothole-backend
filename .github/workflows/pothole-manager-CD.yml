@@ -31,7 +31,7 @@ jobs:
           touch ./application-core-dev.yml
           echo "${{ secrets.CORE_APPLICATION_DEV_YML }}" > ./application-core-dev.yml
 
-      - name: [ Manager ] application.yml 생성
+      - name: [Manager] application.yml 생성
         shell: bash
         run: |
           mkdir -p ./pothole-manager-api/src/main/resources
