@@ -25,8 +25,8 @@ jobs:
       - name: core application.yml 생성
         shell: bash
         run: |
-          mkdir -p ./pothole-core-api/src/main/resources
-          cd ./pothole-core-api/src/main/resources
+          mkdir -p ./pothole-core/src/main/resources
+          cd ./pothole-core/src/main/resources
           
           touch ./application-core-dev.yml
           echo "${{ secrets.CORE_APPLICATION_DEV_YML }}" > ./application-core-dev.yml
