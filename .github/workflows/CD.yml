@@ -12,7 +12,7 @@ on:
 jobs:
   deploy_manager:
     if: github.event.pull_request.merged == true
-#      && (contains(github.head_ref, 'manager') || contains(github.head_ref, 'core'))
+      && (contains(github.head_ref, 'manager') || contains(github.head_ref, 'core'))
     uses: ./.github/workflows/reusable-CD.yml
     with:
       module: manager
@@ -30,7 +30,7 @@ jobs:
 
   deploy_worker:
     if: github.event.pull_request.merged == true
-#      && (contains(github.head_ref, 'worker') || contains(github.head_ref, 'core'))
+      && (contains(github.head_ref, 'worker') || contains(github.head_ref, 'core'))
     uses: ./.github/workflows/reusable-CD.yml
     with:
       module: worker
