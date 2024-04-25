@@ -17,6 +17,12 @@ on:
         required: true
       EC2_SSH_KEY:
         required: true
+      CORE_APPLICATION_DEV_YML:
+        required: true
+      MANAGER_APPLICATION_YML:
+        required: true
+      MANAGER_APPLICATION_DEV_YML:
+        required: true
 
 permissions:
 #  id-token: write
