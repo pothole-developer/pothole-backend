@@ -118,12 +118,12 @@ jobs:
 #          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         run: |
           cd ./pothole-manager-api
-          echo ${{ github.workspace }}
+          pwd
           ls -l
 
           # Build a Docker container and push it to ECR
 #          docker build -t ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:latest .
-          docker build -t ${{ steps.login-ecr.outputs.registry }}/pothole-manager:latest .
+          docker build -t ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:latest .
           echo "Pushing image to ECR..."
           docker push ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:latest
           echo "::set-output name=image::${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:latest .
