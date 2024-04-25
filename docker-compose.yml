@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  pothole-manager:
+    image: 339712790479.dkr.ecr.ap-northeast-2.amazonaws.com/pothole-manager:latest
+    ports:
+      - "8083:8081"
+
+  pothole-worker:
+    image: 339712790479.dkr.ecr.ap-northeast-2.amazonaws.com/pothole-manager:latest
+    ports:
+      - "8084:8082"

@@ -64,7 +64,16 @@ jobs:
           echo ${{ github.workspace }}
           ls -l
 
-      - name: EC2 접속, 컨테이너 종료, 삭제, 이미지 삭제
+      - name: docker-compose.yml 파일 전송
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.EC2_IP }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          source: "./docker-compose.yml"
+          target: "/home/ubuntu/"
+
+      - name: docker compose down [Manager] on EC2
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.EC2_IP }}
@@ -73,7 +82,7 @@ jobs:
           script: |
             docker compose down pothole-manager
 
-      - name: EC2에서 도커 이미지를 가져오기
+      - name: pull image from ECR
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.EC2_IP }}
@@ -82,7 +91,7 @@ jobs:
           script: |
             docker pull ${{ steps.login-ecr.outputs.registry }}/pothole-manager:latest
 
-      - name: ECR에서 불러온 이미지를 도커에서 실행
+      - name: docker compose up [Manager] on EC2
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.EC2_IP }}

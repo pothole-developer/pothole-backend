@@ -31,6 +31,9 @@ out/
 
 **/src/main/generated/**
 
+# ec2 pem 키
+*.pem
+
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
