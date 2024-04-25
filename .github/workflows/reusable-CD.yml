@@ -113,11 +113,10 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v2
 
       - name: Build, tag, and push the image [${{ inputs.module }}] to Amazon ECR
-        shell: bash
 #        env:
 #          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         run: |
-          cd ./$MODULE_PACKAGE
+          cd ./${{ env.MODULE_PACKAGE }}
           echo ${{ github.workspace }}
           ls -l
 
