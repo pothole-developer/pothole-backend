@@ -4,9 +4,9 @@ services:
   pothole-manager-api:
     image: pothole-manager-api
     ports:
-      - "8083:8081"
+      - "8081:8081"
 
   pothole-worker-api:
     image: pothole-worker-api
     ports:
-      - "8084:8082"
+      - "8082:8082"
