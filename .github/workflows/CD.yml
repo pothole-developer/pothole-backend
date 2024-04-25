@@ -13,5 +13,9 @@ on:
 jobs:
   build_manager:
     uses: ./.github/workflows/build.yml
+    with:
+      env: manager
   deploy_manager:
     uses: ./.github/workflows/pothole-manager-CD.yml
+    with:
+      env: manager
