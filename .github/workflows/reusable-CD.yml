@@ -65,7 +65,7 @@ jobs:
           touch ./application-core-dev.yml
           echo "${{ secrets.CORE_APPLICATION_DEV_YML }}" > ./application-core-dev.yml
 
-      - name: ${{ inputs.module }} application.yml 생성
+      - name: Manager application.yml 생성
         shell: bash
         run: |
           mkdir -p ./pothole-manager-api/src/main/resources
@@ -77,7 +77,7 @@ jobs:
           touch ./application-aws.yml
           echo "${{ secrets.MANAGER_APPLICATION_DEV_YML }}" > ./application-manager-dev.yml
 
-      - name: ${{ inputs.module }} application.yml 생성
+      - name: Worker application.yml 생성
         shell: bash
         run: |
           mkdir -p ./pothole-worker-api/src/main/resources
@@ -91,9 +91,9 @@ jobs:
 
       - name: pothole all build
         run: |
-          ./gradlew clean pothole-core:bootJar -x test
-          ./gradlew clean pothole-manager-api:bootJar -x test
-          ./gradlew clean pothole-worker-api:bootJar -x test
+          ./gradlew pothole-core:bootJar -x test
+          ./gradlew pothole-manager-api:bootJar -x test
+          ./gradlew pothole-worker-api:bootJar -x test
 
       - name: 현재 디렉토리 출력
         run: |
@@ -118,6 +118,7 @@ jobs:
 
         run: |
           cd ./pothole-${{ inputs.module }}-api
+          pwd
           ls -l
           
           # Build a Docker container and push it to ECR
