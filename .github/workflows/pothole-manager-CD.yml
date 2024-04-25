@@ -1,14 +1,13 @@
 name: pothole Manager CD
 
 on:
-  pull_request:
-    types:
-        - closed
-    branches:
-      - 'develop'
-
-#  push:
-#    branches: [ "develop" ]
+#  pull_request:
+#    types:
+#        - closed
+#    branches:
+#      - 'develop'
+  push:
+    branches: [ "develop" ]
 
 permissions:
   id-token: write
@@ -16,7 +15,7 @@ permissions:
 
 jobs:
   deploy:
-#    if: github.event.pull_request.merged == true
+    if: contains(github.head_ref, 'manager')
     name: deploy_manager
     runs-on: ubuntu-22.04
 
