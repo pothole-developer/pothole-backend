@@ -168,3 +168,4 @@ jobs:
           script: |
             docker-compose up -d ${{ env.IMAGE_NAME }}
             docker image prune -f
+            docker system prune -af
