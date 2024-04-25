@@ -6,6 +6,11 @@ on:
       env:
         type: string
         required: true
+    secrets:
+      aws-access-key-id:
+        required: true
+      aws-secret-access-key:
+        required: true
 
 permissions:
 #  id-token: write
