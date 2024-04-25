@@ -33,7 +33,7 @@ permissions:
 
 env:
   AWS_REGION: ap-northeast-2
-  ECR_REGISTRY_URI: 339712790479.dkr.ecr.ap-northeast-2.amazonaws.com
+  ECR_REGISTRY: 339712790479.dkr.ecr.ap-northeast-2.amazonaws.com
   ECR_REPOSITORY: pothole-${{ inputs.module }}
   MODULE_PACKAGE: pothole-${{ inputs.module }}-api
   IMAGE_NAME: pothole-${{ inputs.module }}-api
@@ -91,7 +91,7 @@ jobs:
 
       - name: pothole all build
         run: |
-          ./gradlew pothole-core:bootJar -x test
+          ./gradlew clean pothole-core:bootJar -x test
           ./gradlew pothole-manager-api:bootJar -x test
           ./gradlew pothole-worker-api:bootJar -x test
 
@@ -112,20 +112,16 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v2
 
       - name: Build, tag, and push the image ${{ inputs.module }} to Amazon ECR
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY_URI: pothole-manager
-
         run: |
           cd ./pothole-${{ inputs.module }}-api
           pwd
           ls -l
           
           # Build a Docker container and push it to ECR
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY_URI:latest .
+          docker build -t ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:latest .
           echo "Pushing image to ECR..."
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY_URI:latest
-          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY_URI:$IMAGE_TAG"
+          docker push ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:latest
+          echo "::set-output name=image::${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:latest
 
       - name: 현재 디렉토리 출력
         run: |
@@ -159,9 +155,9 @@ jobs:
           script: |
             aws ecr get-login-password --region ${{ env.AWS_REGION }} | docker login --username AWS --password-stdin ${{ env.ECR_REGISTRY_URI }}
             
-            docker pull ${{ env.ECR_REGISTRY_URI }}/${{ env.ECR_REPOSITORY }}:latest
-            docker image tag ${{ env.ECR_REGISTRY_URI }}/${{ env.ECR_REPOSITORY }}:latest ${{ env.IMAGE_NAME }}
-            docker rmi ${{ env.ECR_REGISTRY_URI }}/${{ env.ECR_REPOSITORY }}:latest
+            docker pull ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:latest
+            docker image tag ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:latest ${{ env.IMAGE_NAME }}
+            docker rmi ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:latest
 
       - name: docker compose up [${{ inputs.module }}] on EC2
         uses: appleboy/ssh-action@master
