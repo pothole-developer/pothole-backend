@@ -27,17 +27,16 @@ on:
 permissions:
   contents: read
 
-env:
-  AWS_REGION: ap-northeast-2
-  ECR_REGISTRY: 339712790479.dkr.ecr.ap-northeast-2.amazonaws.com
-  ECR_REPOSITORY: pothole-${{ inputs.module }}
-  MODULE_PACKAGE: pothole-${{ inputs.module }}-api
-  IMAGE_NAME: pothole-${{ inputs.module }}-api
-
 jobs:
   deploy:
     name: ${{ inputs.module }} deploy
     runs-on: ubuntu-22.04
+    env:
+      AWS_REGION: ap-northeast-2
+      ECR_REGISTRY: 339712790479.dkr.ecr.ap-northeast-2.amazonaws.com
+      ECR_REPOSITORY: pothole-${{ inputs.module }}
+      MODULE_PACKAGE: pothole-${{ inputs.module }}-api
+      IMAGE_NAME: pothole-${{ inputs.module }}-api
 
     steps:
       - name: GitHub Repository Checkout
