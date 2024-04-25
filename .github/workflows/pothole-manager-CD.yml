@@ -2,8 +2,8 @@ name: pothole Manager CD
 
 on:
   pull_request:
-#    types:
-#        - closed
+    types:
+        - closed
     branches:
       - 'develop'
 
@@ -11,6 +11,7 @@ on:
 #    branches: [ "develop" ]
 
 permissions:
+  id-token: write
   contents: read
 
 jobs:
