@@ -2,8 +2,8 @@ name: pothole Manager CD
 
 on:
   pull_request:
-    types:
-        - closed
+#    types:
+#        - closed
     branches:
       - 'develop'
 
