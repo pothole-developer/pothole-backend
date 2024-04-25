@@ -12,6 +12,7 @@ on:
 jobs:
   deploy_manager:
 #        if: github.event.pull_request.merged == true
+#  if: contains(github.head_ref, 'manager') || contains(github.head_ref, 'core')
     uses: ./.github/workflows/reusable-CD.yml
     with:
       module: manager
@@ -24,24 +25,23 @@ jobs:
       CORE_APPLICATION_DEV_YML: ${{ secrets.CORE_APPLICATION_DEV_YML }}
       MANAGER_APPLICATION_YML: ${{ secrets.MANAGER_APPLICATION_YML }}
       MANAGER_APPLICATION_DEV_YML: ${{ secrets.MANAGER_APPLICATION_DEV_YML }}
-
       WORKER_APPLICATION_YML: ${{ secrets.WORKER_APPLICATION_YML }}
       WORKER_APPLICATION_DEV_YML: ${{ secrets.WORKER_APPLICATION_DEV_YML }}
 
-#  deploy_worker:
-#    #        if: github.event.pull_request.merged == true
-#    uses: ./.github/workflows/reusable-CD.yml
-#    with:
-#      module: manager
-#    secrets:
-#      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#      EC2_IP: ${{ secrets.EC2_IP }}
-#      EC2_USERNAME: ${{ secrets.EC2_USERNAME }}
-#      EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
-#      CORE_APPLICATION_DEV_YML: ${{ secrets.CORE_APPLICATION_DEV_YML }}
-#      MANAGER_APPLICATION_YML: ${{ secrets.MANAGER_APPLICATION_YML }}
-#      MANAGER_APPLICATION_DEV_YML: ${{ secrets.MANAGER_APPLICATION_DEV_YML }}
-#
-#      WORKER_APPLICATION_YML: ${{ secrets.WORKER_APPLICATION_YML }}
-#      WORKER_APPLICATION_DEV_YML: ${{ secrets.WORKER_APPLICATION_DEV_YML }}
+  deploy_worker:
+    #        if: github.event.pull_request.merged == true
+    uses: ./.github/workflows/reusable-CD.yml
+    with:
+      module: worker
+    secrets:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      EC2_IP: ${{ secrets.EC2_IP }}
+      EC2_USERNAME: ${{ secrets.EC2_USERNAME }}
+      EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
+      CORE_APPLICATION_DEV_YML: ${{ secrets.CORE_APPLICATION_DEV_YML }}
+      MANAGER_APPLICATION_YML: ${{ secrets.MANAGER_APPLICATION_YML }}
+      MANAGER_APPLICATION_DEV_YML: ${{ secrets.MANAGER_APPLICATION_DEV_YML }}
+
+      WORKER_APPLICATION_YML: ${{ secrets.WORKER_APPLICATION_YML }}
+      WORKER_APPLICATION_DEV_YML: ${{ secrets.WORKER_APPLICATION_DEV_YML }}
