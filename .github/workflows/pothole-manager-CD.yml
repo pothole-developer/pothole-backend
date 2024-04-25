@@ -120,6 +120,8 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
+            aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 339712790479.dkr.ecr.ap-northeast-2.amazonaws.com
+            
             docker pull ${{ steps.login-ecr.outputs.registry }}/pothole-manager:latest
             docker image tag ${{ steps.login-ecr.outputs.registry }}/pothole-manager:latest pothole-manager-api
 
