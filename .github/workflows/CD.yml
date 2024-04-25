@@ -15,7 +15,7 @@ jobs:
 #    with:
 #      env: manager
   deploy_manager:
-    needs: build_manager
+#    needs: build_manager
     uses: ./.github/workflows/pothole-manager-CD.yml
     with:
       env: manager
