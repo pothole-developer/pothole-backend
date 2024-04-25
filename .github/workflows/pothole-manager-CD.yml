@@ -11,6 +11,12 @@ on:
         required: true
       AWS_SECRET_ACCESS_KEY:
         required: true
+      EC2_IP:
+        required: true
+      EC2_USERNAME:
+        required: true
+      EC2_SSH_KEY:
+        required: true
 
 permissions:
   id-token: write
