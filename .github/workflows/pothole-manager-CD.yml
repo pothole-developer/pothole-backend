@@ -7,9 +7,9 @@ on:
         type: string
         required: true
     secrets:
-      aws-access-key-id:
+      AWS_ACCESS_KEY_ID:
         required: true
-      aws-secret-access-key:
+      AWS_SECRET_ACCESS_KEY:
         required: true
 
 permissions:
