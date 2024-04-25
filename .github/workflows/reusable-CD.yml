@@ -114,17 +114,19 @@ jobs:
       - name: Build, tag, and push the image [${{ inputs.module }}] to Amazon ECR
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY_URI: pothole-manager
+          ECR_REPOSITORY: pothole-manager
+        #          IMAGE_TAG: ${{ github. sha }}
+
         run: |
-          cd ./${{ env.MODULE_PACKAGE }}
+          cd ./pothole-manager-api
           pwd
           ls -l
-           
+          
           # Build a Docker container and push it to ECR
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY_URI .
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
           echo "Pushing image to ECR..."
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY_URI:latest
-          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY_URI:latest .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
       - name: 현재 디렉토리 출력
         run: |
