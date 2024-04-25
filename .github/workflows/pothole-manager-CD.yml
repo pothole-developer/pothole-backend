@@ -29,7 +29,7 @@ permissions:
 
 jobs:
   deploy:
-    name: ${{ inputs.env }} deploy
+    name: ${{ inputs.module }} deploy
     runs-on: ubuntu-22.04
 
     steps:
@@ -54,8 +54,8 @@ jobs:
           touch ./application-core-dev.yml
           echo "${{ secrets.CORE_APPLICATION_DEV_YML }}" > ./application-core-dev.yml
 
-      - name: ${{ inputs.env }} application.yml 생성
-        if: ${{ inputs.env }} == 'manager'
+      - name: ${{ inputs.module }} application.yml 생성
+        if: ${{ inputs.module }} == 'manager'
         shell: bash
         run: |
           mkdir -p ./pothole-manager-api/src/main/resources
@@ -88,14 +88,14 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
-      - name: ${{ inputs.env }} Build, tag, and push the image to Amazon ECR
+      - name: ${{ inputs.module }} Build, tag, and push the image to Amazon ECR
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: pothole-${{ inputs.env }}
+          ECR_REPOSITORY: pothole-${{ inputs.module }}
 #          IMAGE_TAG: ${{ github. sha }}
 
         run: |
-          cd ./pothole-${{ inputs.env }}-api
+          cd ./pothole-${{ inputs.module }}-api
           echo ${{ github.workspace }}
           ls -l
 
@@ -127,7 +127,7 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            docker compose down pothole-${{ inputs.env }}
+            docker compose down pothole-${{ inputs.module }}
 
       - name: pull image from ECR
         uses: appleboy/ssh-action@master
@@ -138,8 +138,8 @@ jobs:
           script: |
             aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 339712790479.dkr.ecr.ap-northeast-2.amazonaws.com
             
-            docker pull ${{ steps.login-ecr.outputs.registry }}/pothole-${{ inputs.env }}:latest
-            docker image tag ${{ steps.login-ecr.outputs.registry }}/pothole-${{ inputs.env }}:latest pothole-manager-api
+            docker pull ${{ steps.login-ecr.outputs.registry }}/pothole-${{ inputs.module }}:latest
+            docker image tag ${{ steps.login-ecr.outputs.registry }}/pothole-${{ inputs.module }}:latest pothole-manager-api
 
       - name: docker compose up [Manager] on EC2
         uses: appleboy/ssh-action@master
@@ -148,5 +148,5 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            docker-compose up -d pothole-${{ inputs.env }}
+            docker-compose up -d pothole-${{ inputs.module }}
             docker image prune -f
