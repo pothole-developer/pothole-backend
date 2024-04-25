@@ -66,7 +66,6 @@ jobs:
           echo "${{ secrets.CORE_APPLICATION_DEV_YML }}" > ./application-core-dev.yml
 
       - name: ${{ inputs.module }} application.yml 생성
-        if: ${{ inputs.module }} == manager
         shell: bash
         run: |
           mkdir -p ./pothole-manager-api/src/main/resources
@@ -79,7 +78,6 @@ jobs:
           echo "${{ secrets.MANAGER_APPLICATION_DEV_YML }}" > ./application-manager-dev.yml
 
       - name: ${{ inputs.module }} application.yml 생성
-        if: ${{ inputs.module }} == worker
         shell: bash
         run: |
           mkdir -p ./pothole-worker-api/src/main/resources
@@ -122,7 +120,7 @@ jobs:
           ls -l
            
           # Build a Docker container and push it to ECR
-          docker build -t ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:latest .
+          docker build -t ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:latest .
           echo "Pushing image to ECR..."
           docker push ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:latest
           echo "::set-output name=image::${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:latest .
