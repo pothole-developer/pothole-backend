@@ -25,3 +25,6 @@ jobs:
       EC2_IP: ${{ secrets.EC2_IP }}
       EC2_USERNAME: ${{ secrets.EC2_USERNAME }}
       EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
+      CORE_APPLICATION_DEV_YML: ${{ secrets.CORE_APPLICATION_DEV_YML }}
+      MANAGER_APPLICATION_YML: ${{ secrets.MANAGER_APPLICATION_YML }}
+      MANAGER_APPLICATION_DEV_YML: ${{ secrets.MANAGER_APPLICATION_DEV_YML }}
