@@ -6,8 +6,6 @@ on:
         - closed
     branches:
       - 'develop'
-#  push:
-#    branches: [ "develop" ]
 
 permissions:
   id-token: write
@@ -20,9 +18,6 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-      - name: 브랜치 출력
-        run: ${{ github.head_ref }}
-
       - name: GitHub Repository Checkout
         uses: actions/checkout@v3
 
