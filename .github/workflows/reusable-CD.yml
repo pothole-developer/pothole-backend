@@ -144,7 +144,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             docker-compose stop ${{ env.IMAGE_NAME }}
-            docker-compose rm ${{ env.IMAGE_NAME }}
+            docker-compose rm -f ${{ env.IMAGE_NAME }}
 
       - name: pull image from ECR
         uses: appleboy/ssh-action@master
