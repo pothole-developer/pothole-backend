@@ -1,4 +1,4 @@
-name: pothole ${{ inputs.module }} CD
+name: pothole reusable CD
 
 on:
   workflow_call:
@@ -112,7 +112,7 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
-      - name: ${{ inputs.module }} Build, tag, and push the image to Amazon ECR
+      - name: Build, tag, and push the image [${{ inputs.module }}] to Amazon ECR
         shell: bash
 #        env:
 #          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}

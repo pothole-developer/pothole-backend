@@ -1,4 +1,4 @@
-name: CD
+name: pothole CD
 
 on:
   #  pull_request_target:
