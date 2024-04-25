@@ -9,15 +9,11 @@ on:
   push:
     branches: [ "develop" ]
 
-permissions:
-  id-token: write
-  contents: read
-
 jobs:
-  build_manager:
-    uses: ./.github/workflows/build.yml
-    with:
-      env: manager
+#  build_manager:
+#    uses: ./.github/workflows/build.yml
+#    with:
+#      env: manager
   deploy_manager:
     needs: build_manager
     uses: ./.github/workflows/pothole-manager-CD.yml
