@@ -1,17 +1,17 @@
 name: pothole CD
 
 on:
-  #  pull_request_target:
-  #    types:
-  #        - closed
-  #    branches:
-  #      - 'develop'
-  push:
-    branches: [ "develop" ]
+  pull_request_target:
+    types:
+        - closed
+    branches:
+      - 'develop'
+#  push:
+#    branches: [ "develop" ]
 
 jobs:
   deploy_manager:
-#        if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true
 #  if: contains(github.head_ref, 'manager') || contains(github.head_ref, 'core')
     uses: ./.github/workflows/reusable-CD.yml
     with:
@@ -29,7 +29,7 @@ jobs:
       WORKER_APPLICATION_DEV_YML: ${{ secrets.WORKER_APPLICATION_DEV_YML }}
 
   deploy_worker:
-    #        if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true
     uses: ./.github/workflows/reusable-CD.yml
     with:
       module: worker
