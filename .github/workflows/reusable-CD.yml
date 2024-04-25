@@ -42,9 +42,7 @@ jobs:
   deploy:
     name: ${{ inputs.module }} deploy
     runs-on: ubuntu-22.04
-    defaults:
-      run:
-        shell: bash
+
     steps:
       - name: GitHub Repository Checkout
         uses: actions/checkout@v3
