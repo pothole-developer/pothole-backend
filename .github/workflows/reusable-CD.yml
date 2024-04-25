@@ -34,7 +34,6 @@ permissions:
 env:
   AWS_REGION: ap-northeast-2
   ECR_REGISTRY_URI: 339712790479.dkr.ecr.ap-northeast-2.amazonaws.com
-                    339712790479.dkr.ecr.ap-northeast-2.amazonaws.com
   ECR_REPOSITORY: pothole-${{ inputs.module }}
   MODULE_PACKAGE: pothole-${{ inputs.module }}-api
   IMAGE_NAME: pothole-${{ inputs.module }}-api
@@ -152,15 +151,17 @@ jobs:
 
       - name: pull image from ECR
         uses: appleboy/ssh-action@master
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         with:
           host: ${{ secrets.EC2_IP }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            aws ecr get-login-password --region ${{ env.AWS_REGION }} | docker login --username AWS --password-stdin ${{ env.ECR_REGISTRY_URI }}
+            aws ecr get-login-password --region ${{ env.AWS_REGION }} | docker login --username AWS --password-stdin $ECR_REGISTRY
             
-            docker pull ${{ env.ECR_REGISTRY_URI }}/${{ env.ECR_REPOSITORY }}:latest
-            docker image tag ${{ env.ECR_REGISTRY_URI }}/${{ env.ECR_REPOSITORY }}:latest ${{ env.IMAGE_NAME }}
+            docker pull $ECR_REGISTRY/${{ env.ECR_REPOSITORY }}:latest
+            docker image tag $ECR_REGISTRY/${{ env.ECR_REPOSITORY }}:latest ${{ env.IMAGE_NAME }}
 
       - name: docker compose up [${{ inputs.module }}] on EC2
         uses: appleboy/ssh-action@master
