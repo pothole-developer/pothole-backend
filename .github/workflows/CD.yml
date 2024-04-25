@@ -1,0 +1,17 @@
+name: CD
+
+on:
+  #  pull_request_target:
+  #    types:
+  #        - closed
+  #    branches:
+  #      - 'develop'
+  push:
+    branches: [ "develop" ]
+
+
+jobs:
+  build_manager:
+    uses: ./.github/workflows/build.yml
+  deploy_manager:
+    uses: ./.github/workflows/pothole-manager-CD.yml
