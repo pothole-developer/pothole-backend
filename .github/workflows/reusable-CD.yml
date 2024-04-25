@@ -121,7 +121,7 @@ jobs:
           pwd
           ls -l
 
-          # Build a Docker container and push it to ECR
+#           Build a Docker container and push it to ECR
 #          docker build -t ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:latest .
           docker build -t ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:latest .
           echo "Pushing image to ECR..."
