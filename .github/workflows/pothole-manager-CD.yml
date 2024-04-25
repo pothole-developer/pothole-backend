@@ -22,7 +22,7 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
 
-      - name: [ Core ] application.yml 생성
+      - name: core application.yml 생성
         shell: bash
         run: |
           mkdir -p ./pothole-core-api/src/main/resources
