@@ -113,7 +113,7 @@ jobs:
 
       - name: Build, tag, and push the image ${{ inputs.module }} to Amazon ECR
         run: |
-          cd ./pothole-${{ inputs.module }}-api
+          cd ./${{ env.MODULE_PACKAGE }}
           pwd
           ls -l
           
