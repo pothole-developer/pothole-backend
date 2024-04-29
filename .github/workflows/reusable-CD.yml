@@ -52,17 +52,14 @@ jobs:
           echo ${{ github.workspace }}
           ls -l
 
-      - name: Manager jar 파일 다운
+      - name: ${{ inputs.module }} jar 파일 다운
         uses: actions/download-artifact@v4
         with:
-          name: pothole-manager-artifact
-          path: ./pothole-manager-api/build/libs/
-
-      - name: Worker jar 파일 다운
-        uses: actions/download-artifact@v4
-        with:
-          name: pothole-worker-artifact
-          path: ./pothole-worker-api/build/libs/
+          name: pothole-${{ inputs.module }}-artifact
+          path: ./pothole-${{ inputs.module }}-api/build/libs/
+        run: |
+          cd ./pothole-${{ inputs.module }}-api/build/libs/
+          ls -l
 
       - name: 현재 디렉토리 출력
         run: |
