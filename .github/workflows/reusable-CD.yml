@@ -37,6 +37,7 @@ env:
   ECR_REPOSITORY: pothole-${{ inputs.module }}
   MODULE_PACKAGE: pothole-${{ inputs.module }}-api
   IMAGE_NAME: pothole-${{ inputs.module }}-api
+  IMAGE_TAG: ${{ github. sha }}
 
 jobs:
   deploy:
@@ -139,9 +140,9 @@ jobs:
           ls -l
           
           # Build a Docker container and push it to ECR
-          docker build -t ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:latest .
+          docker build -t ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }} .
           echo "Pushing image to ECR..."
-          docker push ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:latest
+          docker push ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
 
       - name: 현재 디렉토리 출력
         run: |
@@ -176,9 +177,9 @@ jobs:
           script: |
             aws ecr get-login-password --region ${{ env.AWS_REGION }} | docker login --username AWS --password-stdin ${{ env.ECR_REGISTRY_URI }}
             
-            docker pull ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:latest
-            docker image tag ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:latest ${{ env.IMAGE_NAME }}
-            docker rmi ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:latest
+            docker pull ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
+            docker image tag ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }} ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+            docker rmi ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
             
             docker-compose ps -a
 
