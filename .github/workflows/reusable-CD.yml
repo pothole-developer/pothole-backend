@@ -53,7 +53,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: pothole-core-artifact
-          path: ./pothole-core-api/build/libs/
+          path: ./pothole-core/build/libs/
 
       - name: ${{ inputs.module }} jar 파일 다운
         uses: actions/download-artifact@v4
