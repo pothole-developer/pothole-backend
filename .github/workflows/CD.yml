@@ -30,6 +30,8 @@ jobs:
       EC2_IP: ${{ secrets.EC2_IP }}
       EC2_USERNAME: ${{ secrets.EC2_USERNAME }}
       EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+      ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
 
   deploy_worker:
     if: github.event.pull_request.merged == true
@@ -44,3 +46,5 @@ jobs:
       EC2_IP: ${{ secrets.EC2_IP }}
       EC2_USERNAME: ${{ secrets.EC2_USERNAME }}
       EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+      ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
