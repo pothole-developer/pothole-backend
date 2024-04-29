@@ -1,4 +1,4 @@
-package util.convertor;
+package pothole_solution.core.util.convertor;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;

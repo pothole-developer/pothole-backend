@@ -1,6 +1,7 @@
 package pothole_solution.manager.sample.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.springframework.http.ResponseEntity;
@@ -9,16 +10,19 @@ import pothole_solution.core.PointDto;
 import pothole_solution.core.Pothole;
 import pothole_solution.core.Progress;
 import pothole_solution.manager.sample.service.SampleService;
+import pothole_solution.core.util.alarm.slack.SlackService;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/pothole/v1/manager")
+@Slf4j
 public class SampleManagerController {
     private final SampleService sampleService;
     private final GeometryFactory geometryFactory = new GeometryFactory();
+
+    private final SlackService slackService;
 
     @PostMapping
     public ResponseEntity<Long> register(){
@@ -37,11 +41,17 @@ public class SampleManagerController {
 
     @GetMapping("/potholes")
     public ResponseEntity<List<PointDto>> getAllPotholes() {
+        log.info("Slack Message 테스트");
+
+        slackService.sendMessage("포트홀 전체 조회 시작");
+
         List<Pothole> potholes = sampleService.getAllPotholes();
+
+        slackService.sendMessage("포트홀 전체 조회 끝");
 
         return ResponseEntity.ok().body(potholes.stream()
                 .map(PointDto::new)
-                .collect(Collectors.toList()));
+                .toList());
     }
 
     @PutMapping("/{id}")

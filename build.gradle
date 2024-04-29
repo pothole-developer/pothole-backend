@@ -43,6 +43,11 @@ subprojects {
 		runtimeOnly 'org.postgresql:postgresql'
 
 		implementation 'org.hibernate.orm:hibernate-spatial'
+
+
+		implementation("com.slack.api:bolt:1.39.0")
+		implementation("com.slack.api:bolt-servlet:1.39.0")
+		implementation("com.slack.api:bolt-jetty:1.39.0")
 	}
 
 	tasks.named('test') {
