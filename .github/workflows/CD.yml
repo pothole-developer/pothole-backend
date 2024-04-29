@@ -1,13 +1,11 @@
 name: pothole CD
 
 on:
-#  pull_request_target:
-#    types:
-#        - closed
-#    branches:
-#      - 'develop'
-  push:
-    branches: [ "develop" ]
+  pull_request_target:
+    types:
+        - closed
+    branches:
+      - 'develop'
 
 jobs:
   build:
@@ -20,8 +18,8 @@ jobs:
       WORKER_APPLICATION_DEV_YML: ${{ secrets.WORKER_APPLICATION_DEV_YML }}
 
   deploy_manager:
-#    if: github.event.pull_request.merged == true
-#      && (contains(github.head_ref, 'manager') || contains(github.head_ref, 'core'))
+    if: github.event.pull_request.merged == true
+      && (contains(github.head_ref, 'manager') || contains(github.head_ref, 'core'))
     needs: build
     uses: ./.github/workflows/reusable-CD.yml
     with:
@@ -32,15 +30,10 @@ jobs:
       EC2_IP: ${{ secrets.EC2_IP }}
       EC2_USERNAME: ${{ secrets.EC2_USERNAME }}
       EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
-#      CORE_APPLICATION_DEV_YML: ${{ secrets.CORE_APPLICATION_DEV_YML }}
-#      MANAGER_APPLICATION_YML: ${{ secrets.MANAGER_APPLICATION_YML }}
-#      MANAGER_APPLICATION_DEV_YML: ${{ secrets.MANAGER_APPLICATION_DEV_YML }}
-#      WORKER_APPLICATION_YML: ${{ secrets.WORKER_APPLICATION_YML }}
-#      WORKER_APPLICATION_DEV_YML: ${{ secrets.WORKER_APPLICATION_DEV_YML }}
 
   deploy_worker:
-#    if: github.event.pull_request.merged == true
-#      && (contains(github.head_ref, 'worker') || contains(github.head_ref, 'core'))
+    if: github.event.pull_request.merged == true
+      && (contains(github.head_ref, 'worker') || contains(github.head_ref, 'core'))
     needs: build
     uses: ./.github/workflows/reusable-CD.yml
     with:
@@ -51,8 +44,3 @@ jobs:
       EC2_IP: ${{ secrets.EC2_IP }}
       EC2_USERNAME: ${{ secrets.EC2_USERNAME }}
       EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
-#      CORE_APPLICATION_DEV_YML: ${{ secrets.CORE_APPLICATION_DEV_YML }}
-#      MANAGER_APPLICATION_YML: ${{ secrets.MANAGER_APPLICATION_YML }}
-#      MANAGER_APPLICATION_DEV_YML: ${{ secrets.MANAGER_APPLICATION_DEV_YML }}
-#      WORKER_APPLICATION_YML: ${{ secrets.WORKER_APPLICATION_YML }}
-#      WORKER_APPLICATION_DEV_YML: ${{ secrets.WORKER_APPLICATION_DEV_YML }}

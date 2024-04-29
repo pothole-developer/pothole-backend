@@ -1,4 +1,4 @@
-name: pothole build CD
+name: pothole all build for CD
 
 on:
   workflow_call:
@@ -14,12 +14,9 @@ on:
       WORKER_APPLICATION_DEV_YML:
         required: true
 
-permissions:
-  contents: read
-
 jobs:
-  deploy:
-    name: ${{ inputs.module }} deploy
+  build:
+    name: pothole all build for CD
     runs-on: ubuntu-22.04
 
     steps:

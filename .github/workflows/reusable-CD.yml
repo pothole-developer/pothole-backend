@@ -17,16 +17,7 @@ on:
         required: true
       EC2_SSH_KEY:
         required: true
-#      CORE_APPLICATION_DEV_YML:
-#        required: true
-#      MANAGER_APPLICATION_YML:
-#        required: true
-#      MANAGER_APPLICATION_DEV_YML:
-#        required: true
-#      WORKER_APPLICATION_YML:
-#        required: true
-#      WORKER_APPLICATION_DEV_YML:
-#        required: true
+
 
 permissions:
   contents: read
@@ -49,7 +40,7 @@ jobs:
       - name: GitHub Repository Checkout
         uses: actions/checkout@v3
 
-      - name: Core jar 파일 다운
+      - name: core jar 파일 다운
         uses: actions/download-artifact@v4
         with:
           name: pothole-core-artifact
@@ -60,69 +51,6 @@ jobs:
         with:
           name: pothole-${{ inputs.module }}-artifact
           path: ./pothole-${{ inputs.module }}-api/build/libs/
-
-      - name: ${{ inputs.module }} 빌드 디렉토리 출력
-        run: |
-          cd ./pothole-${{ inputs.module }}-api/build/libs/
-          ls -l
-
-      - name: 현재 디렉토리 출력
-        run: |
-          echo ${{ github.workspace }}
-          ls -l
-
-#      - name: Set up JDK 17
-#        uses: actions/setup-java@v4
-#        with:
-#          java-version: '17'
-#          distribution: 'temurin'
-#
-#      - name: Setup Gradle
-#        uses: gradle/actions/setup-gradle@v3
-#
-#      - name: core application.yml 생성
-#        shell: bash
-#        run: |
-#          mkdir -p ./pothole-core/src/main/resources
-#          cd ./pothole-core/src/main/resources
-#
-#          touch ./application-core-dev.yml
-#          echo "${{ secrets.CORE_APPLICATION_DEV_YML }}" > ./application-core-dev.yml
-#
-#      - name: Manager application.yml 생성
-#        shell: bash
-#        run: |
-#          mkdir -p ./pothole-manager-api/src/main/resources
-#          cd ./pothole-manager-api/src/main/resources
-#
-#          touch ./application.yml
-#          echo "${{ secrets.MANAGER_APPLICATION_YML }}" > ./application.yml
-#
-#          touch ./application-aws.yml
-#          echo "${{ secrets.MANAGER_APPLICATION_DEV_YML }}" > ./application-manager-dev.yml
-#
-#      - name: Worker application.yml 생성
-#        shell: bash
-#        run: |
-#          mkdir -p ./pothole-worker-api/src/main/resources
-#          cd ./pothole-worker-api/src/main/resources
-#
-#          touch ./application.yml
-#          echo "${{ secrets.WORKER_APPLICATION_YML }}" > ./application.yml
-#
-#          touch ./application-aws.yml
-#          echo "${{ secrets.WORKER_APPLICATION_DEV_YML }}" > ./application-worker-dev.yml
-
-#      - name: pothole all build
-#        run: |
-#          ./gradlew clean pothole-core:bootJar -x test
-#          ./gradlew pothole-manager-api:bootJar -x test
-#          ./gradlew pothole-worker-api:bootJar -x test
-
-      - name: 현재 디렉토리 출력
-        run: |
-          echo ${{ github.workspace }}
-          ls -l
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
@@ -138,18 +66,11 @@ jobs:
       - name: Build, tag, and push the image ${{ inputs.module }} to Amazon ECR
         run: |
           cd ./${{ env.MODULE_PACKAGE }}
-          pwd
-          ls -l
           
           # Build a Docker container and push it to ECR
           docker build -t ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }} .
           echo "Pushing image to ECR..."
           docker push ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
-
-      - name: 현재 디렉토리 출력
-        run: |
-          echo ${{ github.workspace }}
-          ls -l
 
       - name: docker-compose.yml 파일 전송
         uses: appleboy/scp-action@master
@@ -169,7 +90,7 @@ jobs:
           script: |
             docker-compose stop ${{ env.IMAGE_NAME }}
             docker-compose rm -f ${{ env.IMAGE_NAME }}
-            docker image prune -f
+            docker image prune -f -a
 
       - name: pull image from ECR
         uses: appleboy/ssh-action@master
@@ -182,7 +103,6 @@ jobs:
             
             docker pull ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
             docker image tag ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }} ${{ env.IMAGE_NAME }}
-#            docker rmi ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
 
       - name: docker compose up [${{ inputs.module }}] on EC2
         uses: appleboy/ssh-action@master
@@ -192,4 +112,4 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             docker-compose up -d ${{ env.DOCKER_COMPOSE_SERVICES_NAME }}
-            docker image prune -f
+            docker image prune -f -a
