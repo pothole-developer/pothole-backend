@@ -17,14 +17,18 @@ on:
         required: true
       EC2_SSH_KEY:
         required: true
+      AWS_REGION:
+        required: true
+      ECR_REGISTRY:
+        required: true
 
 
 permissions:
   contents: read
 
 env:
-  AWS_REGION: ap-northeast-2
-  ECR_REGISTRY: 339712790479.dkr.ecr.ap-northeast-2.amazonaws.com
+#  AWS_REGION: ap-northeast-2
+#  ECR_REGISTRY: 339712790479.dkr.ecr.ap-northeast-2.amazonaws.com
   ECR_REPOSITORY: pothole-${{ inputs.module }}
   MODULE_PACKAGE: pothole-${{ inputs.module }}-api
   IMAGE_NAME: pothole-${{ inputs.module }}-api
@@ -57,7 +61,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ env.AWS_REGION }}
+          aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Login to Amazon ECR
         id: login-ecr
@@ -68,9 +72,9 @@ jobs:
           cd ./${{ env.MODULE_PACKAGE }}
           
           # Build a Docker container and push it to ECR
-          docker build -t ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }} .
+          docker build -t ${{ secrets.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }} .
           echo "Pushing image to ECR..."
-          docker push ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
+          docker push ${{ secrets.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
 
       - name: docker-compose.yml 파일 전송
         uses: appleboy/scp-action@master
@@ -99,11 +103,11 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            aws ecr get-login-password --region ${{ env.AWS_REGION }} | docker login --username AWS --password-stdin ${{ env.ECR_REGISTRY }}
+            aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.ECR_REGISTRY }}
             
-            docker pull ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
-            docker image tag ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }} ${{ env.IMAGE_NAME }}
-            docker rmi ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
+            docker pull ${{ secrets.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
+            docker image tag ${{ secrets.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }} ${{ env.IMAGE_NAME }}
+            docker rmi ${{ secrets.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
 
       - name: docker compose up [${{ inputs.module }}] on EC2
         uses: appleboy/ssh-action@master
