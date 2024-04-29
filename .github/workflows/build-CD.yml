@@ -1,4 +1,4 @@
-name: pothole reusable CD
+name: pothole build CD
 
 on:
   workflow_call:
@@ -66,8 +66,8 @@ jobs:
       - name: 전체 디렉토리 업로드
         uses: actions/upload-artifact@v4
         with:
-          name: my-artifact
-          path: pothole-backend
+          name: pothole-artifact
+          path: ./
 
       - name: 현재 디렉토리 출력
         run: |
