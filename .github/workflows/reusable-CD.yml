@@ -167,7 +167,7 @@ jobs:
           script: |
             docker-compose stop ${{ env.IMAGE_NAME }}
             docker-compose rm -f ${{ env.IMAGE_NAME }}
-            docker rmi $(docker images -q)
+            docker rmi ${{ env.IMAGE_NAME }}
 
       - name: pull image from ECR
         uses: appleboy/ssh-action@master
