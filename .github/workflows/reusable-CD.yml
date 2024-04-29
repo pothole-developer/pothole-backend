@@ -47,10 +47,22 @@ jobs:
       - name: GitHub Repository Checkout
         uses: actions/checkout@v3
 
-      - name: 빌드 결과물 다운
+      - name: 현재 디렉토리 출력
+        run: |
+          echo ${{ github.workspace }}
+          ls -l
+
+      - name: Manager jar 파일 다운
         uses: actions/download-artifact@v4
         with:
-          name: pothole-artifact
+          name: pothole-manager-artifact
+          path: ./pothole-manager-api/build/libs/
+
+      - name: Worker jar 파일 다운
+        uses: actions/download-artifact@v4
+        with:
+          name: pothole-worker-artifact
+          path: ./pothole-worker-api/build/libs/
 
       - name: 현재 디렉토리 출력
         run: |
