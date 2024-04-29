@@ -43,11 +43,11 @@ public class SampleManagerController {
     public ResponseEntity<List<PointDto>> getAllPotholes() {
         log.info("Slack Message 테스트");
 
-        slackService.sendMessage("포트홀 전체 조회 시작");
+        slackService.sendSlackMessage("포트홀 전체 조회 시작");
 
         List<Pothole> potholes = sampleService.getAllPotholes();
 
-        slackService.sendMessage("포트홀 전체 조회 끝");
+        slackService.sendSlackMessage("포트홀 전체 조회 끝");
 
         return ResponseEntity.ok().body(potholes.stream()
                 .map(PointDto::new)
