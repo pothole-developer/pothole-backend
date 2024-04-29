@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.locationtech.jts.geom.Point;
-import util.convertor.ProgressEnumConvertor;
+import pothole_solution.core.util.convertor.ProgressEnumConvertor;
 
 @Entity
 @Getter
