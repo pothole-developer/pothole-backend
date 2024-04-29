@@ -14,8 +14,8 @@ jobs:
     uses: ./.github/workflows/build-CD.yml
 
   deploy_manager:
-    if: github.event.pull_request.merged == true
-      && (contains(github.head_ref, 'manager') || contains(github.head_ref, 'core'))
+#    if: github.event.pull_request.merged == true
+#      && (contains(github.head_ref, 'manager') || contains(github.head_ref, 'core'))
     needs: build
     uses: ./.github/workflows/reusable-CD.yml
     with:
@@ -33,8 +33,8 @@ jobs:
       WORKER_APPLICATION_DEV_YML: ${{ secrets.WORKER_APPLICATION_DEV_YML }}
 
   deploy_worker:
-    if: github.event.pull_request.merged == true
-      && (contains(github.head_ref, 'worker') || contains(github.head_ref, 'core'))
+#    if: github.event.pull_request.merged == true
+#      && (contains(github.head_ref, 'worker') || contains(github.head_ref, 'core'))
     needs: build
     uses: ./.github/workflows/reusable-CD.yml
     with:
