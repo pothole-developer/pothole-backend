@@ -17,16 +17,16 @@ on:
         required: true
       EC2_SSH_KEY:
         required: true
-      CORE_APPLICATION_DEV_YML:
-        required: true
-      MANAGER_APPLICATION_YML:
-        required: true
-      MANAGER_APPLICATION_DEV_YML:
-        required: true
-      WORKER_APPLICATION_YML:
-        required: true
-      WORKER_APPLICATION_DEV_YML:
-        required: true
+#      CORE_APPLICATION_DEV_YML:
+#        required: true
+#      MANAGER_APPLICATION_YML:
+#        required: true
+#      MANAGER_APPLICATION_DEV_YML:
+#        required: true
+#      WORKER_APPLICATION_YML:
+#        required: true
+#      WORKER_APPLICATION_DEV_YML:
+#        required: true
 
 permissions:
   contents: read
@@ -80,38 +80,38 @@ jobs:
 #      - name: Setup Gradle
 #        uses: gradle/actions/setup-gradle@v3
 #
-      - name: core application.yml 생성
-        shell: bash
-        run: |
-          mkdir -p ./pothole-core/src/main/resources
-          cd ./pothole-core/src/main/resources
-
-          touch ./application-core-dev.yml
-          echo "${{ secrets.CORE_APPLICATION_DEV_YML }}" > ./application-core-dev.yml
-
-      - name: Manager application.yml 생성
-        shell: bash
-        run: |
-          mkdir -p ./pothole-manager-api/src/main/resources
-          cd ./pothole-manager-api/src/main/resources
-
-          touch ./application.yml
-          echo "${{ secrets.MANAGER_APPLICATION_YML }}" > ./application.yml
-
-          touch ./application-aws.yml
-          echo "${{ secrets.MANAGER_APPLICATION_DEV_YML }}" > ./application-manager-dev.yml
-
-      - name: Worker application.yml 생성
-        shell: bash
-        run: |
-          mkdir -p ./pothole-worker-api/src/main/resources
-          cd ./pothole-worker-api/src/main/resources
-
-          touch ./application.yml
-          echo "${{ secrets.WORKER_APPLICATION_YML }}" > ./application.yml
-
-          touch ./application-aws.yml
-          echo "${{ secrets.WORKER_APPLICATION_DEV_YML }}" > ./application-worker-dev.yml
+#      - name: core application.yml 생성
+#        shell: bash
+#        run: |
+#          mkdir -p ./pothole-core/src/main/resources
+#          cd ./pothole-core/src/main/resources
+#
+#          touch ./application-core-dev.yml
+#          echo "${{ secrets.CORE_APPLICATION_DEV_YML }}" > ./application-core-dev.yml
+#
+#      - name: Manager application.yml 생성
+#        shell: bash
+#        run: |
+#          mkdir -p ./pothole-manager-api/src/main/resources
+#          cd ./pothole-manager-api/src/main/resources
+#
+#          touch ./application.yml
+#          echo "${{ secrets.MANAGER_APPLICATION_YML }}" > ./application.yml
+#
+#          touch ./application-aws.yml
+#          echo "${{ secrets.MANAGER_APPLICATION_DEV_YML }}" > ./application-manager-dev.yml
+#
+#      - name: Worker application.yml 생성
+#        shell: bash
+#        run: |
+#          mkdir -p ./pothole-worker-api/src/main/resources
+#          cd ./pothole-worker-api/src/main/resources
+#
+#          touch ./application.yml
+#          echo "${{ secrets.WORKER_APPLICATION_YML }}" > ./application.yml
+#
+#          touch ./application-aws.yml
+#          echo "${{ secrets.WORKER_APPLICATION_DEV_YML }}" > ./application-worker-dev.yml
 
 #      - name: pothole all build
 #        run: |

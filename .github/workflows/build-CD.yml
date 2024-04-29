@@ -2,6 +2,17 @@ name: pothole build CD
 
 on:
   workflow_call:
+    secrets:
+      CORE_APPLICATION_DEV_YML:
+        required: true
+      MANAGER_APPLICATION_YML:
+        required: true
+      MANAGER_APPLICATION_DEV_YML:
+        required: true
+      WORKER_APPLICATION_YML:
+        required: true
+      WORKER_APPLICATION_DEV_YML:
+        required: true
 
 permissions:
   contents: read
