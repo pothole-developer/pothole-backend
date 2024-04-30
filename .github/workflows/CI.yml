@@ -64,9 +64,9 @@ jobs:
     - name: Manager 모듈 실행
       if: (contains(github.head_ref, 'manager') || contains(github.head_ref, 'core'))
       run: |
-        java -Dspring.profiles.active=manager-dev -jar build/libs/*.jar
+        java -Dspring.profiles.active=manager-dev -jar pothole-manager-api/build/libs/*.jar
 
     - name: worker 모듈 실행
       if: (contains(github.head_ref, 'worker') || contains(github.head_ref, 'core'))
       run: |
-        java -Dspring.profiles.active=manager-dev -jar build/libs/*.jar
+        java -Dspring.profiles.active=manager-dev -jar pothole-worker-api/build/libs/*.jar
