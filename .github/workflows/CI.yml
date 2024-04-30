@@ -63,7 +63,7 @@ jobs:
 
     - name: 디렉토리 출력
       run: |
-        cd ./pothole-manager-api/build/libs/
+        cd ./pothole-core/src/main/resources/
         ls -l
 
     - name: Manager 모듈 실행
