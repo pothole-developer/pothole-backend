@@ -1,12 +1,12 @@
-name: pothole Build & Test
+name: pothole Build & Test & Run
 
 on:
   pull_request:
-    branches: [ "develop" ]
+    branches: [ develop ]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
     - name: GitHub Repository Checkout
@@ -18,23 +18,56 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
+    - name: core application.yml 생성
+      shell: bash
+      run: |
+        mkdir -p ./pothole-core/src/main/resources
+        cd ./pothole-core/src/main/resources
+        
+        touch ./application-core-dev.yml
+        echo "${{ secrets.CORE_APPLICATION_DEV_YML }}" > ./application-core-dev.yml
+
+    - name: Manager application.yml 생성
+      shell: bash
+      run: |
+        mkdir -p ./pothole-manager-api/src/main/resources
+        cd ./pothole-manager-api/src/main/resources
+        
+        touch ./application.yml
+        echo "${{ secrets.MANAGER_APPLICATION_YML }}" > ./application.yml
+        
+        touch ./application-manager-dev.yml
+        echo "${{ secrets.MANAGER_APPLICATION_DEV_YML }}" > ./application-manager-dev.yml
+
+    - name: Worker application.yml 생성
+      shell: bash
+      run: |
+        mkdir -p ./pothole-worker-api/src/main/resources
+        cd ./pothole-worker-api/src/main/resources
+        
+        touch ./application.yml
+        echo "${{ secrets.WORKER_APPLICATION_YML }}" > ./application.yml
+        
+        touch ./application-worker-dev.yml
+        echo "${{ secrets.WORKER_APPLICATION_DEV_YML }}" > ./application-worker-dev.yml
+
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v3
 
     - name: Pothole [Core] Module Build with Gradle
-      run: ./gradlew clean pothole-core:bootJar -x test
+      run: ./gradlew pothole-core:bootJar -x test
 
     - name: Pothole [Core] Module test
-      run: ./gradlew clean pothole-core:test
+      run: ./gradlew pothole-core:test
 
     - name: Pothole [Manager] Module Build with Gradle
-      run: ./gradlew clean pothole-manager-api:bootJar -x test
+      run: ./gradlew pothole-manager-api:bootJar -x test
 
     - name: Pothole [Manager] Module test
-      run: ./gradlew clean pothole-manager-api:test
+      run: ./gradlew pothole-manager-api:test
     
     - name: Pothole [Worker] Module Build with Gradle
-      run: ./gradlew clean pothole-worker-api:bootJar -x test
+      run: ./gradlew pothole-worker-api:bootJar -x test
 
     - name: Pothole [Worker] Module test
-      run: ./gradlew clean pothole-worker-api:test
+      run: ./gradlew pothole-worker-api:test
