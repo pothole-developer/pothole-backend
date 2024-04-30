@@ -2,11 +2,8 @@ name: pothole Build & Test & Run
 
 on:
   pull_request_target:
-    types:
-      - opened
-      - reopened
-    branches:
-      - 'develop'
+    types: [opened, reopened]
+    branches: ["develop"]
 
 jobs:
   build:
