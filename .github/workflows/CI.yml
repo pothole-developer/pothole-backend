@@ -50,29 +50,28 @@ jobs:
       run: ./gradlew clean pothole-core:test
 
     - name: Pothole [Manager] Module Build with Gradle
-      run: ./gradlew clean pothole-manager-api:bootJar -x test
+      run: ./gradlew pothole-manager-api:bootJar -x test
 
     - name: Pothole [Manager] Module test
-      run: ./gradlew clean pothole-manager-api:test
+      run: ./gradlew pothole-manager-api:test
     
     - name: Pothole [Worker] Module Build with Gradle
-      run: ./gradlew clean pothole-worker-api:bootJar -x test
+      run: ./gradlew pothole-worker-api:bootJar -x test
 
     - name: Pothole [Worker] Module test
-      run: ./gradlew clean pothole-worker-api:test
+      run: ./gradlew pothole-worker-api:test
+
+    - name: 디렉토리 출력
+      run: |
+        cd ./pothole-manager-api/build/libs/
+        ls -l
 
     - name: Manager 모듈 실행
       if: (contains(github.head_ref, 'manager') || contains(github.head_ref, 'core'))
       run: |
-        cd ./pothole-manager-api
-        ls -l
-        
-        java -Dspring.profiles.active=manager-dev -jar /build/libs/*.jar
+        java -Dspring.profiles.active=manager-dev -jar pothole-manager-api/build/libs/*.jar
 
     - name: worker 모듈 실행
       if: (contains(github.head_ref, 'worker') || contains(github.head_ref, 'core'))
       run: |
-        cd ./pothole-worker-api
-        ls -l
-        
-        java -Dspring.profiles.active=worker-dev -jar /build/libs/*.jar
+        java -Dspring.profiles.active=worker-dev -jar pothole-manager-api/build/libs/*.jar
