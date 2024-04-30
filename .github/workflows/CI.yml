@@ -44,10 +44,10 @@ jobs:
         echo "${{ secrets.WORKER_APPLICATION_DEV_YML }}" > ./application-worker-dev.yml
 
     - name: Pothole [Core] Module Build with Gradle
-      run: ./gradlew clean pothole-core:bootJar -x test
+      run: ./gradlew pothole-core:bootJar -x test
 
     - name: Pothole [Core] Module test
-      run: ./gradlew clean pothole-core:test
+      run: ./gradlew pothole-core:test
 
     - name: Pothole [Manager] Module Build with Gradle
       run: ./gradlew pothole-manager-api:bootJar -x test
