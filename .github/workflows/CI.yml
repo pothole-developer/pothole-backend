@@ -77,6 +77,16 @@ jobs:
         cd ./pothole-core/src/main/resources/
         ls -l
 
+    - name: 디렉토리 출력
+      run: |
+        cd ./pothole-manager-api/src/main/resources/
+        ls -l
+
+    - name: 디렉토리 출력
+      run: |
+        cd ./pothole-worker-api/src/main/resources/
+        ls -l
+
     - name: Manager 모듈 실행
       if: (contains(github.head_ref, 'manager') || contains(github.head_ref, 'core'))
       run: |
