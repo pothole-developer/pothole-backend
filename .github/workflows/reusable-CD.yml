@@ -22,7 +22,6 @@ on:
       ECR_REGISTRY:
         required: true
 
-
 permissions:
   contents: read
 
