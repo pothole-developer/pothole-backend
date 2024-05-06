@@ -1,0 +1,1 @@
+org.springframework.context.ApplicationListener=pothole_solution.core.util.alarm.slack.listener.StartupFailureListener
