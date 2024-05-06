@@ -4,7 +4,10 @@ import com.slack.api.Slack;
 import com.slack.api.methods.MethodsClient;
 import com.slack.api.methods.SlackApiException;
 import com.slack.api.methods.request.chat.ChatPostMessageRequest;
+import com.slack.api.model.block.LayoutBlock;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import pothole_solution.core.util.alarm.slack.constant.SlackConstant;
@@ -22,6 +25,7 @@ import static pothole_solution.core.util.alarm.slack.constant.SlackConstant.NO_P
 
 @Slf4j
 @Service
+@Setter
 public class SlackService {
     @Value(value = "${slack.token}")
     String slackToken;
