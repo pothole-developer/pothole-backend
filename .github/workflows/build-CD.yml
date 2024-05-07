@@ -2,6 +2,16 @@ name: pothole all build for CD
 
 on:
   workflow_call:
+    inputs:
+      pr_author:
+        required: true
+        type: string
+      pr_title:
+        required: true
+        type: string
+      pr_url:
+        required: true
+        type: string
     secrets:
       CORE_APPLICATION_DEV_YML:
         required: true
@@ -13,16 +23,6 @@ on:
         required: true
       WORKER_APPLICATION_DEV_YML:
         required: true
-    inputs:
-      pr_author:
-        required: true
-        type: string
-      pr_title:
-        required: true
-        type: string
-      pr_url:
-        required: true
-        type: string
 
 jobs:
   build:

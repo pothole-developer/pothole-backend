@@ -8,16 +8,16 @@ on:
 jobs:
   build:
     uses: ./.github/workflows/build-CD.yml
+    with:
+      pr_author: ${{ github.event.pull_request.user.login }}
+      pr_title: ${{ github.event.pull_request.title }}
+      pr_url: ${{ github.event.pull_request.html_url }}
     secrets:
       CORE_APPLICATION_DEV_YML: ${{ secrets.CORE_APPLICATION_DEV_YML }}
       MANAGER_APPLICATION_YML: ${{ secrets.MANAGER_APPLICATION_YML }}
       MANAGER_APPLICATION_DEV_YML: ${{ secrets.MANAGER_APPLICATION_DEV_YML }}
       WORKER_APPLICATION_YML: ${{ secrets.WORKER_APPLICATION_YML }}
       WORKER_APPLICATION_DEV_YML: ${{ secrets.WORKER_APPLICATION_DEV_YML }}
-    with:
-      pr_author: ${{ github.event.pull_request.user.login }}
-      pr_title: ${{ github.event.pull_request.title }}
-      pr_url: ${{ github.event.pull_request.html_url }}
 
   deploy_manager:
     if: github.event.pull_request.merged == true
