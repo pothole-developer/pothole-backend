@@ -2,6 +2,16 @@ name: pothole all build for CD
 
 on:
   workflow_call:
+    inputs:
+      pr_author:
+        required: true
+        type: string
+      pr_title:
+        required: true
+        type: string
+      pr_url:
+        required: true
+        type: string
     secrets:
       CORE_APPLICATION_DEV_YML:
         required: true
@@ -40,6 +50,16 @@ jobs:
           
           touch ./application-core-dev.yml
           echo "${{ secrets.CORE_APPLICATION_DEV_YML }}" > ./application-core-dev.yml
+
+      - name: pr_info.txt 생성
+        shell: bash
+        run: |
+          mkdir -p ./pothole-core/src/main/resources
+          cd ./pothole-core/src/main/resources
+          
+          echo "PR Author: ${{ inputs.pr_author }}" > ./pr_info.txt
+          echo "PR Title: ${{ inputs.pr_title }}" >> ./pr_info.txt
+          echo "PR URL: ${{ inputs.pr_url }}" >> ./pr_info.txt
 
       - name: Manager application.yml 생성
         shell: bash
