@@ -1,6 +1,7 @@
 package pothole_solution.core.util.alarm.slack;
 
 import com.slack.api.model.block.LayoutBlock;
+import org.springframework.core.io.ClassPathResource;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -11,7 +12,7 @@ import java.util.List;
 import static com.slack.api.model.block.Blocks.*;
 import static com.slack.api.model.block.composition.BlockCompositions.markdownText;
 import static com.slack.api.model.block.composition.BlockCompositions.plainText;
-import static pothole_solution.core.util.alarm.slack.constant.SlackConstant.NO_PR_INFO_MSG;
+import static pothole_solution.core.util.alarm.slack.constant.SlackConstant.*;
 
 public class SlackMessageFormatter {
     public List<LayoutBlock> buildBootMessageFormat(String serverName, String startupTime, boolean isSuccess) {
@@ -59,7 +60,11 @@ public class SlackMessageFormatter {
 
     private String getPRInfo(String info) {
         try {
-            return Files.readAllLines(Paths.get("./pothole-core/src/main/resources/pr_info.txt")).stream()
+            boolean isManager = new ClassPathResource("application-manager-dev.yml").exists();
+
+            String prInfoPath = isManager ? MANAGER_SERVER_PR_INFO_PATH : WORKER_SERVER_PR_INFO_PATH;
+
+            return Files.readAllLines(Paths.get(prInfoPath)).stream()
                     .filter(prInfo -> prInfo.startsWith(info))
                     .findFirst()
                     .map(prInfo -> prInfo.substring(info.length()).trim())
