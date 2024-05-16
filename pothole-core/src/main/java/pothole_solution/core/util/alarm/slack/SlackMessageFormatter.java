@@ -84,7 +84,7 @@ public class SlackMessageFormatter {
             return PrInfoDto.builder()
                     .author(NO_PR_INFO_MSG)
                     .title(NO_PR_INFO_MSG)
-                    .url(NO_PR_INFO_MSG)
+                    .url("")
                     .build();
         }
     }
