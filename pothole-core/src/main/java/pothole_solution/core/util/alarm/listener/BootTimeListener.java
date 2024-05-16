@@ -1,4 +1,4 @@
-package pothole_solution.core.util.alarm.slack.listener;
+package pothole_solution.core.util.alarm.listener;
 
 import com.slack.api.model.block.LayoutBlock;
 import org.springframework.boot.SpringApplicationRunListener;

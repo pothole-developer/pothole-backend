@@ -51,27 +51,17 @@ jobs:
           touch ./application-core-dev.yml
           echo "${{ secrets.CORE_APPLICATION_DEV_YML }}" > ./application-core-dev.yml
 
-      - name: Manager 서버에 pr_info.txt 생성
-        if: (contains(github.head_ref, 'manager') || contains(github.head_ref, 'core'))
+      - name: pr_info.json 생성
         shell: bash
         run: |
-          mkdir -p ./pothole-manager-api/src/main/resources
-          cd ./pothole-manager-api/src/main/resources
-          
-          echo "PR Author: ${{ inputs.pr_author }}" > ./pr_info.txt
-          echo "PR Title: ${{ inputs.pr_title }}" >> ./pr_info.txt
-          echo "PR URL: ${{ inputs.pr_url }}" >> ./pr_info.txt
+          mkdir -p ./pothole-core/src/main/resources
+          cd ./pothole-core/src/main/resources
 
-      - name: Worker 서버에 pr_info.txt 생성
-        if: (contains(github.head_ref, 'worker') || contains(github.head_ref, 'core'))
-        shell: bash
-        run: |
-          mkdir -p ./pothole-worker-api/src/main/resources
-          cd ./pothole-worker-api/src/main/resources
-          
-          echo "PR Author: ${{ inputs.pr_author }}" > ./pr_info.txt
-          echo "PR Title: ${{ inputs.pr_title }}" >> ./pr_info.txt
-          echo "PR URL: ${{ inputs.pr_url }}" >> ./pr_info.txt
+          echo "{" > ./pr_info.json
+          echo "  \"author\": \"${{ inputs.pr_author }}\"," >> ./pr_info.json
+          echo "  \"title\": \"${{ inputs.pr_title }}\"," >> ./pr_info.json
+          echo "  \"url\": \"${{ inputs.pr_url }}\"" >> ./pr_info.json
+          echo "}" >> ./pr_info.json
 
       - name: Manager application.yml 생성
         shell: bash

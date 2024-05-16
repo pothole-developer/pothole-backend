@@ -15,7 +15,4 @@ public class SlackConstant {
     public static final String FAILURE_STARTUP_TIME = "0.000";
 
     public static final String NO_PR_INFO_MSG = "N/A";
-
-    public static final String MANAGER_SERVER_PR_INFO_PATH = "./pothole-manager-api/src/main/resources/pr_info.txt";
-    public static final String WORKER_SERVER_PR_INFO_PATH = "./pothole-worker-api/src/main/resources/pr_info.txt";
 }
