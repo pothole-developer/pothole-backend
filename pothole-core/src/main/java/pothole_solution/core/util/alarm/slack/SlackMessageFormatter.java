@@ -19,9 +19,11 @@ public class SlackMessageFormatter {
         // 애플리케이션 실행 상태 확인
         String bootStatusEmoji = isSuccess ? ":white_check_mark:" : ":x:";
 
-        String prAuthor = getPRInfo().getAuthor();
-        String prTitle = getPRInfo().getTitle();
-        String prUrl = getPRInfo().getUrl();
+        PrInfoDto prInfoDto = getPRInfo();
+
+        String prAuthor = prInfoDto.getAuthor();
+        String prTitle = prInfoDto.getTitle();
+        String prUrl = prInfoDto.getUrl();
 
         String prUrlMsg = prUrl.isEmpty() ? NO_PR_INFO_MSG : "<" + prUrl + "|PR 보기>";
 
