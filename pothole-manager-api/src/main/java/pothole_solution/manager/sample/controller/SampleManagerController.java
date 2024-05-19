@@ -1,7 +1,6 @@
 package pothole_solution.manager.sample.controller;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +15,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/pothole/v1/manager")
-@Slf4j
 public class SampleManagerController {
     private final SampleService sampleService;
     private final GeometryFactory geometryFactory = new GeometryFactory();
