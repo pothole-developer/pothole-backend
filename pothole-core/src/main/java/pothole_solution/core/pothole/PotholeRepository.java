@@ -1,4 +1,4 @@
-package pothole_solution.core;
+package pothole_solution.core.pothole;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

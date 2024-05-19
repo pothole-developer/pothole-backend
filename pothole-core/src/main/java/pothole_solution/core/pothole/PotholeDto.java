@@ -1,20 +1,20 @@
-package pothole_solution.core;
+package pothole_solution.core.pothole;
 
 import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
 
 @Data
-@Slf4j
-public class PointDto {
-    public final Long pothole_id;
+public class PotholeDto {
+    public final Long potholeId;
     public final double lat;
     public final double lon;
+    public final int importance;
     public final Progress progress;
 
-    public PointDto(Pothole pothole) {
-        this.pothole_id = pothole.getPothole_id();
+    public PotholeDto(Pothole pothole) {
+        this.potholeId = pothole.getPotholeId();
         this.lat = pothole.getLocation().getY();
         this.lon = pothole.getLocation().getX();
+        this.importance = pothole.getImportance();
         this.progress = pothole.getProgress();
     }
 }
