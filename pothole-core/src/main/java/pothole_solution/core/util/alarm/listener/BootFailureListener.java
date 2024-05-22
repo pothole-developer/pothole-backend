@@ -22,12 +22,14 @@ public class BootFailureListener implements ApplicationListener<ApplicationFaile
         try {
             SlackService slackService = new SlackService(getSlackToken());
 
-            boolean isManagerServer = new ClassPathResource("application-manager-dev.yml").exists();
+            if (!isLocalServer()) {
+                boolean isManagerDevServer = new ClassPathResource("application-manager-dev.yml").exists();
 
-            String serverName = isManagerServer ? MANAGER_SERVER : WORKER_SERVER;
+                String serverName = isManagerDevServer ? MANAGER_SERVER : WORKER_SERVER;
 
-            List<LayoutBlock> layoutBlocks = new SlackMessageFormatter().buildBootMessageFormat(serverName, FAILURE_STARTUP_TIME, false);
-            slackService.sendMessage(POTHOLE_SERVER_DEPLOY, POTHOLE_SERVER_DEPLOY_PREVIEW_MSG, layoutBlocks);
+                List<LayoutBlock> layoutBlocks = new SlackMessageFormatter().buildBootMessageFormat(serverName, FAILURE_STARTUP_TIME, false);
+                slackService.sendMessage(POTHOLE_SERVER_DEPLOY, POTHOLE_SERVER_DEPLOY_PREVIEW_MSG, layoutBlocks);
+            }
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -40,5 +42,12 @@ public class BootFailureListener implements ApplicationListener<ApplicationFaile
         environment.getPropertySources().addLast(new ResourcePropertySource("classpath:application-core-dev.yml"));
 
         return environment.getProperty("slack.token");
+    }
+
+    private boolean isLocalServer() {
+        boolean isManagerLocalServer = new ClassPathResource("application-manager-local.yml").exists();
+        boolean isWorkerLocalServer = new ClassPathResource("application-worker-local.yml").exists();
+
+        return isManagerLocalServer || isWorkerLocalServer;
     }
 }
