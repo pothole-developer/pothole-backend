@@ -5,33 +5,33 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pothole_solution.core.pothole.Pothole;
 import pothole_solution.core.pothole.PotholeRepository;
-import pothole_solution.core.pothole.Progress;
+import pothole_solution.core.pothole.dto.request.PotholeChangeProgressRequestDto;
 
 import java.util.List;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 @RequiredArgsConstructor
 public class SampleService {
     private final PotholeRepository potholeRepository;
 
-    @Transactional
     public Pothole register(Pothole pothole) {
         return potholeRepository.save(pothole);
     }
 
+    @Transactional(readOnly = true)
     public Pothole getPothole(Long id) {
         return potholeRepository.findById(id).get();
     }
 
+    @Transactional(readOnly = true)
     public List<Pothole> getAllPotholes() {
         return potholeRepository.findAll();
     }
 
-    @Transactional
-    public Pothole changePotholeProgress(Long id) {
+    public Pothole changePotholeProgress(Long id, PotholeChangeProgressRequestDto changeProgressRequestDto) {
         Pothole pothole = potholeRepository.findById(id).get();
-        pothole.changeProgress(Progress.EMERGENCY_ONGOING);
+        pothole.changeProgress(changeProgressRequestDto.getProgress());
 
         return pothole;
     }
@@ -40,6 +40,7 @@ public class SampleService {
         potholeRepository.deleteById(id);
     }
 
+    @Transactional(readOnly = true)
     public List<Pothole> getFilteredPotholes(Integer minImportance, Integer maxImportance, String process) {
         List<Pothole> potholes = potholeRepository.findAll();
 

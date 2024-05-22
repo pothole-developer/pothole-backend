@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 import org.locationtech.jts.geom.Point;
 import pothole_solution.core.util.convertor.ProgressEnumConvertor;
 
-import java.util.Random;
-
 @Entity
 @Getter
 @NoArgsConstructor
@@ -27,10 +25,10 @@ public class Pothole {
     private Integer importance;
 
     @Builder
-    public Pothole(Point location, Progress progress) {
+    public Pothole(Point location, Progress progress, Integer importance) {
         this.location = location;
         this.progress = progress;
-        this.importance = new Random().nextInt(100);
+        this.importance = importance;
     }
 
     public void changeProgress(Progress progress) {

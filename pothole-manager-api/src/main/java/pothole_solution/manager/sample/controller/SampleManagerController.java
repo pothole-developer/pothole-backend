@@ -1,13 +1,12 @@
 package pothole_solution.manager.sample.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.GeometryFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pothole_solution.core.pothole.Pothole;
-import pothole_solution.core.pothole.PotholeDto;
-import pothole_solution.core.pothole.Progress;
+import pothole_solution.core.pothole.dto.request.PotholeChangeProgressRequestDto;
+import pothole_solution.core.pothole.dto.request.PotholeRegisterRequestDto;
+import pothole_solution.core.pothole.dto.response.PotholeResponseDto;
 import pothole_solution.manager.sample.service.SampleService;
 
 import java.util.List;
@@ -17,37 +16,35 @@ import java.util.List;
 @RequestMapping("/pothole/v1/manager")
 public class SampleManagerController {
     private final SampleService sampleService;
-    private final GeometryFactory geometryFactory = new GeometryFactory();
 
     @PostMapping
-    public ResponseEntity<Long> register(){
-        Pothole sample = Pothole.builder().location(geometryFactory.createPoint(new Coordinate(126.93427307071744, 37.38609685274056))).progress(Progress.REGISTER).build();
-        Pothole pothole = sampleService.register(sample);
+    public ResponseEntity<Long> register(@RequestBody PotholeRegisterRequestDto registerRequestDto){
+        Pothole pothole = sampleService.register(registerRequestDto.toPothole());
 
         return ResponseEntity.ok().body(pothole.getPotholeId());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PotholeDto> getPothole(@PathVariable("id") Long id) {
+    public ResponseEntity<PotholeResponseDto> getPothole(@PathVariable("id") Long id) {
         Pothole pothole = sampleService.getPothole(id);
 
-        return ResponseEntity.ok().body(new PotholeDto(pothole));
+        return ResponseEntity.ok().body(new PotholeResponseDto(pothole));
     }
 
     @GetMapping("/potholes")
-    public ResponseEntity<List<PotholeDto>> getAllPotholes() {
+    public ResponseEntity<List<PotholeResponseDto>> getAllPotholes() {
         List<Pothole> potholes = sampleService.getAllPotholes();
 
         return ResponseEntity.ok().body(potholes.stream()
-                .map(PotholeDto::new)
+                .map(PotholeResponseDto::new)
                 .toList());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PotholeDto> changePothole(@PathVariable("id") Long id) {
-        Pothole pothole = sampleService.changePotholeProgress(id);
+    public ResponseEntity<PotholeResponseDto> changePotholeProgress(@PathVariable("id") Long id, @RequestBody PotholeChangeProgressRequestDto changeProgressRequestDto) {
+        Pothole pothole = sampleService.changePotholeProgress(id, changeProgressRequestDto);
 
-        return ResponseEntity.ok().body(new PotholeDto(pothole));
+        return ResponseEntity.ok().body(new PotholeResponseDto(pothole));
     }
 
     @DeleteMapping("/{id}")
@@ -58,11 +55,11 @@ public class SampleManagerController {
     }
 
     @GetMapping("/potholes-filters")
-    public ResponseEntity<List<PotholeDto>> getFilteredPotholes(@RequestParam(value = "minImportance", required = false) Integer minImportance, @RequestParam(value = "maxImportance", required = false) Integer maxImportance, @RequestParam(value = "process", required = false) String process) {
+    public ResponseEntity<List<PotholeResponseDto>> getFilteredPotholes(@RequestParam(value = "minImportance", required = false) Integer minImportance, @RequestParam(value = "maxImportance", required = false) Integer maxImportance, @RequestParam(value = "process", required = false) String process) {
         List<Pothole> filteredPotholes = sampleService.getFilteredPotholes(minImportance, maxImportance, process);
 
         return ResponseEntity.ok().body(filteredPotholes.stream()
-                .map(PotholeDto::new)
+                .map(PotholeResponseDto::new)
                 .toList());
     }
 }
