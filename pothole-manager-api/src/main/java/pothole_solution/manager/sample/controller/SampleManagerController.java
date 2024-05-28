@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pothole_solution.core.pothole.Pothole;
+import pothole_solution.core.pothole.Progress;
+import pothole_solution.core.pothole.dto.PotholeFilterDto;
 import pothole_solution.core.pothole.dto.request.PotholeChangeProgressRequestDto;
 import pothole_solution.core.pothole.dto.request.PotholeRegisterRequestDto;
 import pothole_solution.core.pothole.dto.response.PotholeResponseDto;
@@ -55,8 +57,11 @@ public class SampleManagerController {
     }
 
     @GetMapping("/potholes-filters")
-    public ResponseEntity<List<PotholeResponseDto>> getFilteredPotholes(@RequestParam(value = "minImportance", required = false) Integer minImportance, @RequestParam(value = "maxImportance", required = false) Integer maxImportance, @RequestParam(value = "process", required = false) String process) {
-        List<Pothole> filteredPotholes = sampleService.getFilteredPotholes(minImportance, maxImportance, process);
+    public ResponseEntity<List<PotholeResponseDto>> getFilteredPotholes(@RequestParam(value = "minImportance", required = false) Integer minImportance,
+                                                                        @RequestParam(value = "maxImportance", required = false) Integer maxImportance,
+                                                                        @RequestParam(value = "process", required = false) Progress progress) {
+
+        List<Pothole> filteredPotholes = sampleService.getFilteredPotholes(new PotholeFilterDto(minImportance, maxImportance, progress));
 
         return ResponseEntity.ok().body(filteredPotholes.stream()
                 .map(PotholeResponseDto::new)

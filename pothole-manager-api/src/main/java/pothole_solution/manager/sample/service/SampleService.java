@@ -4,7 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pothole_solution.core.pothole.Pothole;
+import pothole_solution.core.pothole.PotholeQueryDslRepository;
 import pothole_solution.core.pothole.PotholeRepository;
+import pothole_solution.core.pothole.dto.PotholeFilterDto;
 import pothole_solution.core.pothole.dto.request.PotholeChangeProgressRequestDto;
 
 import java.util.List;
@@ -14,6 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SampleService {
     private final PotholeRepository potholeRepository;
+    private final PotholeQueryDslRepository potholeQueryDslRepository;
 
     public Pothole register(Pothole pothole) {
         return potholeRepository.save(pothole);
@@ -41,18 +44,12 @@ public class SampleService {
     }
 
     @Transactional(readOnly = true)
-    public List<Pothole> getFilteredPotholes(Integer minImportance, Integer maxImportance, String process) {
-        List<Pothole> potholes = potholeRepository.findAll();
+    public List<Pothole> getFilteredPotholes(PotholeFilterDto potholeFilterDto) {
+        int availableMinImportance = (potholeFilterDto.getMinImportance() == null) ? 0 : potholeFilterDto.getMinImportance();
+        int availableMaxImportance = (potholeFilterDto.getMaxImportance() == null) ? 100 : potholeFilterDto.getMaxImportance();
 
-        int actualMinImportance = (minImportance == null) ? 0 : minImportance;
-        int actualMaxImportance = (maxImportance == null) ? 100 : maxImportance;
+        potholeFilterDto.changeToAvailableImportance(availableMinImportance, availableMaxImportance);
 
-        return potholes.stream()
-                .filter(pothole ->
-                        (actualMinImportance <= pothole.getImportance() && pothole.getImportance() <= actualMaxImportance)
-                        &&
-                        (process == null || pothole.getProgress().getValue().equals(process))
-                )
-                .toList();
+        return potholeQueryDslRepository.findByFilter(potholeFilterDto);
     }
 }
