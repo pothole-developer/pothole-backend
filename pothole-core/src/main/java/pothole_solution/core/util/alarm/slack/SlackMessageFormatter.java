@@ -1,10 +1,11 @@
 package pothole_solution.core.util.alarm.slack;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.slack.api.model.block.LayoutBlock;
+import org.springframework.core.io.ClassPathResource;
+import pothole_solution.core.util.alarm.slack.dto.PrInfoDto;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,9 +19,13 @@ public class SlackMessageFormatter {
         // 애플리케이션 실행 상태 확인
         String bootStatusEmoji = isSuccess ? ":white_check_mark:" : ":x:";
 
-        String prAuthor = getPRInfo("PR Author: ");
-        String prTitle = getPRInfo("PR Title: ");
-        String prUrl = getPRInfo("PR URL: ");
+        PrInfoDto prInfoDto = getPRInfo();
+
+        String prAuthor = prInfoDto.getAuthor();
+        String prTitle = prInfoDto.getTitle();
+        String prUrl = prInfoDto.getUrl();
+
+        String prUrlMsg = prUrl.isEmpty() ? NO_PR_INFO_MSG : "<" + prUrl + "|PR 보기>";
 
         List<LayoutBlock> layoutBlocks = new ArrayList<>();
 
@@ -45,7 +50,7 @@ public class SlackMessageFormatter {
         layoutBlocks.add(section(section -> section.text(markdownText("*배포 성공 여부*  |  " + bootStatusEmoji))));
         layoutBlocks.add(section(section -> section.text(markdownText("*배포 소요 시간 (단위: 초)*  |  `" + startupTime + "`"))));
         layoutBlocks.add(section(section -> section.text(markdownText("*PR 생성자*  |  " + prAuthor))));
-        layoutBlocks.add(section(section -> section.text(markdownText("*PR URL*  |  <" + prUrl + "|PR 보기>"))));
+        layoutBlocks.add(section(section -> section.text(markdownText("*PR URL*  |  " + prUrlMsg))));
 
         leaveSpace(layoutBlocks);
         leaveSpace(layoutBlocks);
@@ -57,18 +62,32 @@ public class SlackMessageFormatter {
         layoutBlocks.add(section(section -> section.text(markdownText(" "))));
     }
 
-    private String getPRInfo(String info) {
+    private PrInfoDto getPRInfo() {
         try {
-            return Files.readAllLines(Paths.get("./pothole-core/src/main/resources/pr_info.txt")).stream()
-                    .filter(prInfo -> prInfo.startsWith(info))
-                    .findFirst()
-                    .map(prInfo -> prInfo.substring(info.length()).trim())
-                    .orElse(NO_PR_INFO_MSG);
+            ObjectMapper objectMapper = new ObjectMapper();
+
+            ClassPathResource prInfoJson = new ClassPathResource("pr_info.json");
+
+            PrInfoDto prInfoDto = objectMapper.readValue(prInfoJson.getInputStream(), PrInfoDto.class);
+
+            if (prInfoDto.getAuthor().isEmpty()) {
+                prInfoDto.changeNoAuthorValue();
+            }
+
+            if (prInfoDto.getTitle().isEmpty()) {
+                prInfoDto.changeNoTitleValue();
+            }
+
+            return prInfoDto;
 
         } catch (IOException e) {
             e.printStackTrace();
 
-            return NO_PR_INFO_MSG;
+            return PrInfoDto.builder()
+                    .author(NO_PR_INFO_MSG)
+                    .title(NO_PR_INFO_MSG)
+                    .url("")
+                    .build();
         }
     }
 }
