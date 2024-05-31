@@ -1,6 +1,7 @@
 package pothole_solution.core.domain.member.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.jetbrains.annotations.NotNull;
 import pothole_solution.core.domain.BaseTimeEntity;
@@ -16,18 +17,23 @@ public class Member extends BaseTimeEntity {
     @Column(name = "member_id")
     private Long id;
 
+    @Size(max = 50)
+    @Column(length = 50)
     private String name;
 
     private String email;
 
-    @Column(columnDefinition = "TEXT")
     private String password;
 
     private String contact;
 
+    @Size(max = 50)
+    @Column(length = 50)
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @Size(max = 50)
+    @Column(length = 50)
     @Enumerated(EnumType.STRING)
     private Status status;
 
