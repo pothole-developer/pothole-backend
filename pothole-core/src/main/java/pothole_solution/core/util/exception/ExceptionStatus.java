@@ -17,7 +17,8 @@ public enum ExceptionStatus {
 
     // user exception
     DUPLICATED_EMAIL(CONFLICT, 3000, "중복된 이메일이 존재합니다."),
-    NONE_USER(NOT_FOUND, 3001, "존재하지 않는 회원입니다.");
+    NONE_USER(NOT_FOUND, 3001, "존재하지 않는 회원입니다."),
+    MISMATCH_PASSWORD(UNAUTHORIZED, 3002, "비밀번호가 일치하지 않습니다.");
 
     private final HttpStatus httpStatus;
     private final int code;
