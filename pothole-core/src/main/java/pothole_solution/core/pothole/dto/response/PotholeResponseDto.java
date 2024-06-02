@@ -9,16 +9,20 @@ import pothole_solution.core.pothole.Progress;
 @Getter
 @NoArgsConstructor
 public class PotholeResponseDto {
+    private String roadName;
     private double lat;
     private double lon;
-    private int importance;
-    private Progress progress;
+    private String thumbnail;
+    private short importance;
+    private Progress processStatus;
 
     @Builder
     public PotholeResponseDto(Pothole pothole) {
-        this.lat = pothole.getLocation().getY();
-        this.lon = pothole.getLocation().getX();
+        this.roadName = pothole.getRoadName();
+        this.lat = pothole.getPoint().getY();
+        this.lon = pothole.getPoint().getX();
+        this.thumbnail = pothole.getThumbnail();
         this.importance = pothole.getImportance();
-        this.progress = pothole.getProgress();
+        this.processStatus = pothole.getProcessStatus();
     }
 }

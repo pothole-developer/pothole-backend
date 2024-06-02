@@ -7,11 +7,11 @@ import pothole_solution.core.pothole.Progress;
 
 @Getter
 @NoArgsConstructor
-public class PotholeChangeProgressRequestDto {
-    private Progress progress;
+public class PotholeChangeProcessStatusRequestDto {
+    private Progress processStatus;
 
     @Builder
-    public PotholeChangeProgressRequestDto(Progress progress) {
-        this.progress = progress;
+    public PotholeChangeProcessStatusRequestDto(Progress processStatus) {
+        this.processStatus = processStatus;
     }
 }

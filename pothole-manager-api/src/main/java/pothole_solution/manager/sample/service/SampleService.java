@@ -7,7 +7,7 @@ import pothole_solution.core.pothole.Pothole;
 import pothole_solution.core.pothole.PotholeQueryDslRepository;
 import pothole_solution.core.pothole.PotholeRepository;
 import pothole_solution.core.pothole.dto.PotholeFilterDto;
-import pothole_solution.core.pothole.dto.request.PotholeChangeProgressRequestDto;
+import pothole_solution.core.pothole.dto.request.PotholeChangeProcessStatusRequestDto;
 
 import java.util.List;
 
@@ -32,9 +32,9 @@ public class SampleService {
         return potholeRepository.findAll();
     }
 
-    public Pothole changePotholeProgress(Long id, PotholeChangeProgressRequestDto changeProgressRequestDto) {
+    public Pothole changePotholeProgress(Long id, PotholeChangeProcessStatusRequestDto changeProcessStatusRequestDto) {
         Pothole pothole = potholeRepository.findById(id).get();
-        pothole.changeProgress(changeProgressRequestDto.getProgress());
+        pothole.changeProgress(changeProcessStatusRequestDto.getProcessStatus());
 
         return pothole;
     }
@@ -45,8 +45,8 @@ public class SampleService {
 
     @Transactional(readOnly = true)
     public List<Pothole> getFilteredPotholes(PotholeFilterDto potholeFilterDto) {
-        int availableMinImportance = (potholeFilterDto.getMinImportance() == null) ? 0 : potholeFilterDto.getMinImportance();
-        int availableMaxImportance = (potholeFilterDto.getMaxImportance() == null) ? 100 : potholeFilterDto.getMaxImportance();
+        short availableMinImportance = (potholeFilterDto.getMinImportance() == null) ? 0 : potholeFilterDto.getMinImportance();
+        short availableMaxImportance = (potholeFilterDto.getMaxImportance() == null) ? 100 : potholeFilterDto.getMaxImportance();
 
         potholeFilterDto.changeToAvailableImportance(availableMinImportance, availableMaxImportance);
 

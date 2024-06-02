@@ -15,23 +15,31 @@ public class Pothole {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long potholeId;
 
-    @Column(columnDefinition = "geography(Point, 4326)")
-    private Point location;
+    @Column(length = 50)
+    private String roadName;
 
-    @Column(nullable = false, length = 2)
+    @Column(nullable = false, columnDefinition = "geography(Point, 4326)")
+    private Point point;
+
+    @Column(columnDefinition = "TEXT")
+    private String thumbnail;
+
+    private Short importance;
+
+    @Column(nullable = false, length = 5)
     @Convert(converter = ProgressEnumConvertor.class)
-    private Progress progress;
-
-    private Integer importance;
+    private Progress processStatus;
 
     @Builder
-    public Pothole(Point location, Progress progress, Integer importance) {
-        this.location = location;
-        this.progress = progress;
+    public Pothole(String roadName, Point point, String thumbnail, Short importance, Progress processStatus) {
+        this.roadName = roadName;
+        this.point = point;
+        this.thumbnail = thumbnail;
         this.importance = importance;
+        this.processStatus = processStatus;
     }
 
-    public void changeProgress(Progress progress) {
-        this.progress = progress;
+    public void changeProgress(Progress processStatus) {
+        this.processStatus = processStatus;
     }
 }

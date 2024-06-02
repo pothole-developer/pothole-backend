@@ -19,22 +19,22 @@ public class PotholeQueryDslRepository {
         return jpaQueryFactory.selectFrom(pothole)
                 .where(
                         getImportanceFilter(potholeFilterDto.getMinImportance(), potholeFilterDto.getMaxImportance()),
-                        getProgressFilter(potholeFilterDto.getProgress()))
+                        getProgressFilter(potholeFilterDto.getProcessStatus()))
                 .fetch();
     }
 
-    private BooleanBuilder getProgressFilter(Progress progress) {
+    private BooleanBuilder getProgressFilter(Progress processStatus) {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
 
         // 진행 상태 입력
-        if (progress != null) {
-            booleanBuilder.and(pothole.progress.eq(progress));
+        if (processStatus != null) {
+            booleanBuilder.and(pothole.processStatus.eq(processStatus));
         }
 
         return booleanBuilder;
     }
 
-    private BooleanBuilder getImportanceFilter(Integer minImportance, Integer maxImportance) {
+    private BooleanBuilder getImportanceFilter(Short minImportance, Short maxImportance) {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
 
         // 최소, 최대 모두 입력
