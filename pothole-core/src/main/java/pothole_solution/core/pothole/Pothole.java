@@ -1,4 +1,4 @@
-package pothole_solution.core;
+package pothole_solution.core.pothole;
 
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -13,19 +13,22 @@ import pothole_solution.core.util.convertor.ProgressEnumConvertor;
 public class Pothole {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long pothole_id;
+    private Long potholeId;
 
     @Column(columnDefinition = "geography(Point, 4326)")
     private Point location;
 
-    @Column(columnDefinition = "char")
+    @Column(nullable = false, length = 2)
     @Convert(converter = ProgressEnumConvertor.class)
     private Progress progress;
 
+    private Integer importance;
+
     @Builder
-    public Pothole(Point location, Progress progress) {
+    public Pothole(Point location, Progress progress, Integer importance) {
         this.location = location;
         this.progress = progress;
+        this.importance = importance;
     }
 
     public void changeProgress(Progress progress) {
