@@ -8,8 +8,6 @@ import org.locationtech.jts.geom.GeometryFactory;
 import pothole_solution.core.pothole.Pothole;
 import pothole_solution.core.pothole.Progress;
 
-import java.util.Random;
-
 @Getter
 @NoArgsConstructor
 public class PotholeRegisterRequestDto {
@@ -25,12 +23,13 @@ public class PotholeRegisterRequestDto {
     public Pothole toPothole() {
         GeometryFactory geometryFactory = new GeometryFactory();
 
-        int randomImportance = new Random().nextInt(100);
+        short randomImportance = (short) (Math.random() * 101);
 
         return Pothole.builder()
-                .location(geometryFactory.createPoint(new Coordinate(lat, lon)))
+                .roadName("강남로 1")
+                .point(geometryFactory.createPoint(new Coordinate(lat, lon)))
                 .importance(randomImportance)
-                .progress(Progress.REGISTER)
+                .processStatus(Progress.REGISTER)
                 .build();
     }
 }

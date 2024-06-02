@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import pothole_solution.core.pothole.Pothole;
 import pothole_solution.core.pothole.Progress;
 import pothole_solution.core.pothole.dto.PotholeFilterDto;
-import pothole_solution.core.pothole.dto.request.PotholeChangeProgressRequestDto;
+import pothole_solution.core.pothole.dto.request.PotholeChangeProcessStatusRequestDto;
 import pothole_solution.core.pothole.dto.request.PotholeRegisterRequestDto;
 import pothole_solution.core.pothole.dto.response.PotholeResponseDto;
 import pothole_solution.manager.sample.service.SampleService;
@@ -43,7 +43,7 @@ public class SampleManagerController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PotholeResponseDto> changePotholeProgress(@PathVariable("id") Long id, @RequestBody PotholeChangeProgressRequestDto changeProgressRequestDto) {
+    public ResponseEntity<PotholeResponseDto> changePotholeProgress(@PathVariable("id") Long id, @RequestBody PotholeChangeProcessStatusRequestDto changeProgressRequestDto) {
         Pothole pothole = sampleService.changePotholeProgress(id, changeProgressRequestDto);
 
         return ResponseEntity.ok().body(new PotholeResponseDto(pothole));
@@ -57,11 +57,11 @@ public class SampleManagerController {
     }
 
     @GetMapping("/potholes-filters")
-    public ResponseEntity<List<PotholeResponseDto>> getFilteredPotholes(@RequestParam(value = "minImportance", required = false) Integer minImportance,
-                                                                        @RequestParam(value = "maxImportance", required = false) Integer maxImportance,
-                                                                        @RequestParam(value = "process", required = false) Progress progress) {
+    public ResponseEntity<List<PotholeResponseDto>> getFilteredPotholes(@RequestParam(value = "minImportance", required = false) Short minImportance,
+                                                                        @RequestParam(value = "maxImportance", required = false) Short maxImportance,
+                                                                        @RequestParam(value = "process", required = false) Progress processStatus) {
 
-        List<Pothole> filteredPotholes = sampleService.getFilteredPotholes(new PotholeFilterDto(minImportance, maxImportance, progress));
+        List<Pothole> filteredPotholes = sampleService.getFilteredPotholes(new PotholeFilterDto(minImportance, maxImportance, processStatus));
 
         return ResponseEntity.ok().body(filteredPotholes.stream()
                 .map(PotholeResponseDto::new)
