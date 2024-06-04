@@ -15,4 +15,10 @@ public class MemberBaseResponseDto {
                 .memberId(member.getId())
                 .build();
     }
+
+    public static MemberBaseResponseDto of(Long memberId) {
+        return MemberBaseResponseDto.builder()
+                .memberId(memberId)
+                .build();
+    }
 }
