@@ -2,7 +2,7 @@ package pothole_solution.core.util.convertor;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
-import pothole_solution.core.Progress;
+import pothole_solution.core.pothole.Progress;
 
 import java.util.Arrays;
 
