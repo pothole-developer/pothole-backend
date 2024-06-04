@@ -27,12 +27,10 @@ public class Member extends BaseTimeEntity {
 
     private String contact;
 
-    @Size(max = 50)
     @Column(length = 50)
     @Enumerated(EnumType.STRING)
     private Role role;
-
-    @Size(max = 50)
+    
     @Column(length = 50)
     @Enumerated(EnumType.STRING)
     private Status status;
