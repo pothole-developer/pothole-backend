@@ -15,6 +15,11 @@ public enum ExceptionStatus {
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, 2002,"서버 내부 오류입니다."),
     NOT_EXISTED_FILE(NOT_EXTENDED, 2003,"존재하지 않는 파일입니다."),
 
+    // session exception
+    UNAUTHORIZED_SESSION(UNAUTHORIZED, 2100, "인증되지 않은 세션입니다. 로그인을 해주세요."),
+    EXPIRED_SESSION(UNAUTHORIZED, 2102, "만료된 세션입니다."),
+    FORBIDDEN_SESSION(FORBIDDEN, 2101, "권한이 없는 세션입니다."),
+
     // user exception
     DUPLICATED_EMAIL(CONFLICT, 3000, "중복된 이메일이 존재합니다."),
     NONE_USER(NOT_FOUND, 3001, "존재하지 않는 회원입니다."),

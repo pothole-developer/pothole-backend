@@ -1,13 +1,12 @@
 package pothole_solution.core.util.exception;
 
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Getter
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
 public class CustomException extends RuntimeException {
     private final ExceptionStatus status;
 
@@ -16,6 +15,11 @@ public class CustomException extends RuntimeException {
     public static final CustomException INVALID_URL             = new CustomException(ExceptionStatus.INVALID_URL);
     public static final CustomException INTERNAL_SERVER_ERROR   = new CustomException(ExceptionStatus.INTERNAL_SERVER_ERROR);
     public static final CustomException NOT_EXISTED_FILE        = new CustomException(ExceptionStatus.NOT_EXISTED_FILE);
+
+    // session exception
+    public static final CustomException UNAUTHORIZED_SESSION    = new CustomException(ExceptionStatus.UNAUTHORIZED_SESSION);
+    public static final CustomException EXPIRED_SESSION         = new CustomException(ExceptionStatus.EXPIRED_SESSION);
+    public static final CustomException FORBIDDEN_SESSION       = new CustomException(ExceptionStatus.FORBIDDEN_SESSION);
 
     // user exception
     public static final CustomException DUPLICATED_EMAIL        = new CustomException(ExceptionStatus.DUPLICATED_EMAIL);
