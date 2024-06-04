@@ -3,6 +3,8 @@ buildscript {
 		springBootVersion = '3.1.7'
 	}
 
+	ext['spring-security.version']='6.3.0'
+
 	repositories {
 		mavenCentral()
 	}
@@ -49,8 +51,9 @@ subprojects {
 		// redis
 		implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
-		// spring session
+		// spring session & security
 		implementation("org.springframework.session:spring-session-data-redis")
+		implementation 'org.springframework.boot:spring-boot-starter-security'
 
         // Point, Polygon 객체 사용
 		implementation 'org.hibernate.orm:hibernate-spatial'
