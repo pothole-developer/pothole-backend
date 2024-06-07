@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import pothole_solution.core.domain.auth.entity.PrincipalDetails;
 import pothole_solution.core.domain.auth.service.AuthService;
 import pothole_solution.core.domain.member.dto.MemberBaseResponseDto;
-import pothole_solution.core.domain.member.dto.MemberJoinRequestDto;
-import pothole_solution.core.domain.member.dto.MemberLoginRequestDto;
+import pothole_solution.core.domain.auth.dto.AuthJoinRequestDto;
+import pothole_solution.core.domain.auth.dto.AuthLoginRequestDto;
 import pothole_solution.core.util.response.BaseResponse;
 
 @Slf4j
@@ -25,18 +25,18 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/join")
-    public BaseResponse<MemberBaseResponseDto> join(@Valid @RequestBody final MemberJoinRequestDto memberJoinRequestDto) {
+    public BaseResponse<MemberBaseResponseDto> join(@Valid @RequestBody final AuthJoinRequestDto authJoinRequestDto) {
 
-        MemberBaseResponseDto responseDto = authService.join(memberJoinRequestDto);
+        MemberBaseResponseDto responseDto = authService.join(authJoinRequestDto);
 
         return new BaseResponse<>(responseDto);
     }
 
     @PostMapping("/login")
-    public BaseResponse<MemberBaseResponseDto> login(@Valid @RequestBody final MemberLoginRequestDto memberLoginRequestDto,
+    public BaseResponse<MemberBaseResponseDto> login(@Valid @RequestBody final AuthLoginRequestDto authLoginRequestDto,
                                                      final HttpServletRequest httpServletRequest) {
 
-        MemberBaseResponseDto responseDto = authService.login(memberLoginRequestDto, httpServletRequest);
+        MemberBaseResponseDto responseDto = authService.login(authLoginRequestDto, httpServletRequest);
 
         return new BaseResponse<>(responseDto);
     }

@@ -1,4 +1,4 @@
-package pothole_solution.core.domain.member.dto;
+package pothole_solution.core.domain.auth.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MemberJoinRequestDto {
+public class AuthJoinRequestDto {
     @NotBlank(message = "이름 입력은 필수 입니다.")
     @Size(max = 50, message = "이름의 길이는 50글자 이하입니다.")
     private String name;

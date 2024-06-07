@@ -1,11 +1,11 @@
-package pothole_solution.core.domain.member.dto;
+package pothole_solution.core.domain.auth.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 
 @Getter
-public class MemberLoginRequestDto {
+public class AuthLoginRequestDto {
 
     @NotBlank(message = "이메일 입력은 필수 입니다.")
     @Email

@@ -7,8 +7,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pothole_solution.core.domain.member.dto.MemberBaseResponseDto;
-import pothole_solution.core.domain.member.dto.MemberJoinRequestDto;
-import pothole_solution.core.domain.member.dto.MemberLoginRequestDto;
+import pothole_solution.core.domain.auth.dto.AuthJoinRequestDto;
+import pothole_solution.core.domain.auth.dto.AuthLoginRequestDto;
 import pothole_solution.core.domain.member.entity.Member;
 import pothole_solution.core.domain.member.entity.Role;
 import pothole_solution.core.domain.member.service.MemberService;
@@ -25,15 +25,17 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public MemberBaseResponseDto join(MemberJoinRequestDto requestDto) {
+    public MemberBaseResponseDto join(AuthJoinRequestDto requestDto) {
 
         memberService.validateDuplicateEmail(requestDto.getEmail());
 
-        Member joinMember = Member.create(requestDto.getName(),
+        Member joinMember = Member.create(
+                requestDto.getName(),
                 requestDto.getEmail(),
                 passwordEncoder.encode(requestDto.getPassword()),
                 requestDto.getContact(),
-                Role.valueOf(requestDto.getRole()));
+                Role.valueOf(requestDto.getRole())
+        );
 
         Member saveMember = memberService.save(joinMember);
 
@@ -41,7 +43,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public MemberBaseResponseDto login(MemberLoginRequestDto requestDto, HttpServletRequest request) {
+    public MemberBaseResponseDto login(AuthLoginRequestDto requestDto, HttpServletRequest request) {
 
         Member findMember = memberService.findByEmail(requestDto.getEmail());
 
