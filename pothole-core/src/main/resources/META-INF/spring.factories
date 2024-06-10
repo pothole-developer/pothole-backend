@@ -1,2 +1,2 @@
-org.springframework.boot.SpringApplicationRunListener=pothole_solution.core.util.alarm.listener.BootTimeListener
-org.springframework.context.ApplicationListener=pothole_solution.core.util.alarm.listener.BootFailureListener
+org.springframework.boot.SpringApplicationRunListener=pothole_solution.core.global.util.alarm.listener.BootTimeListener
+org.springframework.context.ApplicationListener=pothole_solution.core.global.util.alarm.listener.BootFailureListener
