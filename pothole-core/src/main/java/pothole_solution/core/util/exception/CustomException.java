@@ -1,12 +1,13 @@
 package pothole_solution.core.util.exception;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Getter
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class CustomException extends RuntimeException {
     private final ExceptionStatus status;
 
