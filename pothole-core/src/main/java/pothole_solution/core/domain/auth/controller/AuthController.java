@@ -5,10 +5,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pothole_solution.core.domain.auth.entity.PrincipalDetails;
 import pothole_solution.core.domain.auth.service.AuthService;
 import pothole_solution.core.domain.member.dto.MemberBaseResponseDto;
@@ -24,10 +21,11 @@ public class AuthController {
 
     private final AuthService authService;
 
-    @PostMapping("/join")
-    public BaseResponse<MemberBaseResponseDto> join(@Valid @RequestBody final AuthJoinRequestDto authJoinRequestDto) {
+    @PostMapping("/{roleName}/join")
+    public BaseResponse<MemberBaseResponseDto> join(@PathVariable String roleName,
+                                                    @Valid @RequestBody final AuthJoinRequestDto authJoinRequestDto) {
 
-        MemberBaseResponseDto responseDto = authService.join(authJoinRequestDto);
+        MemberBaseResponseDto responseDto = authService.join(roleName, authJoinRequestDto);
 
         return new BaseResponse<>(responseDto);
     }
@@ -43,7 +41,7 @@ public class AuthController {
 
     @PostMapping("/logout")
     public BaseResponse<MemberBaseResponseDto> logout(@AuthenticationPrincipal PrincipalDetails principalDetails,
-                                     final HttpServletRequest httpServletRequest) {
+                                                      final HttpServletRequest httpServletRequest) {
 
         Long memberId = principalDetails.getId();
         MemberBaseResponseDto responseDto = authService.logout(memberId, httpServletRequest);
