@@ -23,7 +23,4 @@ public class AuthJoinRequestDto {
     private String password;
 
     private String contact;
-
-    @NotBlank(message = "권한 입력은 필수 입니다.")
-    private String role;
 }

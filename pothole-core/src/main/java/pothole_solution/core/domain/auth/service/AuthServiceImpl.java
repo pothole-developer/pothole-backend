@@ -25,7 +25,7 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public MemberBaseResponseDto join(AuthJoinRequestDto requestDto) {
+    public MemberBaseResponseDto join(String roleName, AuthJoinRequestDto requestDto) {
 
         memberService.validateDuplicateEmail(requestDto.getEmail());
 
@@ -34,7 +34,7 @@ public class AuthServiceImpl implements AuthService {
                 requestDto.getEmail(),
                 passwordEncoder.encode(requestDto.getPassword()),
                 requestDto.getContact(),
-                Role.from(requestDto.getRole())
+                Role.from(roleName)
         );
 
         Member saveMember = memberService.save(joinMember);

@@ -37,7 +37,7 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(authorizeRequest -> authorizeRequest
                         .requestMatchers(
-                                AntPathRequestMatcher.antMatcher("/pothole/v1/auth/join"),
+                                AntPathRequestMatcher.antMatcher("/pothole/v1/auth/**/join"),
                                 AntPathRequestMatcher.antMatcher("/pothole/v1/auth/login")).permitAll()
                         .requestMatchers(
                                 AntPathRequestMatcher.antMatcher("/pothole/v1/manager/**")).hasRole("MANAGER")
