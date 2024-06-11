@@ -26,4 +26,5 @@ public class CustomException extends RuntimeException {
     public static final CustomException DUPLICATED_EMAIL        = new CustomException(ExceptionStatus.DUPLICATED_EMAIL);
     public static final CustomException NONE_USER               = new CustomException(ExceptionStatus.NONE_USER);
     public static final CustomException MISMATCH_PASSWORD       = new CustomException(ExceptionStatus.MISMATCH_PASSWORD);
+    public static final CustomException NONE_ROLE               = new CustomException(ExceptionStatus.NONE_ROLE);
 }
