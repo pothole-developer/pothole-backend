@@ -34,7 +34,7 @@ public class AuthServiceImpl implements AuthService {
                 requestDto.getEmail(),
                 passwordEncoder.encode(requestDto.getPassword()),
                 requestDto.getContact(),
-                Role.valueOf(requestDto.getRole())
+                Role.from(requestDto.getRole())
         );
 
         Member saveMember = memberService.save(joinMember);

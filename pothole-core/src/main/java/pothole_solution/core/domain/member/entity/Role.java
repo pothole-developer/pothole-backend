@@ -2,6 +2,7 @@ package pothole_solution.core.domain.member.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import pothole_solution.core.util.exception.CustomException;
 
 @Getter
 @AllArgsConstructor
@@ -11,4 +12,12 @@ public enum Role {
     WORKER("ROLE_WORKER");
 
     private final String roleName;
+
+    public static Role from(String roleName){
+        try {
+            return Role.valueOf(roleName);
+        } catch (IllegalArgumentException e) {
+            throw CustomException.NONE_ROLE;
+        }
+    }
 }
