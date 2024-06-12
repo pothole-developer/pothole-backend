@@ -25,7 +25,6 @@ public class AmazonS3Service implements ImageService {
     private String bucket;
 
     public String uploadImage (MultipartFile image, String dirName)  {
-        try {
             // 클라이언트가 전송한 파일 이름
             String getOriginalFilename = image.getOriginalFilename();
 
@@ -46,6 +45,7 @@ public class AmazonS3Service implements ImageService {
 
             ObjectMetadata objectMetadata = ObjectMetadata.builder().contentType(fileExtension).build();
 
+        try {
             S3Resource s3Resource = s3Template.upload(bucket, imageName, image.getInputStream(), objectMetadata);
 
             return s3Resource.getURL().toString();
