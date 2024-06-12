@@ -9,11 +9,12 @@ import pothole_solution.core.domain.pothole.dto.request.PotholeChangeProcessStat
 import pothole_solution.core.domain.pothole.entity.Pothole;
 import pothole_solution.core.domain.pothole.repository.PotholeQueryDslRepository;
 import pothole_solution.core.domain.pothole.repository.PotholeRepository;
-import pothole_solution.core.infra.s3.AmazonS3Service;
+import pothole_solution.core.infra.s3.ImageService;
 
 import java.util.List;
 
 import static pothole_solution.core.global.exception.CustomException.NOT_EXISTED_POTHOLE;
+import static pothole_solution.manager.service.constant.PotholeManagerServiceConstant.THUMBNAIL_DIR_NAME;
 
 @Service
 @Transactional
@@ -21,11 +22,11 @@ import static pothole_solution.core.global.exception.CustomException.NOT_EXISTED
 public class PotholeManagerService {
     private final PotholeRepository potholeRepository;
     private final PotholeQueryDslRepository potholeQueryDslRepository;
-    private final AmazonS3Service amazonS3Service;
+    private final ImageService imageService;
 
     public Pothole register(Pothole pothole, MultipartFile potholeImg) {
         if (potholeImg != null) {
-            String thumbnail = amazonS3Service.uploadImage(potholeImg, "thumbnail");
+            String thumbnail = imageService.uploadImage(potholeImg, THUMBNAIL_DIR_NAME);
 
             pothole.createThumbnailURL(thumbnail);
         }
@@ -51,7 +52,7 @@ public class PotholeManagerService {
         }
 
         if (newImage != null) {
-            String newImageUrl = amazonS3Service.updateImage(pothole.getThumbnail(), newImage, "thumbnail");
+            String newImageUrl = imageService.updateImage(pothole.getThumbnail(), newImage, THUMBNAIL_DIR_NAME);
 
             pothole.createThumbnailURL(newImageUrl);
         }
@@ -62,7 +63,7 @@ public class PotholeManagerService {
     public void deletePothole(Long id) {
         Pothole pothole = findById(id);
 
-        amazonS3Service.deleteImage(pothole.getThumbnail());
+        imageService.deleteImage(pothole.getThumbnail());
 
         potholeRepository.deleteById(id);
     }

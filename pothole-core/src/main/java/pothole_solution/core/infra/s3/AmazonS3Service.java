@@ -61,10 +61,10 @@ public class AmazonS3Service implements ImageService {
     }
 
     @Override
-    public String updateImage(String imageName, MultipartFile image, String dirName) {
-        deleteImage(imageName);
+    public String updateImage(String oldImageName, MultipartFile newImage, String dirName) {
+        deleteImage(oldImageName);
 
-        return uploadImage(image, dirName);
+        return uploadImage(newImage, dirName);
     }
 
     private String getImageKey(String imageName) {
