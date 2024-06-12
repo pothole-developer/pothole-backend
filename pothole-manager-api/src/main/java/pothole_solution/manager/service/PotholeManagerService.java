@@ -35,10 +35,7 @@ public class PotholeManagerService {
 
     @Transactional(readOnly = true)
     public Pothole getPothole(Long id) {
-        return potholeRepository.findById(id)
-                .orElseThrow(
-                        () -> NOT_EXISTED_POTHOLE
-                );
+        return findById(id);
     }
 
     @Transactional(readOnly = true)
@@ -47,10 +44,7 @@ public class PotholeManagerService {
     }
 
     public Pothole changePotholeSimpleInfo(Long id, PotholeChangeProcessStatusRequestDto changeProcessStatusRequestDto, MultipartFile newImage) {
-        Pothole pothole = potholeRepository.findById(id)
-                                        .orElseThrow(
-                                                () -> NOT_EXISTED_POTHOLE
-                                        );
+        Pothole pothole = findById(id);
 
         if (changeProcessStatusRequestDto != null) {
             pothole.changeProgress(changeProcessStatusRequestDto.getProcessStatus());
@@ -66,10 +60,7 @@ public class PotholeManagerService {
     }
 
     public void deletePothole(Long id) {
-        Pothole pothole = potholeRepository.findById(id)
-                                        .orElseThrow(
-                                                () -> NOT_EXISTED_POTHOLE
-                                        );
+        Pothole pothole = findById(id);
 
         amazonS3Service.deleteImage(pothole.getThumbnail());
 
@@ -84,5 +75,12 @@ public class PotholeManagerService {
         potholeFilterDto.changeToAvailableImportance(availableMinImportance, availableMaxImportance);
 
         return potholeQueryDslRepository.findByFilter(potholeFilterDto);
+    }
+
+    private Pothole findById(Long id) {
+        return potholeRepository.findById(id)
+                .orElseThrow(
+                        () -> NOT_EXISTED_POTHOLE
+                );
     }
 }
