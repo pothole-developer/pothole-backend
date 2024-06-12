@@ -18,7 +18,7 @@ import static pothole_solution.core.global.exception.CustomException.*;
 
 @Service
 @RequiredArgsConstructor
-public class AmazonS3Service {
+public class AmazonS3Service implements ImageService {
     private final S3Template s3Template;
 
     @Value("${spring.cloud.aws.s3.bucket}")
@@ -55,10 +55,12 @@ public class AmazonS3Service {
         }
     }
 
+    @Override
     public void deleteImage(String imageName) {
         s3Template.deleteObject(bucket, getImageKey(imageName));
     }
 
+    @Override
     public String updateImage(String imageName, MultipartFile image, String dirName) {
         deleteImage(imageName);
 
