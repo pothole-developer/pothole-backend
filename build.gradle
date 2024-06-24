@@ -3,6 +3,8 @@ buildscript {
 		springBootVersion = '3.1.7'
 	}
 
+	ext['spring-security.version']='6.3.0'
+
 	repositories {
 		mavenCentral()
 	}
@@ -40,9 +42,21 @@ subprojects {
 		annotationProcessor 'org.projectlombok:lombok'
 		testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+		// validation
+		implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+		// postgreSQL
 		runtimeOnly 'org.postgresql:postgresql'
 
-		// Point, Polygon 객체 사용
+		// redis
+		implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+		// spring session & security
+		implementation("org.springframework.session:spring-session-data-redis")
+		implementation 'org.springframework.boot:spring-boot-starter-security'
+
+        // Point, Polygon 객체 사용
+
 		implementation 'org.hibernate.orm:hibernate-spatial'
 
 		// slack
