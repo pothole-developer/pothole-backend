@@ -1,5 +1,6 @@
 package pothole_solution.manager.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,7 +22,7 @@ public class PotholeManagerController {
     private final PotholeManagerService potholeManagerService;
 
     @PostMapping
-    public BaseResponse<SimpleInfoPotholeResponseDto> register(@RequestPart(value = "registerRequestDto") PotholeRegisterRequestDto registerRequestDto,
+    public BaseResponse<SimpleInfoPotholeResponseDto> register(@Valid @RequestPart(value = "registerRequestDto") PotholeRegisterRequestDto registerRequestDto,
                                                                @RequestPart(value = "thumbnail") MultipartFile thumbnail){
 
         Pothole pothole = potholeManagerService.register(registerRequestDto.toPothole(), thumbnail);
