@@ -13,7 +13,8 @@ import pothole_solution.core.domain.member.entity.Member;
 import pothole_solution.core.domain.member.entity.Role;
 import pothole_solution.core.domain.member.service.MemberService;
 
-import static pothole_solution.core.util.exception.CustomException.MISMATCH_PASSWORD;
+import static pothole_solution.core.global.exception.CustomException.MISMATCH_PASSWORD;
+
 
 @Service
 @Transactional

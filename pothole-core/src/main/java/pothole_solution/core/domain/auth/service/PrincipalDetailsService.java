@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import pothole_solution.core.domain.auth.entity.PrincipalDetails;
 import pothole_solution.core.domain.member.entity.Member;
 import pothole_solution.core.domain.member.repository.MemberRepository;
-import pothole_solution.core.util.exception.CustomException;
+import pothole_solution.core.global.exception.CustomException;
 
 @Service
 @RequiredArgsConstructor

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pothole_solution.core.domain.member.entity.Member;
 import pothole_solution.core.domain.member.repository.MemberRepository;
-import pothole_solution.core.util.exception.CustomException;
+import pothole_solution.core.global.exception.CustomException;
 
 @Service
 @Transactional

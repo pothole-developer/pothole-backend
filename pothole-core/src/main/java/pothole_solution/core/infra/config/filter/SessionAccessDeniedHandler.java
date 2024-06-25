@@ -6,13 +6,13 @@ import org.springframework.http.MediaType;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
-import pothole_solution.core.util.exception.ExceptionStatus;
-import pothole_solution.core.util.response.BaseResponse;
+import pothole_solution.core.global.exception.ExceptionStatus;
+import pothole_solution.core.global.util.response.BaseResponse;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static pothole_solution.core.util.exception.ExceptionStatus.FORBIDDEN_SESSION;
+import static pothole_solution.core.global.exception.ExceptionStatus.FORBIDDEN_SESSION;
 
 
 @Component

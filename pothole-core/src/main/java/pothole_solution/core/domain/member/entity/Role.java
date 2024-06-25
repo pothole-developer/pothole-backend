@@ -2,7 +2,7 @@ package pothole_solution.core.domain.member.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import pothole_solution.core.util.exception.CustomException;
+import pothole_solution.core.global.exception.CustomException;
 
 @Getter
 @AllArgsConstructor

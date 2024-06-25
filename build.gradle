@@ -56,7 +56,6 @@ subprojects {
 		implementation 'org.springframework.boot:spring-boot-starter-security'
 
         // Point, Polygon 객체 사용
-
 		implementation 'org.hibernate.orm:hibernate-spatial'
 
 		// slack
@@ -70,6 +69,10 @@ subprojects {
 		annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
 		annotationProcessor "jakarta.annotation:jakarta.annotation-api"
 		annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+
+		// s3
+		implementation platform("io.awspring.cloud:spring-cloud-aws-dependencies:3.1.1")
+		implementation 'io.awspring.cloud:spring-cloud-aws-starter-s3'
 	}
 
 	// QueryDSL 추가

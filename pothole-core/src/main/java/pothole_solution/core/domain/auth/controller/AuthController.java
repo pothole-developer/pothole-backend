@@ -11,7 +11,7 @@ import pothole_solution.core.domain.auth.service.AuthService;
 import pothole_solution.core.domain.member.dto.MemberBaseResponseDto;
 import pothole_solution.core.domain.auth.dto.AuthJoinRequestDto;
 import pothole_solution.core.domain.auth.dto.AuthLoginRequestDto;
-import pothole_solution.core.util.response.BaseResponse;
+import pothole_solution.core.global.util.response.BaseResponse;
 
 @Slf4j
 @RestController
