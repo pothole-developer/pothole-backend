@@ -14,7 +14,7 @@ services:
   session-redis:
     image: redis:alpine
     container_name: session-redis
-    hostname: redis
+    hostname: session-redis
     ports:
       - 6379:6379
     volumes:
