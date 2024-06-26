@@ -9,6 +9,8 @@ import pothole_solution.core.domain.member.entity.Member;
 import pothole_solution.core.domain.member.repository.MemberRepository;
 import pothole_solution.core.global.exception.CustomException;
 
+import static pothole_solution.core.global.exception.CustomException.NONE_USER;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -23,9 +25,15 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
+    public Member findById(Long memberId) {
+        return memberRepository.findById(memberId)
+                .orElseThrow(() -> NONE_USER);
+    }
+
+    @Override
     public Member findByEmail(String email) {
         return memberRepository.findByEmail(email)
-                .orElseThrow(() -> CustomException.NONE_USER);
+                .orElseThrow(() -> NONE_USER);
     }
 
     @Override
