@@ -41,14 +41,14 @@ public class AuthController {
     }
 
     @PostMapping("/{roleName}/logout")
-    public BaseResponse<MemberBaseResponseDto> logout(@PathVariable String roleName,
-                                                      @AuthenticationPrincipal PrincipalDetails principalDetails,
-                                                      final HttpServletRequest httpServletRequest) {
+    public BaseResponse<Object> logout(@PathVariable String roleName,
+                                       @AuthenticationPrincipal PrincipalDetails principalDetails,
+                                       final HttpServletRequest httpServletRequest) {
 
         Long memberId = principalDetails.getId();
 
-        MemberBaseResponseDto responseDto = authService.logout(roleName, memberId, httpServletRequest);
+        authService.logout(roleName, memberId, httpServletRequest);
 
-        return new BaseResponse<>(responseDto);
+        return new BaseResponse<>();
     }
 }

@@ -8,5 +8,5 @@ import pothole_solution.core.domain.auth.dto.AuthLoginRequestDto;
 public interface AuthService {
     MemberBaseResponseDto join(String roleName, AuthJoinRequestDto requestDto);
     MemberBaseResponseDto login(String roleName, AuthLoginRequestDto requestDto, HttpServletRequest httpServletRequest);
-    MemberBaseResponseDto logout(String roleName, Long memberId, HttpServletRequest httpServletRequest);
+    void logout(String roleName, Long memberId, HttpServletRequest httpServletRequest);
 }
