@@ -25,6 +25,7 @@ public enum ExceptionStatus {
     NONE_USER(NOT_FOUND, 3001, "존재하지 않는 회원입니다."),
     MISMATCH_PASSWORD(UNAUTHORIZED, 3002, "비밀번호가 일치하지 않습니다."),
     NONE_ROLE(NOT_FOUND, 3003, "존재하지 않는 역할 입니다."),
+    MISMATCH_ROLE(UNAUTHORIZED, 3004, "일치하지 않는 역할 입니다."),
 
     // manager exception
     NOT_EXISTED_POTHOLE(NOT_FOUND, 4000, "존재하지 않는 포트홀입니다."),
