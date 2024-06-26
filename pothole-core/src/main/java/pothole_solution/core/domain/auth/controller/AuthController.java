@@ -30,21 +30,24 @@ public class AuthController {
         return new BaseResponse<>(responseDto);
     }
 
-    @PostMapping("/login")
-    public BaseResponse<MemberBaseResponseDto> login(@Valid @RequestBody final AuthLoginRequestDto authLoginRequestDto,
+    @PostMapping("/{roleName}/login")
+    public BaseResponse<MemberBaseResponseDto> login(@PathVariable String roleName,
+                                                     @Valid @RequestBody final AuthLoginRequestDto authLoginRequestDto,
                                                      final HttpServletRequest httpServletRequest) {
 
-        MemberBaseResponseDto responseDto = authService.login(authLoginRequestDto, httpServletRequest);
+        MemberBaseResponseDto responseDto = authService.login(roleName, authLoginRequestDto, httpServletRequest);
 
         return new BaseResponse<>(responseDto);
     }
 
-    @PostMapping("/logout")
-    public BaseResponse<MemberBaseResponseDto> logout(@AuthenticationPrincipal PrincipalDetails principalDetails,
+    @PostMapping("/{roleName}/logout")
+    public BaseResponse<MemberBaseResponseDto> logout(@PathVariable String roleName,
+                                                      @AuthenticationPrincipal PrincipalDetails principalDetails,
                                                       final HttpServletRequest httpServletRequest) {
 
         Long memberId = principalDetails.getId();
-        MemberBaseResponseDto responseDto = authService.logout(memberId, httpServletRequest);
+
+        MemberBaseResponseDto responseDto = authService.logout(roleName, memberId, httpServletRequest);
 
         return new BaseResponse<>(responseDto);
     }

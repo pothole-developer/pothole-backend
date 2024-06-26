@@ -12,8 +12,10 @@ import pothole_solution.core.domain.auth.dto.AuthLoginRequestDto;
 import pothole_solution.core.domain.member.entity.Member;
 import pothole_solution.core.domain.member.entity.Role;
 import pothole_solution.core.domain.member.service.MemberService;
+import pothole_solution.core.global.exception.CustomException;
 
 import static pothole_solution.core.global.exception.CustomException.MISMATCH_PASSWORD;
+import static pothole_solution.core.global.exception.CustomException.MISMATCH_ROLE;
 
 
 @Service
@@ -44,9 +46,11 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public MemberBaseResponseDto login(AuthLoginRequestDto requestDto, HttpServletRequest request) {
+    public MemberBaseResponseDto login(String roleName, AuthLoginRequestDto requestDto, HttpServletRequest request) {
 
         Member findMember = memberService.findByEmail(requestDto.getEmail());
+
+        matchesRole(roleName, findMember.getRole().name());
 
         matchesPassword(requestDto.getPassword(), findMember.getPassword());
 
@@ -62,10 +66,20 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public MemberBaseResponseDto logout(Long memberId, HttpServletRequest httpServletRequest) {
+    public MemberBaseResponseDto logout(String roleName, Long memberId, HttpServletRequest httpServletRequest) {
+
+        Member findMember = memberService.findById(memberId);
+
+        matchesRole(roleName, findMember.getRole().name());
 
         sessionService.invalidate(httpServletRequest);
 
         return MemberBaseResponseDto.of(memberId);
+    }
+
+    private void matchesRole(String requestRoleName, String memberRoleName) {
+        if (requestRoleName.equals(memberRoleName)) {
+            throw MISMATCH_ROLE;
+        }
     }
 }
