@@ -27,6 +27,7 @@ public class CustomException extends RuntimeException {
     public static final CustomException NONE_USER               = new CustomException(ExceptionStatus.NONE_USER);
     public static final CustomException MISMATCH_PASSWORD       = new CustomException(ExceptionStatus.MISMATCH_PASSWORD);
     public static final CustomException NONE_ROLE               = new CustomException(ExceptionStatus.NONE_ROLE);
+    public static final CustomException MISMATCH_ROLE               = new CustomException(ExceptionStatus.MISMATCH_ROLE);
 
     // s3 exception
     public static final CustomException NOT_EXISTED_POTHOLE         = new CustomException(ExceptionStatus.NOT_EXISTED_POTHOLE);
