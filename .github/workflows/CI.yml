@@ -51,6 +51,11 @@ jobs:
         touch ./application-worker-dev.yml
         echo "${{ secrets.WORKER_APPLICATION_DEV_YML }}" > ./application-worker-dev.yml
 
+    - name: check yml config validation
+      shell: bash
+      run: |
+        ./script/checkConfigValidation.sh
+
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v3
 
