@@ -5,12 +5,13 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.locationtech.jts.geom.Point;
-import pothole_solution.core.global.util.convertor.ProgressEnumConvertor;
+import pothole_solution.core.domain.BaseTimeEntity;
+import pothole_solution.core.global.util.converter.ProgressEnumConverter;
 
 @Entity
 @Getter
 @NoArgsConstructor
-public class Pothole {
+public class Pothole extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long potholeId;
@@ -29,7 +30,7 @@ public class Pothole {
     private Integer importance;
 
     @Column(nullable = false, length = 5)
-    @Convert(converter = ProgressEnumConvertor.class)
+    @Convert(converter = ProgressEnumConverter.class)
     private Progress processStatus;
 
     private Integer dangerous;
@@ -49,7 +50,11 @@ public class Pothole {
         this.processStatus = processStatus;
     }
 
-    public void createThumbnailURL(String thumbnailURL) {
-        this.thumbnail = thumbnailURL;
+    public void createThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
+    public void changeThumbnail(String newThumbnail) {
+        this.thumbnail = newThumbnail;
     }
 }
