@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import pothole_solution.core.global.util.response.BaseResponse;
 
 @RestControllerAdvice
@@ -23,6 +24,17 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Object> handleValidException() {
         CustomException exception = CustomException.INVALID_PARAMETER;
+        return ResponseEntity
+                .status(exception.getStatus().getHttpStatus())
+                .body(new BaseResponse<>(exception.getStatus()));
+    }
+
+    /**
+     * Progress Converter Exception Handler
+     */
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<Object> handleProgressConverterValidException() {
+        CustomException exception = CustomException.NONE_PROGRESS_STATUS;
         return ResponseEntity
                 .status(exception.getStatus().getHttpStatus())
                 .body(new BaseResponse<>(exception.getStatus()));
