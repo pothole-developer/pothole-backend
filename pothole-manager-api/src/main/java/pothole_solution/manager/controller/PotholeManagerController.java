@@ -4,12 +4,16 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import pothole_solution.core.domain.pothole.entity.Pothole;
-import pothole_solution.core.domain.pothole.entity.Progress;
 import pothole_solution.core.domain.pothole.dto.PotholeFilterDto;
-import pothole_solution.core.domain.pothole.dto.request.PotholeChangeProcessStatusRequestDto;
-import pothole_solution.core.domain.pothole.dto.request.PotholeRegisterRequestDto;
+import pothole_solution.core.domain.pothole.dto.request.ChangePotholeProgressStatusRequestDto;
+import pothole_solution.core.domain.pothole.dto.request.RegisterPotholeRequestDto;
+import pothole_solution.core.domain.pothole.dto.response.DetailsInfoPotholeResponseDto;
+import pothole_solution.core.domain.pothole.dto.response.GetPotholeHistoryResponseDto;
 import pothole_solution.core.domain.pothole.dto.response.SimpleInfoPotholeResponseDto;
+import pothole_solution.core.domain.pothole.entity.Pothole;
+import pothole_solution.core.domain.pothole.entity.PotholeHistory;
+import pothole_solution.core.domain.pothole.entity.PotholeHistoryImage;
+import pothole_solution.core.domain.pothole.entity.Progress;
 import pothole_solution.core.global.util.response.BaseResponse;
 import pothole_solution.manager.service.PotholeManagerService;
 
@@ -22,10 +26,10 @@ public class PotholeManagerController {
     private final PotholeManagerService potholeManagerService;
 
     @PostMapping
-    public BaseResponse<SimpleInfoPotholeResponseDto> register(@Valid @RequestPart(value = "registerRequestDto") PotholeRegisterRequestDto registerRequestDto,
-                                                               @RequestPart(value = "thumbnail") MultipartFile thumbnail){
+    public BaseResponse<SimpleInfoPotholeResponseDto> registerPothole(@Valid @RequestPart(value = "registerPotholeRequestDto") RegisterPotholeRequestDto registerPotholeRequestDto,
+                                                                      @RequestPart(value = "registerPotholeImages") List<MultipartFile> registerPotholeImages){
 
-        Pothole pothole = potholeManagerService.register(registerRequestDto.toPothole(), thumbnail);
+        Pothole pothole = potholeManagerService.registerPothole(registerPotholeRequestDto.toPothole(), registerPotholeImages);
 
         return new BaseResponse<>(new SimpleInfoPotholeResponseDto(pothole));
     }
@@ -42,23 +46,23 @@ public class PotholeManagerController {
         List<Pothole> potholes = potholeManagerService.getAllPotholes();
 
         return new BaseResponse<>(potholes.stream()
-                .map(SimpleInfoPotholeResponseDto::new)
-                .toList());
+                                          .map(SimpleInfoPotholeResponseDto::new)
+                                          .toList()
+        );
     }
 
-    @PutMapping("/{id}")
-    public BaseResponse<SimpleInfoPotholeResponseDto> changePotholeSimpleInfo(@PathVariable("id") Long id,
-                                                                            @RequestPart(value = "changeProgressRequestDto", required = false) PotholeChangeProcessStatusRequestDto changeProgressRequestDto,
-                                                                            @RequestPart(value = "newThumbnail", required = false) MultipartFile newThumbnail) {
+    @PutMapping("/{potholeId}")
+    public BaseResponse<SimpleInfoPotholeResponseDto> changePotholeProgressStatus(@PathVariable("potholeId") Long potholeId,
+                                                                                  @Valid @RequestPart(value = "changePotholeProgressStatusRequestDto") ChangePotholeProgressStatusRequestDto changeProgressStatusRequestDto) {
 
-        Pothole pothole = potholeManagerService.changePotholeSimpleInfo(id, changeProgressRequestDto, newThumbnail);
+        Pothole pothole = potholeManagerService.changePotholeProgressStatus(potholeId, changeProgressStatusRequestDto);
 
         return new BaseResponse<>(new SimpleInfoPotholeResponseDto(pothole));
     }
 
-    @DeleteMapping("/{id}")
-    public BaseResponse<Void> deletePothole(@PathVariable("id") Long id) {
-        potholeManagerService.deletePothole(id);
+    @DeleteMapping("/{potholeId}")
+    public BaseResponse<Void> deletePothole(@PathVariable("potholeId") Long potholeId) {
+        potholeManagerService.deletePothole(potholeId);
 
         return new BaseResponse<>();
     }
@@ -66,12 +70,13 @@ public class PotholeManagerController {
     @GetMapping("/potholes-filters")
     public BaseResponse<List<SimpleInfoPotholeResponseDto>> getFilteredPotholes(@RequestParam(value = "minImportance", required = false) Integer minImportance,
                                                                                 @RequestParam(value = "maxImportance", required = false) Integer maxImportance,
-                                                                                @RequestParam(value = "process", required = false) Progress processStatus) {
+                                                                                @RequestParam(value = "potholeProgressStatus", required = false) Progress potholeProgressStatus) {
 
-        List<Pothole> filteredPotholes = potholeManagerService.getFilteredPotholes(new PotholeFilterDto(minImportance, maxImportance, processStatus));
+        List<Pothole> filteredPotholes = potholeManagerService.getFilteredPotholes(new PotholeFilterDto(minImportance, maxImportance, potholeProgressStatus));
 
         return new BaseResponse<>(filteredPotholes.stream()
-                .map(SimpleInfoPotholeResponseDto::new)
-                .toList());
+                                                  .map(SimpleInfoPotholeResponseDto::new)
+                                                  .toList()
+        );
     }
 }
