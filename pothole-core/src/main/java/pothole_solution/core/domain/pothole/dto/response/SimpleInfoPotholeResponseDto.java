@@ -15,7 +15,7 @@ public class SimpleInfoPotholeResponseDto {
     private double lon;
     private String thumbnail;
     private Integer importance;
-    private Progress processStatus;
+    private Progress progressStatus;
 
     @Builder
     public SimpleInfoPotholeResponseDto(Pothole pothole) {
@@ -25,6 +25,6 @@ public class SimpleInfoPotholeResponseDto {
         this.lon = pothole.getPoint().getX();
         this.thumbnail = pothole.getThumbnail();
         this.importance = pothole.getImportance();
-        this.processStatus = pothole.getProcessStatus();
+        this.progressStatus = pothole.getProcessStatus();
     }
 }

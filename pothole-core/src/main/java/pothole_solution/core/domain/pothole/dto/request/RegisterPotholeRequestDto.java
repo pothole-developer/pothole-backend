@@ -1,6 +1,6 @@
 package pothole_solution.core.domain.pothole.dto.request;
 
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,15 +13,15 @@ import java.util.Random;
 
 @Getter
 @NoArgsConstructor
-public class PotholeRegisterRequestDto {
-    @NotEmpty(message = "위도의 값은 반드시 존재해야 합니다.")
+public class RegisterPotholeRequestDto {
+    @NotNull(message = "위도의 값은 반드시 존재해야 합니다.")
     private double lat;
 
-    @NotEmpty(message = "경도의 값은 반드시 존재해야 합니다.")
+    @NotNull(message = "경도의 값은 반드시 존재해야 합니다.")
     private double lon;
 
     @Builder
-    public PotholeRegisterRequestDto(double lat, double lon) {
+    public RegisterPotholeRequestDto(double lat, double lon) {
         this.lat = lat;
         this.lon = lon;
     }
