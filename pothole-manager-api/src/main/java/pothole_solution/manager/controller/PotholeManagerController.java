@@ -15,6 +15,8 @@ import pothole_solution.core.domain.pothole.entity.PotholeHistory;
 import pothole_solution.core.domain.pothole.entity.PotholeHistoryImage;
 import pothole_solution.core.domain.pothole.entity.Progress;
 import pothole_solution.core.global.util.response.BaseResponse;
+import pothole_solution.manager.service.PotholeHistoryImageManagerService;
+import pothole_solution.manager.service.PotholeHistoryManagerService;
 import pothole_solution.manager.service.PotholeManagerService;
 
 import java.util.List;
@@ -24,6 +26,8 @@ import java.util.List;
 @RequestMapping("/pothole/v1/manager")
 public class PotholeManagerController {
     private final PotholeManagerService potholeManagerService;
+    private final PotholeHistoryManagerService potholeHistoryManagerService;
+    private final PotholeHistoryImageManagerService potholeHistoryImageManagerService;
 
     @PostMapping
     public BaseResponse<SimpleInfoPotholeResponseDto> registerPothole(@Valid @RequestPart(value = "registerPotholeRequestDto") RegisterPotholeRequestDto registerPotholeRequestDto,
@@ -34,11 +38,28 @@ public class PotholeManagerController {
         return new BaseResponse<>(new SimpleInfoPotholeResponseDto(pothole));
     }
 
-    @GetMapping("/{id}")
-    public BaseResponse<SimpleInfoPotholeResponseDto> getPothole(@PathVariable("id") Long id) {
-        Pothole pothole = potholeManagerService.getPothole(id);
+    @GetMapping("/{potholeId}")
+    public BaseResponse<DetailsInfoPotholeResponseDto> getPothole(@PathVariable("potholeId") Long potholeId) {
+        Pothole pothole = potholeManagerService.getPothole(potholeId);
+        List<PotholeHistory> potholeHistories = potholeHistoryManagerService.getAllPotholeHistoryByPotholeId(potholeId);
+        List<PotholeHistoryImage> potholeHistoryImages = potholeHistoryImageManagerService.getAllPotholeHistoryImageByPotholeId(potholeId);
 
-        return new BaseResponse<>(new SimpleInfoPotholeResponseDto(pothole));
+        return new BaseResponse<>(new DetailsInfoPotholeResponseDto(pothole, getPotholeHistoryResponseDtoList(potholeHistories, potholeHistoryImages)));
+    }
+
+    private List<GetPotholeHistoryResponseDto> getPotholeHistoryResponseDtoList(List<PotholeHistory> potholeHistories, List<PotholeHistoryImage> potholeHistoryImages) {
+        return potholeHistories.stream()
+                .map(potholeHistory -> new GetPotholeHistoryResponseDto(
+                        potholeHistory,
+                        getPotholeHistoryImagesByPotholeHistory(potholeHistoryImages, potholeHistory.getPotholeHistoryId())
+                ))
+                .toList();
+    }
+
+    private List<PotholeHistoryImage> getPotholeHistoryImagesByPotholeHistory(List<PotholeHistoryImage> potholeHistoryImages, Long potholeHistoryId) {
+        return potholeHistoryImages.stream()
+                .filter(potholeHistoryImage -> potholeHistoryImage.getPotholeHistory().getPotholeHistoryId().equals(potholeHistoryId))
+                .toList();
     }
 
     @GetMapping("/potholes")
