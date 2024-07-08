@@ -34,4 +34,7 @@ public class CustomException extends RuntimeException {
     public static final CustomException FAILED_UPLOAD               = new CustomException(ExceptionStatus.FAILED_UPLOAD);
     public static final CustomException INVALID_POTHOLE_IMG_URL     = new CustomException(ExceptionStatus.INVALID_POTHOLE_IMG_URL);
     public static final CustomException INVALID_POTHOLE_IMG_NAME    = new CustomException(ExceptionStatus.INVALID_POTHOLE_IMG_NAME);
+언
+    // Report Exception
+    public static final CustomException MISMATCH_PERIOD               = new CustomException(ExceptionStatus.MISMATCH_PERIOD);
 }
