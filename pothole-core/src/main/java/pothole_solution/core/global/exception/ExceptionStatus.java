@@ -33,7 +33,10 @@ public enum ExceptionStatus {
     // s3 exception
     FAILED_UPLOAD(NOT_FOUND, 5000, "포트홀 이미지 업로드에 실패했습니다."),
     INVALID_POTHOLE_IMG_URL(BAD_REQUEST, 5001, "잘못된 포트홀 이미지 URL 요청입니다."),
-    INVALID_POTHOLE_IMG_NAME(BAD_REQUEST, 5002, "포트홀 이미지의 이름이 존재하지 않거나 잘못되었습니다.");
+    INVALID_POTHOLE_IMG_NAME(BAD_REQUEST, 5002, "포트홀 이미지의 이름이 존재하지 않거나 잘못되었습니다."),
+
+    // Report exception
+    MISMATCH_PERIOD(BAD_REQUEST, 6000, "존재하지 않는 기간입니다.");
 
     private final HttpStatus httpStatus;
     private final int code;
