@@ -8,9 +8,9 @@ import pothole_solution.core.domain.pothole.entity.Pothole;
 import java.util.List;
 
 public interface PotholeManagerService {
-    Pothole registerPothole(Pothole pothole, List<MultipartFile> potholeImg);
+    Pothole registerPothole(Pothole pothole, List<MultipartFile> potholeImages);
 
-    Pothole getPothole(Long potholeId);
+    Pothole getPotholeByPotholeId(Long potholeId);
 
     List<Pothole> getAllPotholes();
 

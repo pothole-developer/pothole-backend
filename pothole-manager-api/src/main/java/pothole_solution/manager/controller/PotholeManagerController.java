@@ -39,8 +39,8 @@ public class PotholeManagerController {
     }
 
     @GetMapping("/{potholeId}")
-    public BaseResponse<DetailsInfoPotholeResponseDto> getPothole(@PathVariable("potholeId") Long potholeId) {
-        Pothole pothole = potholeManagerService.getPothole(potholeId);
+    public BaseResponse<DetailsInfoPotholeResponseDto> getPotholeDetails(@PathVariable("potholeId") Long potholeId) {
+        Pothole pothole = potholeManagerService.getPotholeByPotholeId(potholeId);
         List<PotholeHistory> potholeHistories = potholeHistoryManagerService.getAllPotholeHistoryByPotholeId(potholeId);
         List<PotholeHistoryImage> potholeHistoryImages = potholeHistoryImageManagerService.getAllPotholeHistoryImageByPotholeId(potholeId);
 

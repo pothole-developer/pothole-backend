@@ -53,7 +53,7 @@ public class PotholeManagerServiceImpl implements PotholeManagerService {
 
     @Override
     @Transactional(readOnly = true)
-    public Pothole getPothole(Long potholeId) {
+    public Pothole getPotholeByPotholeId(Long potholeId) {
         return findByPotholeId(potholeId);
     }
 

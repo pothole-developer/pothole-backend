@@ -6,7 +6,7 @@ import pothole_solution.core.domain.pothole.entity.PotholeHistoryImage;
 import java.util.List;
 
 public interface PotholeHistoryImageManagerService {
-    List<PotholeHistoryImage> registerPotholeHistoryImage(Long potholeHistoryId, List<MultipartFile> historyImages);
+    List<PotholeHistoryImage> registerPotholeHistoryImage(Long potholeHistoryId, List<MultipartFile> potholeHistoryImages);
 
     PotholeHistoryImage getPotholeHistoryImage(Long potholeHistoryImageId);
 
