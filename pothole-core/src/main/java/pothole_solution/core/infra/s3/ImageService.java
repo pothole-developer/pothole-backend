@@ -5,11 +5,11 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 public interface ImageService {
-    String uploadImage(MultipartFile image, String dirName);
+    String uploadImage(MultipartFile image, Long id, String progressStatus);
 
-    List<String> uploadImages(List<MultipartFile> images, String dirName);
+    List<String> uploadImages(List<MultipartFile> images, Long id, String progressStatus);
 
     void deleteImage(String imageName);
 
-    String updateImage(String imageName, MultipartFile image, String dirName);
+    String updateImage(String imageName, MultipartFile image, Long id, String progressStatus);
 }

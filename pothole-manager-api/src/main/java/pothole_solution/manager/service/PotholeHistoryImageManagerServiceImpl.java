@@ -35,7 +35,7 @@ public class PotholeHistoryImageManagerServiceImpl implements PotholeHistoryImag
 
         List<PotholeHistoryImage> potholeHistoryImageList = new ArrayList<>();
 
-        List<String> potholeHistoryImagesUrl = imageService.uploadImages(potholeHistoryImages, potholeHistory.getProcessStatus().getValue());
+        List<String> potholeHistoryImagesUrl = imageService.uploadImages(potholeHistoryImages, potholeHistory.getPothole().getPotholeId(), potholeHistory.getProcessStatus().getValue());
 
         for (String potholeHistoryImageUrl : potholeHistoryImagesUrl) {
             PotholeHistoryImage createPotholeHistoryImage = new PotholeHistoryImage(potholeHistory, potholeHistoryImageUrl);

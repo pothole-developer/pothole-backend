@@ -32,15 +32,15 @@ public class PotholeManagerServiceImpl implements PotholeManagerService {
 
     @Override
     public Pothole registerPothole(Pothole pothole, List<MultipartFile> registerPotholeImages) {
-        List<String> imageUrls = imageService.uploadImages(registerPotholeImages, pothole.getProcessStatus().getValue());
-        pothole.createThumbnail(imageUrls.get(0));
-
         // Pothole 저장
         Pothole savedPothole = potholeRepository.save(pothole);
 
         // PotholeHistory 생성 및 저장
-        PotholeHistory potholeHistory = new PotholeHistory(pothole.getProcessStatus(), savedPothole);
+        PotholeHistory potholeHistory = new PotholeHistory(savedPothole, pothole.getProcessStatus());
         PotholeHistory savedPotholeHistory = potholeHistoryRepository.save(potholeHistory);
+
+        List<String> imageUrls = imageService.uploadImages(registerPotholeImages, pothole.getPotholeId(), pothole.getProcessStatus().getValue());
+        pothole.createThumbnail(imageUrls.get(0));
 
         // PotholeHistoryImage 생성 및 저장
         for (String imageUrl : imageUrls) {
