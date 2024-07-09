@@ -74,7 +74,7 @@ public class PotholeManagerController {
 
     @PutMapping("/{potholeId}")
     public BaseResponse<SimpleInfoPotholeResponseDto> changePotholeProgressStatus(@PathVariable("potholeId") Long potholeId,
-                                                                                  @Valid @RequestPart(value = "changePotholeProgressStatusRequestDto") ChangePotholeProgressStatusRequestDto changeProgressStatusRequestDto) {
+                                                                                  @Valid @RequestBody ChangePotholeProgressStatusRequestDto changeProgressStatusRequestDto) {
 
         Pothole pothole = potholeManagerService.changePotholeProgressStatus(potholeId, changeProgressStatusRequestDto);
 
