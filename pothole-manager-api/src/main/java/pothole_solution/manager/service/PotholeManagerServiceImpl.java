@@ -44,7 +44,7 @@ public class PotholeManagerServiceImpl implements PotholeManagerService {
 
         // PotholeHistoryImage 생성 및 저장
         for (String imageUrl : imageUrls) {
-            PotholeHistoryImage potholeHistoryImage = new PotholeHistoryImage(imageUrl, savedPotholeHistory);
+            PotholeHistoryImage potholeHistoryImage = new PotholeHistoryImage(savedPotholeHistory, imageUrl);
             potholeHistoryImageRepository.save(potholeHistoryImage);
         }
 
@@ -84,7 +84,7 @@ public class PotholeManagerServiceImpl implements PotholeManagerService {
                                                            );
 
         if (!isProcessStatusIncluded) {
-            PotholeHistory potholeHistory = new PotholeHistory(pothole.getProcessStatus(), pothole);
+            PotholeHistory potholeHistory = new PotholeHistory(pothole, pothole.getProcessStatus());
             potholeHistoryRepository.save(potholeHistory);
         }
     }

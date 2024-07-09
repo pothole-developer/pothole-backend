@@ -24,8 +24,8 @@ public class PotholeHistory extends BaseTimeEntity {
     private Pothole pothole;
 
     @Builder
-    public PotholeHistory(Progress processStatus, Pothole pothole) {
-        this.processStatus = processStatus;
+    public PotholeHistory(Pothole pothole, Progress processStatus) {
         this.pothole = pothole;
+        this.processStatus = processStatus;
     }
 }

@@ -23,8 +23,8 @@ public class PotholeHistoryImage extends BaseTimeEntity {
     private PotholeHistory potholeHistory;
 
     @Builder
-    public PotholeHistoryImage(String image, PotholeHistory potholeHistory) {
-        this.image = image;
+    public PotholeHistoryImage(PotholeHistory potholeHistory, String image) {
         this.potholeHistory = potholeHistory;
+        this.image = image;
     }
 }
