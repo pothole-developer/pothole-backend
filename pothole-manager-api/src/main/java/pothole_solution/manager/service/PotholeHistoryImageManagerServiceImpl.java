@@ -74,6 +74,16 @@ public class PotholeHistoryImageManagerServiceImpl implements PotholeHistoryImag
         return potholeHistoryImageRepository.findAllByPotholeId(potholeId);
     }
 
+    @Transactional(readOnly = true)
+    @Override
+    public List<PotholeHistoryImage> getAllPotholeHistoryImageByPotholeHistoryId(List<PotholeHistory> potholeHistories) {
+        List<Long> potholeHistoryIds = potholeHistories.stream()
+                .map(PotholeHistory::getPotholeHistoryId)
+                .toList();
+
+        return potholeHistoryImageRepository.findAllByPotholeHistoryIds(potholeHistoryIds);
+    }
+
     @Override
     public void deletePotholeHistoryImage(Long potholeHistoryImageId) {
         PotholeHistoryImage potholeHistoryImage = potholeHistoryImageRepository.findById(potholeHistoryImageId)
