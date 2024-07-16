@@ -34,7 +34,7 @@ public class RegisterPotholeRequestDto {
 
         return Pothole.builder()
                 .roadName("강남로 1")
-                .point(geometryFactory.createPoint(new Coordinate(lat, lon)))
+                .point(geometryFactory.createPoint(new Coordinate(lon, lat)))
                 .importance(randomImportance)
                 .dangerous(randomDangerous)
                 .processStatus(Progress.REGISTER)
