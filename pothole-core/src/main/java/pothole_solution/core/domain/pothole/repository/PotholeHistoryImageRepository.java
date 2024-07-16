@@ -26,4 +26,8 @@ public interface PotholeHistoryImageRepository extends JpaRepository<PotholeHist
     @Query("delete from PotholeHistoryImage phi " +
             "where phi.potholeHistory.potholeHistoryId = :potholeHistoryId")
     void deleteAllByPotholeHistoryId(@Param("potholeHistoryId") Long potholeHistoryId);
+
+    @Query("select phi from PotholeHistoryImage phi " +
+            "where phi.potholeHistory.potholeHistoryId in :potholeHistoryIds")
+    List<PotholeHistoryImage> findAllByPotholeHistoryIds(@Param("potholeHistoryIds") List<Long> potholeHistoryIds);
 }
