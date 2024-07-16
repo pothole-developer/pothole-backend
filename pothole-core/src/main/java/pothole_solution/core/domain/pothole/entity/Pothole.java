@@ -8,6 +8,9 @@ import org.locationtech.jts.geom.Point;
 import pothole_solution.core.domain.BaseTimeEntity;
 import pothole_solution.core.global.util.converter.ProgressEnumConverter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @NoArgsConstructor
@@ -34,6 +37,9 @@ public class Pothole extends BaseTimeEntity {
     private Progress processStatus;
 
     private Integer dangerous;
+
+    @OneToMany(mappedBy = "pothole")
+    private List<PotholeHistory> potholeHistories = new ArrayList<>();
 
     @Builder
     public Pothole(String roadName, String addressName, Point point, String thumbnail, Integer importance, Progress processStatus, Integer dangerous) {

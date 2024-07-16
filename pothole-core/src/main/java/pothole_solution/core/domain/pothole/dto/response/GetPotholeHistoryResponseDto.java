@@ -24,8 +24,6 @@ public class GetPotholeHistoryResponseDto {
 
     private List<GetPotholeHistoryImageResponseDto> potholeHistoryImages = new ArrayList<>();
 
-
-
     @Builder
     public GetPotholeHistoryResponseDto(PotholeHistory potholeHistory, List<PotholeHistoryImage> potholeHistoryImages) {
         this.potholeHistoryId = potholeHistory.getPotholeHistoryId();

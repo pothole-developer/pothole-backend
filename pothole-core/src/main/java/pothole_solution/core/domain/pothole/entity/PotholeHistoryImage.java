@@ -26,5 +26,9 @@ public class PotholeHistoryImage extends BaseTimeEntity {
     public PotholeHistoryImage(PotholeHistory potholeHistory, String image) {
         this.potholeHistory = potholeHistory;
         this.image = image;
+
+        if (potholeHistory != null) {
+            potholeHistory.getPotholeHistoryImages().add(this);
+        }
     }
 }

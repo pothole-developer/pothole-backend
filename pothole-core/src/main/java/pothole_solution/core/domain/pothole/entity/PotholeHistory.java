@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 import pothole_solution.core.domain.BaseTimeEntity;
 import pothole_solution.core.global.util.converter.ProgressEnumConverter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @NoArgsConstructor
@@ -23,9 +26,16 @@ public class PotholeHistory extends BaseTimeEntity {
     @JoinColumn(name = "pothole_id")
     private Pothole pothole;
 
+    @OneToMany(mappedBy = "potholeHistory")
+    private List<PotholeHistoryImage> potholeHistoryImages = new ArrayList<>();
+
     @Builder
     public PotholeHistory(Pothole pothole, Progress processStatus) {
         this.pothole = pothole;
         this.processStatus = processStatus;
+
+        if (pothole != null) {
+            pothole.getPotholeHistories().add(this);
+        }
     }
 }
