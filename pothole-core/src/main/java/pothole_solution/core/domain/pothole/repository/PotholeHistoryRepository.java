@@ -10,6 +10,7 @@ import java.util.List;
 
 public interface PotholeHistoryRepository extends JpaRepository<PotholeHistory, Long> {
     @Query("select ph from PotholeHistory ph " +
+            "join fetch ph.potholeHistoryImages " +
             "where ph.pothole.potholeId = :potholeId")
     List<PotholeHistory> findAllByPotholeId(@Param("potholeId") Long potholeId);
 
