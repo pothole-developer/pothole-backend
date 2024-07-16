@@ -10,7 +10,7 @@ import java.util.List;
 public interface PotholeManagerService {
     Pothole registerPothole(Pothole pothole, List<MultipartFile> potholeImages);
 
-    Pothole getPotholeByPotholeId(Long potholeId);
+    Pothole getPotholeWithPotholeHistoryByPotholeId(Long potholeId);
 
     List<Pothole> getAllPotholes();
 

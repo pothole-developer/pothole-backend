@@ -53,8 +53,11 @@ public class PotholeManagerServiceImpl implements PotholeManagerService {
 
     @Override
     @Transactional(readOnly = true)
-    public Pothole getPotholeByPotholeId(Long potholeId) {
-        return findByPotholeId(potholeId);
+    public Pothole getPotholeWithPotholeHistoryByPotholeId(Long potholeId) {
+        return potholeRepository.findPotholeWithPotholeHistoryByPotholeId(potholeId)
+                .orElseThrow(
+                        () -> NONE_POTHOLE
+                );
     }
 
     @Override
@@ -65,14 +68,15 @@ public class PotholeManagerServiceImpl implements PotholeManagerService {
 
     @Override
     public Pothole changePotholeProgressStatus(Long potholeId, ChangePotholeProgressStatusRequestDto changePotholeProcessStatusRequestDto) {
-        Pothole pothole = findByPotholeId(potholeId);
-
-        List<PotholeHistory> potholeHistories = potholeHistoryRepository.findAllByPotholeId(potholeId);
+        Pothole pothole = potholeRepository.findPotholeWithPotholeHistoryByPotholeId(potholeId)
+                .orElseThrow(
+                        () -> NONE_POTHOLE
+                );
 
         pothole.changeProgress(changePotholeProcessStatusRequestDto.getProgressStatus());
 
         // 해당 진행 상태에 대한 PotholeHistory 가 없다면 생성
-        createPotholeHistoryToProgressStatus(pothole, potholeHistories);
+        createPotholeHistoryToProgressStatus(pothole, pothole.getPotholeHistories());
 
         return pothole;
     }
