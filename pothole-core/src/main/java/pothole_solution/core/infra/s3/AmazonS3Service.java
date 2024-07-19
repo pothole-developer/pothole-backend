@@ -27,7 +27,7 @@ public class AmazonS3Service implements ImageService {
     private String bucket;
 
     @Override
-    public String uploadImage(MultipartFile image, Long potholeId, String progressStatus)  {
+    public String uploadImage(MultipartFile image, String dirName)  {
         if (image == null || image.isEmpty()) {
             throw INVALID_POTHOLE_IMG;
         }
@@ -48,7 +48,7 @@ public class AmazonS3Service implements ImageService {
         // 파일 이름 중복 방지
         // 파일 수정 및 삭제할 때 아래의 값을 통해 해야 함
         // 아래의 값 예시) thumbnail/8826a18a-5359-429c-8870-69db63615ad3_pothole_img_test.jpeg
-        String imageName = getDirName(potholeId, progressStatus) + UUID.randomUUID() + "_" + originalFilename;
+        String imageName = dirName + "/" + UUID.randomUUID() + "_" + originalFilename;
 
         ObjectMetadata objectMetadata = ObjectMetadata.builder().contentType(fileExtension).build();
 
@@ -63,7 +63,7 @@ public class AmazonS3Service implements ImageService {
     }
 
     @Override
-    public List<String> uploadImages(List<MultipartFile> images, Long potholeId, String progressStatus)  {
+    public List<String> uploadImages(List<MultipartFile> images, String dirName)  {
         // 만약 여러 개 중 한 개를 실패했을 때, 메서드가 종료되므로 그 뒤에 정상적인 파일이 있다하더라도 S3에 업로드 되지 않고 종료됨.
         if (images == null || images.isEmpty()) {
             throw INVALID_POTHOLE_IMG;
@@ -82,7 +82,7 @@ public class AmazonS3Service implements ImageService {
 
             String fileExtension = StringUtils.getFilenameExtension(originalFilename);
 
-            String imageName = getDirName(potholeId, progressStatus) + UUID.randomUUID() + "_" + originalFilename;
+            String imageName = dirName + "/" + UUID.randomUUID() + "_" + originalFilename;
 
             ObjectMetadata objectMetadata = ObjectMetadata.builder().contentType(fileExtension).build();
 
@@ -100,20 +100,16 @@ public class AmazonS3Service implements ImageService {
         return imageUrls;
     }
 
-    private String getDirName(Long potholeId, String progressStatus) {
-        return potholeId + "/" + progressStatus + "/";
-    }
-
     @Override
     public void deleteImage(String imageName) {
         s3Template.deleteObject(bucket, getImageKey(imageName));
     }
 
     @Override
-    public String updateImage(String oldImageName, MultipartFile newImage, Long potholeId, String progressStatus) {
+    public String updateImage(String oldImageName, MultipartFile newImage, String dirName) {
         deleteImage(oldImageName);
 
-        return uploadImage(newImage, potholeId, progressStatus);
+        return uploadImage(newImage, dirName);
     }
 
     private String getImageKey(String imageName) {

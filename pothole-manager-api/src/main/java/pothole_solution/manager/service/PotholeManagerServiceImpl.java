@@ -35,7 +35,12 @@ public class PotholeManagerServiceImpl implements PotholeManagerService {
         // Pothole 저장
         Pothole savedPothole = potholeRepository.save(pothole);
 
-        // PotholeHistory 생성 및 저장
+        // 포트홀 등록 이미지 S3에 업로드 및 썸네일 설정
+        String dirName = uploadDirName(savedPothole.getPotholeId(), savedPothole.getProcessStatus().getValue());
+        List<String> imageUrls = imageService.uploadImages(registerPotholeImages, dirName);
+        savedPothole.createThumbnail(imageUrls.get(0));
+
+        // PotholeHistory 생성
         PotholeHistory potholeHistory = new PotholeHistory(savedPothole, pothole.getProcessStatus());
         PotholeHistory savedPotholeHistory = potholeHistoryRepository.save(potholeHistory);
 
@@ -51,13 +56,17 @@ public class PotholeManagerServiceImpl implements PotholeManagerService {
         return savedPothole;
     }
 
+    private String uploadDirName(Long potholeId, String progressStatus) {
+        return potholeId + "/" + progressStatus;
+    }
+
     @Override
     @Transactional(readOnly = true)
     public Pothole getPotholeWithPotholeHistoryByPotholeId(Long potholeId) {
         return potholeRepository.findPotholeWithPotholeHistoryByPotholeId(potholeId)
-                .orElseThrow(
-                        () -> NONE_POTHOLE
-                );
+                                .orElseThrow(
+                                        () -> NONE_POTHOLE
+                                );
     }
 
     @Override
@@ -69,9 +78,9 @@ public class PotholeManagerServiceImpl implements PotholeManagerService {
     @Override
     public Pothole changePotholeProgressStatus(Long potholeId, ChangePotholeProgressStatusRequestDto changePotholeProcessStatusRequestDto) {
         Pothole pothole = potholeRepository.findPotholeWithPotholeHistoryByPotholeId(potholeId)
-                .orElseThrow(
-                        () -> NONE_POTHOLE
-                );
+                                           .orElseThrow(
+                                                   () -> NONE_POTHOLE
+                                           );
 
         pothole.changeProgress(changePotholeProcessStatusRequestDto.getProgressStatus());
 

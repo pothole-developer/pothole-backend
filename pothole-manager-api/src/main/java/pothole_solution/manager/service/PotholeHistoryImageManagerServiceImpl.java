@@ -35,7 +35,8 @@ public class PotholeHistoryImageManagerServiceImpl implements PotholeHistoryImag
 
         List<PotholeHistoryImage> potholeHistoryImageList = new ArrayList<>();
 
-        List<String> potholeHistoryImagesUrl = imageService.uploadImages(potholeHistoryImages, potholeHistory.getPothole().getPotholeId(), potholeHistory.getProcessStatus().getValue());
+        String dirName = uploadDirName(potholeHistory.getPothole().getPotholeId(), potholeHistory.getProcessStatus().getValue());
+        List<String> potholeHistoryImagesUrl = imageService.uploadImages(potholeHistoryImages, dirName);
 
         for (String potholeHistoryImageUrl : potholeHistoryImagesUrl) {
             PotholeHistoryImage createPotholeHistoryImage = new PotholeHistoryImage(potholeHistory, potholeHistoryImageUrl);
@@ -49,6 +50,10 @@ public class PotholeHistoryImageManagerServiceImpl implements PotholeHistoryImag
         reRegisterThumbnail(potholeHistory, potholeHistoryImagesUrl);
 
         return potholeHistoryImageList;
+    }
+
+    private String uploadDirName(Long potholeId, String progressStatus) {
+        return potholeId + "/" + progressStatus;
     }
 
     private void reRegisterThumbnail(PotholeHistory potholeHistory, List<String> potholeHistoryImagesUrl) {
@@ -78,8 +83,8 @@ public class PotholeHistoryImageManagerServiceImpl implements PotholeHistoryImag
     @Override
     public List<PotholeHistoryImage> getAllPotholeHistoryImageByPotholeHistoryId(List<PotholeHistory> potholeHistories) {
         List<Long> potholeHistoryIds = potholeHistories.stream()
-                .map(PotholeHistory::getPotholeHistoryId)
-                .toList();
+                                                       .map(PotholeHistory::getPotholeHistoryId)
+                                                       .toList();
 
         return potholeHistoryImageRepository.findAllByPotholeHistoryIds(potholeHistoryIds);
     }

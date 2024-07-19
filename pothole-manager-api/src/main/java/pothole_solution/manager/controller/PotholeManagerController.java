@@ -47,17 +47,17 @@ public class PotholeManagerController {
 
     private List<GetPotholeHistoryResponseDto> getPotholeHistoryResponseDtoList(List<PotholeHistory> potholeHistories, List<PotholeHistoryImage> potholeHistoryImages) {
         return potholeHistories.stream()
-                .map(potholeHistory -> new GetPotholeHistoryResponseDto(
-                        potholeHistory,
-                        getPotholeHistoryImagesByPotholeHistory(potholeHistoryImages, potholeHistory.getPotholeHistoryId())
-                ))
-                .toList();
+                                .map(potholeHistory -> new GetPotholeHistoryResponseDto(
+                                        potholeHistory,
+                                        getPotholeHistoryImagesByPotholeHistory(potholeHistoryImages, potholeHistory.getPotholeHistoryId())
+                                ))
+                                .toList();
     }
 
     private List<PotholeHistoryImage> getPotholeHistoryImagesByPotholeHistory(List<PotholeHistoryImage> potholeHistoryImages, Long potholeHistoryId) {
         return potholeHistoryImages.stream()
-                .filter(potholeHistoryImage -> potholeHistoryImage.getPotholeHistory().getPotholeHistoryId().equals(potholeHistoryId))
-                .toList();
+                                   .filter(potholeHistoryImage -> potholeHistoryImage.getPotholeHistory().getPotholeHistoryId().equals(potholeHistoryId))
+                                   .toList();
     }
 
     @GetMapping("/potholes")
