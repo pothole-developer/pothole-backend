@@ -26,7 +26,7 @@ public class PotholeHistory extends BaseTimeEntity {
     @JoinColumn(name = "pothole_id")
     private Pothole pothole;
 
-    @OneToMany(mappedBy = "potholeHistory")
+    @OneToMany(mappedBy = "potholeHistory", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PotholeHistoryImage> potholeHistoryImages = new ArrayList<>();
 
     @Builder

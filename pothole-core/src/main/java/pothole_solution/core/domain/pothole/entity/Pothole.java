@@ -38,7 +38,7 @@ public class Pothole extends BaseTimeEntity {
 
     private Integer dangerous;
 
-    @OneToMany(mappedBy = "pothole")
+    @OneToMany(mappedBy = "pothole", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PotholeHistory> potholeHistories = new ArrayList<>();
 
     @Builder
