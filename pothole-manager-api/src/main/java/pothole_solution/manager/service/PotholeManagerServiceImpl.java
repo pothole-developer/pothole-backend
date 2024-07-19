@@ -85,13 +85,13 @@ public class PotholeManagerServiceImpl implements PotholeManagerService {
         pothole.changeProgress(changePotholeProcessStatusRequestDto.getProgressStatus());
 
         // 해당 진행 상태에 대한 PotholeHistory 가 없다면 생성
-        createPotholeHistoryToProgressStatus(pothole, pothole.getPotholeHistories());
+        createPotholeHistoryToProgressStatus(pothole);
 
         return pothole;
     }
 
-    private void createPotholeHistoryToProgressStatus(Pothole pothole, List<PotholeHistory> potholeHistories) {
-        boolean isProcessStatusIncluded = potholeHistories.stream()
+    private void createPotholeHistoryToProgressStatus(Pothole pothole) {
+        boolean isProcessStatusIncluded = pothole.getPotholeHistories().stream()
                                                            .anyMatch(potholeHistory ->
                                                                    potholeHistory.getProcessStatus().equals(pothole.getProcessStatus())
                                                            );
