@@ -13,7 +13,7 @@ import java.util.Random;
 
 @Getter
 @NoArgsConstructor
-public class RegisterPotholeRequestDto {
+public class ReqPotRegPotMngrServDto {
     @NotNull(message = "위도의 값은 반드시 존재해야 합니다.")
     private double lat;
 
@@ -21,7 +21,7 @@ public class RegisterPotholeRequestDto {
     private double lon;
 
     @Builder
-    public RegisterPotholeRequestDto(double lat, double lon) {
+    public ReqPotRegPotMngrServDto(double lat, double lon) {
         this.lat = lat;
         this.lon = lon;
     }

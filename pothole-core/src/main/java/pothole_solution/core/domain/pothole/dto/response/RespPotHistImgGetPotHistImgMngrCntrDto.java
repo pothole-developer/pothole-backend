@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
-public class GetPotholeHistoryImageResponseDto {
+public class RespPotHistImgGetPotHistImgMngrCntrDto {
     private Long potholeHistoryImageId;
 
     private String potholeHistoryImageUrl;
@@ -19,7 +19,7 @@ public class GetPotholeHistoryImageResponseDto {
     private LocalDateTime createdAt;
 
     @Builder
-    public GetPotholeHistoryImageResponseDto(PotholeHistoryImage potholeHistoryImg) {
+    public RespPotHistImgGetPotHistImgMngrCntrDto(PotholeHistoryImage potholeHistoryImg) {
         this.potholeHistoryImageId = potholeHistoryImg.getPotholeHistoryImgId();
         this.potholeHistoryImageUrl = potholeHistoryImg.getImage();
         this.createdAt = potholeHistoryImg.getCreatedAt();

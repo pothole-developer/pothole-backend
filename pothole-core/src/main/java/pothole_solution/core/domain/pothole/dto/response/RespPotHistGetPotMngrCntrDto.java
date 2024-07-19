@@ -14,7 +14,7 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor
-public class GetPotholeHistoryResponseDto {
+public class RespPotHistGetPotMngrCntrDto {
     private Long potholeHistoryId;
 
     private Progress progressStatus;
@@ -22,14 +22,14 @@ public class GetPotholeHistoryResponseDto {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
 
-    private List<GetPotholeHistoryImageResponseDto> potholeHistoryImages = new ArrayList<>();
+    private List<RespPotHistImgGetPotHistImgMngrCntrDto> potholeHistoryImages = new ArrayList<>();
 
     @Builder
-    public GetPotholeHistoryResponseDto(PotholeHistory potholeHistory, List<PotholeHistoryImage> potholeHistoryImages) {
+    public RespPotHistGetPotMngrCntrDto(PotholeHistory potholeHistory, List<PotholeHistoryImage> potholeHistoryImages) {
         this.potholeHistoryId = potholeHistory.getPotholeHistoryId();
         this.progressStatus = potholeHistory.getProcessStatus();
         this.potholeHistoryImages = potholeHistoryImages.stream()
-                .map(GetPotholeHistoryImageResponseDto::new)
+                .map(RespPotHistImgGetPotHistImgMngrCntrDto::new)
                 .toList();
         this.createdAt = potholeHistory.getCreatedAt();
     }

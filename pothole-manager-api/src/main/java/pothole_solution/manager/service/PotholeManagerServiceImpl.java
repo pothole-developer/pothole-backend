@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import pothole_solution.core.domain.pothole.dto.PotholeFilterDto;
-import pothole_solution.core.domain.pothole.dto.request.ChangePotholeProgressStatusRequestDto;
+import pothole_solution.core.domain.pothole.dto.PotFltPotMngrServDto;
+import pothole_solution.core.domain.pothole.dto.request.ReqPotChgPrgsStusPotMngrServDto;
 import pothole_solution.core.domain.pothole.entity.Pothole;
 import pothole_solution.core.domain.pothole.entity.PotholeHistory;
 import pothole_solution.core.domain.pothole.entity.PotholeHistoryImage;
@@ -72,7 +72,7 @@ public class PotholeManagerServiceImpl implements PotholeManagerService {
     }
 
     @Override
-    public Pothole changePotholeProgressStatus(Long potholeId, ChangePotholeProgressStatusRequestDto changePotholeProcessStatusRequestDto) {
+    public Pothole changePotholeProgressStatus(Long potholeId, ReqPotChgPrgsStusPotMngrServDto changePotholeProcessStatusRequestDto) {
         Pothole pothole = potholeRepository.findPotholeWithPotholeHistoryByPotholeId(potholeId)
                                            .orElseThrow(
                                                    () -> NONE_POTHOLE
@@ -137,13 +137,13 @@ public class PotholeManagerServiceImpl implements PotholeManagerService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Pothole> getFilteredPotholes(PotholeFilterDto potholeFilterDto) {
-        Integer availableMinImportance = (potholeFilterDto.getMinImportance() == null) ? 0 : potholeFilterDto.getMinImportance();
-        Integer availableMaxImportance = (potholeFilterDto.getMaxImportance() == null) ? 100 : potholeFilterDto.getMaxImportance();
+    public List<Pothole> getFilteredPotholes(PotFltPotMngrServDto potFltPotMngrServDto) {
+        Integer availableMinImportance = (potFltPotMngrServDto.getMinImportance() == null) ? 0 : potFltPotMngrServDto.getMinImportance();
+        Integer availableMaxImportance = (potFltPotMngrServDto.getMaxImportance() == null) ? 100 : potFltPotMngrServDto.getMaxImportance();
 
-        potholeFilterDto.changeToAvailableImportance(availableMinImportance, availableMaxImportance);
+        potFltPotMngrServDto.changeToAvailableImportance(availableMinImportance, availableMaxImportance);
 
-        return potholeQueryDslRepository.findByFilter(potholeFilterDto);
+        return potholeQueryDslRepository.findByFilter(potFltPotMngrServDto);
     }
 
     private Pothole findByPotholeId(Long potholeId) {

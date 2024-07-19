@@ -8,12 +8,12 @@ import pothole_solution.core.global.util.valid.enums.Enum;
 
 @Getter
 @NoArgsConstructor
-public class ChangePotholeProgressStatusRequestDto {
+public class ReqPotChgPrgsStusPotMngrServDto {
     @Enum(enumClass = Progress.class)
     private Progress progressStatus;
 
     @Builder
-    public ChangePotholeProgressStatusRequestDto(Progress progressStatus) {
+    public ReqPotChgPrgsStusPotMngrServDto(Progress progressStatus) {
         this.progressStatus = progressStatus;
     }
 }

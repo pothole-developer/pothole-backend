@@ -1,8 +1,8 @@
 package pothole_solution.manager.service;
 
 import org.springframework.web.multipart.MultipartFile;
-import pothole_solution.core.domain.pothole.dto.PotholeFilterDto;
-import pothole_solution.core.domain.pothole.dto.request.ChangePotholeProgressStatusRequestDto;
+import pothole_solution.core.domain.pothole.dto.PotFltPotMngrServDto;
+import pothole_solution.core.domain.pothole.dto.request.ReqPotChgPrgsStusPotMngrServDto;
 import pothole_solution.core.domain.pothole.entity.Pothole;
 
 import java.util.List;
@@ -14,9 +14,9 @@ public interface PotholeManagerService {
 
     List<Pothole> getAllPotholes();
 
-    Pothole changePotholeProgressStatus(Long potholeId, ChangePotholeProgressStatusRequestDto changePotholeProcessStatusRequestDto);
+    Pothole changePotholeProgressStatus(Long potholeId, ReqPotChgPrgsStusPotMngrServDto changePotholeProcessStatusRequestDto);
 
     void deletePothole(Long potholeId);
 
-    List<Pothole> getFilteredPotholes(PotholeFilterDto potholeFilterDto);
+    List<Pothole> getFilteredPotholes(PotFltPotMngrServDto potFltPotMngrServDto);
 }

@@ -8,13 +8,13 @@ import static pothole_solution.core.global.util.alarm.slack.constant.SlackConsta
 
 @NoArgsConstructor
 @Getter
-public class PrInfoDto {
+public class SlkPrInfoSlkMsgFmtrDto {
     private String author;
     private String title;
     private String url;
 
     @Builder
-    public PrInfoDto(String author, String title, String url) {
+    public SlkPrInfoSlkMsgFmtrDto(String author, String title, String url) {
         this.author = author;
         this.title = title;
         this.url = url;

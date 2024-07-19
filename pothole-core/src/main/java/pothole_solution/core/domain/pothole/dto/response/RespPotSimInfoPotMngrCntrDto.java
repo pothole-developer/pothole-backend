@@ -8,7 +8,7 @@ import pothole_solution.core.domain.pothole.entity.Progress;
 
 @Getter
 @NoArgsConstructor
-public class SimpleInfoPotholeResponseDto {
+public class RespPotSimInfoPotMngrCntrDto {
     private Long potholeId;
     private String roadName;
     private double lat;
@@ -18,7 +18,7 @@ public class SimpleInfoPotholeResponseDto {
     private Progress progressStatus;
 
     @Builder
-    public SimpleInfoPotholeResponseDto(Pothole pothole) {
+    public RespPotSimInfoPotMngrCntrDto(Pothole pothole) {
         this.potholeId = pothole.getPotholeId();
         this.roadName = pothole.getRoadName();
         this.lat = pothole.getPoint().getY();

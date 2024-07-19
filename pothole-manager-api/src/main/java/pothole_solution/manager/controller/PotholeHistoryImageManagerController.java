@@ -3,7 +3,7 @@ package pothole_solution.manager.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import pothole_solution.core.domain.pothole.dto.response.GetPotholeHistoryImageResponseDto;
+import pothole_solution.core.domain.pothole.dto.response.RespPotHistImgGetPotHistImgMngrCntrDto;
 import pothole_solution.core.domain.pothole.entity.PotholeHistoryImage;
 import pothole_solution.core.global.util.response.BaseResponse;
 import pothole_solution.manager.service.PotholeHistoryImageManagerService;
@@ -17,21 +17,21 @@ public class PotholeHistoryImageManagerController {
     private final PotholeHistoryImageManagerService potholeHistoryImageManagerService;
 
     @PostMapping("/{potholeHistoryId}")
-    public BaseResponse<List<GetPotholeHistoryImageResponseDto>> registerPotholeHistoryImage(@PathVariable("potholeHistoryId") Long potholeHistoryId,
-                                                                                             @RequestPart List<MultipartFile> potholeHistoryImages) {
+    public BaseResponse<List<RespPotHistImgGetPotHistImgMngrCntrDto>> registerPotholeHistoryImage(@PathVariable("potholeHistoryId") Long potholeHistoryId,
+                                                                                                  @RequestPart List<MultipartFile> potholeHistoryImages) {
 
         List<PotholeHistoryImage> potholeHistoryImageList = potholeHistoryImageManagerService.registerPotholeHistoryImage(potholeHistoryId, potholeHistoryImages);
 
         return new BaseResponse<>(potholeHistoryImageList.stream()
-                                                               .map(GetPotholeHistoryImageResponseDto::new)
+                                                               .map(RespPotHistImgGetPotHistImgMngrCntrDto::new)
                                                                .toList());
     }
 
     @GetMapping("/{potholeHistoryImageId}")
-    public BaseResponse<GetPotholeHistoryImageResponseDto> getPotholeHistoryImage(@PathVariable("potholeHistoryImageId") Long potholeHistoryImageId) {
+    public BaseResponse<RespPotHistImgGetPotHistImgMngrCntrDto> getPotholeHistoryImage(@PathVariable("potholeHistoryImageId") Long potholeHistoryImageId) {
         PotholeHistoryImage potholeHistoryImage = potholeHistoryImageManagerService.getPotholeHistoryImage(potholeHistoryImageId);
 
-        return new BaseResponse<>(new GetPotholeHistoryImageResponseDto(potholeHistoryImage));
+        return new BaseResponse<>(new RespPotHistImgGetPotHistImgMngrCntrDto(potholeHistoryImage));
     }
 
     @DeleteMapping("/{potholeHistoryImageId}")

@@ -12,7 +12,7 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor
-public class DetailsInfoPotholeResponseDto {
+public class RespPotDetsInfoPotMngrCntrDto {
     private Long potholeId;
     private String roadName;
     private double lat;
@@ -23,10 +23,10 @@ public class DetailsInfoPotholeResponseDto {
     private Integer dangerous;
 
     @JsonProperty(value = "potholeHistories")
-    private List<GetPotholeHistoryResponseDto> potholeHistoryResponseDto = new ArrayList<>();
+    private List<RespPotHistGetPotMngrCntrDto> potholeHistoryResponseDto = new ArrayList<>();
 
     @Builder
-    public DetailsInfoPotholeResponseDto(Pothole pothole, List<GetPotholeHistoryResponseDto> getPotholeHistoryResponseDtoList) {
+    public RespPotDetsInfoPotMngrCntrDto(Pothole pothole, List<RespPotHistGetPotMngrCntrDto> respPotHistGetPotMngrCntrDtoList) {
         this.potholeId = pothole.getPotholeId();
         this.roadName = pothole.getRoadName();
         this.lat = pothole.getPoint().getY();
@@ -35,6 +35,6 @@ public class DetailsInfoPotholeResponseDto {
         this.importance = pothole.getImportance();
         this.progressStatus = pothole.getProcessStatus();
         this.dangerous = pothole.getDangerous();
-        this.potholeHistoryResponseDto = getPotholeHistoryResponseDtoList;
+        this.potholeHistoryResponseDto = respPotHistGetPotMngrCntrDtoList;
     }
 }
