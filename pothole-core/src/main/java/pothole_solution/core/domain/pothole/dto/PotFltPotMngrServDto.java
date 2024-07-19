@@ -5,13 +5,13 @@ import lombok.Getter;
 import pothole_solution.core.domain.pothole.entity.Progress;
 
 @Getter
-public class PotholeFilterDto {
+public class PotFltPotMngrServDto {
     private Integer minImportance;
     private Integer maxImportance;
     private final Progress processStatus;
 
     @Builder
-    public PotholeFilterDto(Integer minImportance, Integer maxImportance, Progress processStatus) {
+    public PotFltPotMngrServDto(Integer minImportance, Integer maxImportance, Progress processStatus) {
         this.minImportance = minImportance;
         this.maxImportance = maxImportance;
         this.processStatus = processStatus;

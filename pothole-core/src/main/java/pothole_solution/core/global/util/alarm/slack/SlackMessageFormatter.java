@@ -3,7 +3,7 @@ package pothole_solution.core.global.util.alarm.slack;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.slack.api.model.block.LayoutBlock;
 import org.springframework.core.io.ClassPathResource;
-import pothole_solution.core.global.util.alarm.slack.dto.PrInfoDto;
+import pothole_solution.core.global.util.alarm.slack.dto.SlkPrInfoSlkMsgFmtrDto;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,11 +19,11 @@ public class SlackMessageFormatter {
         // 애플리케이션 실행 상태 확인
         String bootStatusEmoji = isSuccess ? ":white_check_mark:" : ":x:";
 
-        PrInfoDto prInfoDto = getPRInfo();
+        SlkPrInfoSlkMsgFmtrDto slkPrInfoSlkMsgFmtrDto = getPRInfo();
 
-        String prAuthor = prInfoDto.getAuthor();
-        String prTitle = prInfoDto.getTitle();
-        String prUrl = prInfoDto.getUrl();
+        String prAuthor = slkPrInfoSlkMsgFmtrDto.getAuthor();
+        String prTitle = slkPrInfoSlkMsgFmtrDto.getTitle();
+        String prUrl = slkPrInfoSlkMsgFmtrDto.getUrl();
 
         String prUrlMsg = prUrl.isEmpty() ? NO_PR_INFO_MSG : "<" + prUrl + "|PR 보기>";
 
@@ -62,28 +62,28 @@ public class SlackMessageFormatter {
         layoutBlocks.add(section(section -> section.text(markdownText(" "))));
     }
 
-    private PrInfoDto getPRInfo() {
+    private SlkPrInfoSlkMsgFmtrDto getPRInfo() {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
 
             ClassPathResource prInfoJson = new ClassPathResource("pr_info.json");
 
-            PrInfoDto prInfoDto = objectMapper.readValue(prInfoJson.getInputStream(), PrInfoDto.class);
+            SlkPrInfoSlkMsgFmtrDto slkPrInfoSlkMsgFmtrDto = objectMapper.readValue(prInfoJson.getInputStream(), SlkPrInfoSlkMsgFmtrDto.class);
 
-            if (prInfoDto.getAuthor().isEmpty()) {
-                prInfoDto.changeNoAuthorValue();
+            if (slkPrInfoSlkMsgFmtrDto.getAuthor().isEmpty()) {
+                slkPrInfoSlkMsgFmtrDto.changeNoAuthorValue();
             }
 
-            if (prInfoDto.getTitle().isEmpty()) {
-                prInfoDto.changeNoTitleValue();
+            if (slkPrInfoSlkMsgFmtrDto.getTitle().isEmpty()) {
+                slkPrInfoSlkMsgFmtrDto.changeNoTitleValue();
             }
 
-            return prInfoDto;
+            return slkPrInfoSlkMsgFmtrDto;
 
         } catch (IOException e) {
             e.printStackTrace();
 
-            return PrInfoDto.builder()
+            return SlkPrInfoSlkMsgFmtrDto.builder()
                     .author(NO_PR_INFO_MSG)
                     .title(NO_PR_INFO_MSG)
                     .url("")
