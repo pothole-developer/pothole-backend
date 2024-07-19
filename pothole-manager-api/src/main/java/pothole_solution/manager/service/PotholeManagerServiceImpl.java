@@ -15,7 +15,6 @@ import pothole_solution.core.domain.pothole.repository.PotholeQueryDslRepository
 import pothole_solution.core.domain.pothole.repository.PotholeRepository;
 import pothole_solution.core.infra.s3.ImageService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static pothole_solution.core.global.exception.CustomException.NONE_POTHOLE;
@@ -108,10 +107,19 @@ public class PotholeManagerServiceImpl implements PotholeManagerService {
 
         String thumbnail = pothole.getThumbnail();
 
-        List<String> potholeHistoryImages = getPotholeHistoryImagesByPotholeId(potholeId);
+        // PotholeHistoryImage
+        List<PotholeHistoryImage> potholeHistoryImages = potholeHistoryImageRepository.findAllByPotholeId(potholeId);
+
+        List<Long> potholeHistoryImageIds = potholeHistoryImages.stream()
+                                                                .map(PotholeHistoryImage::getPotholeHistoryImgId)
+                                                                .toList();
+
+        List<String> potholeHistoryImageUrls = potholeHistoryImages.stream()
+                                                                   .map(PotholeHistoryImage::getImage)
+                                                                   .toList();
 
         // PotholeHistoryImage 삭제
-        potholeHistoryImageRepository.deleteAllByPotholeId(potholeId);
+        potholeHistoryImageRepository.deleteAllByIds(potholeHistoryImageIds);
 
         // PotholeHistory 삭제
         potholeHistoryRepository.deleteAllByPotholeId(potholeId);
@@ -120,26 +128,14 @@ public class PotholeManagerServiceImpl implements PotholeManagerService {
         potholeRepository.deleteById(potholeId);
 
         // S3 PotholeHistoryImage 삭제
-        if (!potholeHistoryImages.isEmpty()) {
-            potholeHistoryImages.forEach(imageService::deleteImage);
+        if (!potholeHistoryImageUrls.isEmpty()) {
+            potholeHistoryImageUrls.forEach(imageService::deleteImage);
         }
 
         // S3 Pothole Thumbnail 삭제
         if (thumbnail != null && !thumbnail.isEmpty()) {
             imageService.deleteImage(thumbnail);
         }
-    }
-
-    private List<String> getPotholeHistoryImagesByPotholeId(Long potholeId) {
-        List<PotholeHistoryImage> potholeHistoryImages = potholeHistoryImageRepository.findAllByPotholeId(potholeId);
-
-        List<String> potholeHistoryImagesUrl = new ArrayList<>();
-
-        if (potholeHistoryImages != null && !potholeHistoryImages.isEmpty()) {
-            potholeHistoryImages.forEach(potholeHistoryImage -> potholeHistoryImagesUrl.add(potholeHistoryImage.getImage()));
-        }
-
-        return potholeHistoryImagesUrl;
     }
 
     @Override
