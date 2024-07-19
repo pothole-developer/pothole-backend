@@ -32,27 +32,24 @@ public class PotholeManagerServiceImpl implements PotholeManagerService {
     @Override
     public Pothole registerPothole(Pothole pothole, List<MultipartFile> registerPotholeImages) {
         // Pothole 저장
-        Pothole savedPothole = potholeRepository.save(pothole);
+        potholeRepository.save(pothole);
 
         // 포트홀 등록 이미지 S3에 업로드 및 썸네일 설정
-        String dirName = uploadDirName(savedPothole.getPotholeId(), savedPothole.getProcessStatus().getValue());
+        String dirName = uploadDirName(pothole.getPotholeId(), pothole.getProcessStatus().getValue());
         List<String> imageUrls = imageService.uploadImages(registerPotholeImages, dirName);
-        savedPothole.createThumbnail(imageUrls.get(0));
-
-        // PotholeHistory 생성
-        PotholeHistory potholeHistory = new PotholeHistory(savedPothole, pothole.getProcessStatus());
-        PotholeHistory savedPotholeHistory = potholeHistoryRepository.save(potholeHistory);
-
-        List<String> imageUrls = imageService.uploadImages(registerPotholeImages, pothole.getPotholeId(), pothole.getProcessStatus().getValue());
         pothole.createThumbnail(imageUrls.get(0));
 
-        // PotholeHistoryImage 생성 및 저장
+        // PotholeHistory 생성
+        PotholeHistory potholeHistory = new PotholeHistory(pothole, pothole.getProcessStatus());
+        potholeHistoryRepository.save(potholeHistory);
+
+        // PotholeHistoryImage 생성
         for (String imageUrl : imageUrls) {
-            PotholeHistoryImage potholeHistoryImage = new PotholeHistoryImage(savedPotholeHistory, imageUrl);
+            PotholeHistoryImage potholeHistoryImage = new PotholeHistoryImage(potholeHistory, imageUrl);
             potholeHistoryImageRepository.save(potholeHistoryImage);
         }
 
-        return savedPothole;
+        return pothole;
     }
 
     private String uploadDirName(Long potholeId, String progressStatus) {
