@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface PotholeRepository extends JpaRepository<Pothole, Long> {
     @Query("select p from Pothole p " +
-            "join fetch p.potholeHistories ph " +
+            "left join fetch p.potholeHistories ph " +
             "where p.potholeId = :potholeId")
     Optional<Pothole> findPotholeWithPotholeHistoryByPotholeId(@Param("potholeId") Long potholeId);
 }
