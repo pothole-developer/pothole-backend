@@ -48,6 +48,9 @@ subprojects {
 		// postgreSQL
 		runtimeOnly 'org.postgresql:postgresql'
 
+		// 쿼리 인자값 확인
+		implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.8.0'
+
 		// redis
 		implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
