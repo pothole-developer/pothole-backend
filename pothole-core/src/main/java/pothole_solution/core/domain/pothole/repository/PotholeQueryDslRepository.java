@@ -5,7 +5,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import pothole_solution.core.domain.pothole.entity.Progress;
-import pothole_solution.core.domain.pothole.dto.PotholeFilterDto;
+import pothole_solution.core.domain.pothole.dto.PotFltPotMngrServDto;
 import pothole_solution.core.domain.pothole.entity.Pothole;
 
 import java.util.List;
@@ -17,11 +17,11 @@ import static pothole_solution.core.domain.pothole.entity.QPothole.pothole;
 public class PotholeQueryDslRepository {
     private final JPAQueryFactory jpaQueryFactory;
 
-    public List<Pothole> findByFilter(PotholeFilterDto potholeFilterDto) {
+    public List<Pothole> findByFilter(PotFltPotMngrServDto potFltPotMngrServDto) {
         return jpaQueryFactory.selectFrom(pothole)
                 .where(
-                        getImportanceFilter(potholeFilterDto.getMinImportance(), potholeFilterDto.getMaxImportance()),
-                        getProgressFilter(potholeFilterDto.getProcessStatus()))
+                        getImportanceFilter(potFltPotMngrServDto.getMinImportance(), potFltPotMngrServDto.getMaxImportance()),
+                        getProgressFilter(potFltPotMngrServDto.getProcessStatus()))
                 .fetch();
     }
 

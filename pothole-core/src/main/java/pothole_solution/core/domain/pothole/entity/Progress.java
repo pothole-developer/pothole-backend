@@ -1,7 +1,10 @@
 package pothole_solution.core.domain.pothole.entity;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+
+import java.util.stream.Stream;
 
 @Getter
 @AllArgsConstructor
@@ -14,4 +17,14 @@ public enum Progress {
     STOP("S");
 
     private String value;
+
+    @JsonCreator
+    public static Progress from(String inputValue) {
+        return Stream.of(Progress.values())
+                .filter(progress ->
+                        progress.toString().equals(inputValue.toUpperCase())
+                )
+                .findFirst()
+                .orElse(null);
+    }
 }
