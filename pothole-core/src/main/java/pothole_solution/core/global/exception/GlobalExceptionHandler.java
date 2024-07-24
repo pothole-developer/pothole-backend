@@ -2,6 +2,7 @@ package pothole_solution.core.global.exception;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
@@ -35,6 +36,17 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<Object> handleProgressConverterValidException() {
         CustomException exception = CustomException.NONE_PROGRESS_STATUS;
+        return ResponseEntity
+                .status(exception.getStatus().getHttpStatus())
+                .body(new BaseResponse<>(exception.getStatus()));
+    }
+
+    /**
+     * Missing Request Parameter Exception Handler
+     */
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public ResponseEntity<Object> handleMissingServletRequestParameterException() {
+        CustomException exception = CustomException.MISSING_PARAMETER;
         return ResponseEntity
                 .status(exception.getStatus().getHttpStatus())
                 .body(new BaseResponse<>(exception.getStatus()));
