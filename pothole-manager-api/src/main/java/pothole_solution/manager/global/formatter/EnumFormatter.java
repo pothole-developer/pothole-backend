@@ -1,4 +1,4 @@
-package pothole_solution.manager.global.config;
+package pothole_solution.manager.global.formatter;
 
 import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.Configuration;
