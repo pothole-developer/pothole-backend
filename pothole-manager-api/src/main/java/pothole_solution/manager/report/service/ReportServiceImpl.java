@@ -27,7 +27,7 @@ public class ReportServiceImpl implements ReportService {
 
         String queryOfPeriod = getQueryOfPeriod(startDate, endDate, reportPeriod);
 
-        return reportRepository.getPeriodPotholeDangerousCount(startDate.atStartOfDay(), endDate.atTime(LocalTime.MAX), queryOfPeriod);
+        return reportRepository.getPotDngrCntByPeriod(startDate.atStartOfDay(), endDate.atTime(LocalTime.MAX), queryOfPeriod);
 
     }
 
