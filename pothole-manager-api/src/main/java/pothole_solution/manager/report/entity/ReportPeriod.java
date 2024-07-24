@@ -1,4 +1,4 @@
-package pothole_solution.manager.service;
+package pothole_solution.manager.report.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,9 +7,10 @@ import pothole_solution.core.global.exception.CustomException;
 @Getter
 @AllArgsConstructor
 public enum ReportPeriod {
-    MONTHLY("%Y-%M"),
-    WEEKLY("%Y-%W"),
-    DAILY("%Y-%M-%D");
+    MONTHLY("YYYY-MM"),
+    WEEKLY("YYYY-MM-W"),
+    DAILY("YYYY-MM-DD"),
+    AUTO("auto");
 
     private final String queryOfPeriod;
 
