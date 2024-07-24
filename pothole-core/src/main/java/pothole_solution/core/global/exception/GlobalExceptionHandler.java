@@ -31,11 +31,11 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * Progress Converter Exception Handler
+     * Invalid Parameter Exception Handler
      */
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<Object> handleProgressConverterValidException() {
-        CustomException exception = CustomException.NONE_PROGRESS_STATUS;
+        CustomException exception = CustomException.INVALID_PARAMETER;
         return ResponseEntity
                 .status(exception.getStatus().getHttpStatus())
                 .body(new BaseResponse<>(exception.getStatus()));
