@@ -14,6 +14,7 @@ public class CustomException extends RuntimeException {
     public static final CustomException INVALID_URL             = new CustomException(ExceptionStatus.INVALID_URL);
     public static final CustomException INTERNAL_SERVER_ERROR   = new CustomException(ExceptionStatus.INTERNAL_SERVER_ERROR);
     public static final CustomException NOT_EXISTED_FILE        = new CustomException(ExceptionStatus.NOT_EXISTED_FILE);
+    public static final CustomException MISSING_PARAMETER       = new CustomException(ExceptionStatus.MISSING_PARAMETER);
 
     // session exception
     public static final CustomException UNAUTHORIZED_SESSION    = new CustomException(ExceptionStatus.UNAUTHORIZED_SESSION);
@@ -38,4 +39,7 @@ public class CustomException extends RuntimeException {
     public static final CustomException INVALID_POTHOLE_IMG_URL     = new CustomException(ExceptionStatus.INVALID_POTHOLE_IMG_URL);
     public static final CustomException INVALID_POTHOLE_IMG_NAME    = new CustomException(ExceptionStatus.INVALID_POTHOLE_IMG_NAME);
     public static final CustomException INVALID_POTHOLE_IMG         = new CustomException(ExceptionStatus.INVALID_POTHOLE_IMG);
+
+    // Report Exception
+    public static final CustomException MISMATCH_PERIOD               = new CustomException(ExceptionStatus.MISMATCH_PERIOD);
 }

@@ -14,6 +14,7 @@ public enum ExceptionStatus {
     INVALID_URL(BAD_REQUEST, 2001, "잘못된 URL 요청입니다."),
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, 2002,"서버 내부 오류입니다."),
     NOT_EXISTED_FILE(NOT_EXTENDED, 2003,"존재하지 않는 파일입니다."),
+    MISSING_PARAMETER(BAD_REQUEST, 2004,"놓친 파라미터가 존재합니다."),
 
     // session exception
     UNAUTHORIZED_SESSION(UNAUTHORIZED, 2100, "인증되지 않은 세션입니다. 로그인을 해주세요."),
@@ -37,7 +38,10 @@ public enum ExceptionStatus {
     FAILED_UPLOAD(HttpStatus.INTERNAL_SERVER_ERROR, 5000, "포트홀 이미지 업로드에 실패했습니다."),
     INVALID_POTHOLE_IMG_URL(BAD_REQUEST, 5001, "잘못된 포트홀 이미지 URL 요청입니다."),
     INVALID_POTHOLE_IMG_NAME(BAD_REQUEST, 5002, "포트홀 이미지의 이름이 존재하지 않거나 잘못되었습니다."),
-    INVALID_POTHOLE_IMG(BAD_REQUEST, 5003, "포트홀 이미지가 존재하지 않거나 잘못되었습니다.");
+    INVALID_POTHOLE_IMG(BAD_REQUEST, 5003, "포트홀 이미지가 존재하지 않거나 잘못되었습니다."),
+
+    // Report exception
+    MISMATCH_PERIOD(BAD_REQUEST, 6000, "존재하지 않는 기간입니다.");
 
     private final HttpStatus httpStatus;
     private final int code;
