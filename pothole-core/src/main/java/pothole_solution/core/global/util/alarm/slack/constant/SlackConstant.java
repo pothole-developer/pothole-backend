@@ -11,6 +11,7 @@ public class SlackConstant {
     public static final String WORKER_SERVER = "Worker";
 
     public static final String POTHOLE_SERVER_DEPLOY_PREVIEW_MSG = ":loudspeaker:  포트홀 서버가 배포되었습니다. 배포된 내용을 확인해주세요.";
+    public static final String POTHOLE_DETECTION_START_PREVIEW_MSG = ":loudspeaker:  포트홀 탐지 차량이 출발하였습니다.";
 
     public static final String FAILURE_STARTUP_TIME = "0.000";
 
