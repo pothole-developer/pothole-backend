@@ -4,9 +4,9 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import pothole_solution.core.domain.pothole.entity.Progress;
 import pothole_solution.core.domain.pothole.dto.PotFltPotMngrServDto;
 import pothole_solution.core.domain.pothole.entity.Pothole;
+import pothole_solution.core.domain.pothole.entity.Progress;
 
 import java.util.List;
 
@@ -63,7 +63,7 @@ public class PotholeQueryDslRepository {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
 
         // 도로명 입력
-        if (roadName != null) {
+        if (roadName != null && !roadName.isBlank()) {
             booleanBuilder.and(pothole.roadName.eq(roadName));
         }
 
