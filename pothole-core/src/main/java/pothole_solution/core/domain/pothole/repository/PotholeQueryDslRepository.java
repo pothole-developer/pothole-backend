@@ -21,7 +21,9 @@ public class PotholeQueryDslRepository {
         return jpaQueryFactory.selectFrom(pothole)
                 .where(
                         getImportanceFilter(potFltPotMngrServDto.getMinImportance(), potFltPotMngrServDto.getMaxImportance()),
-                        getProgressFilter(potFltPotMngrServDto.getProcessStatus()))
+                        getProgressFilter(potFltPotMngrServDto.getProcessStatus()),
+                        getRoadNameFilter(potFltPotMngrServDto.getRoadName())
+                )
                 .fetch();
     }
 
@@ -52,6 +54,17 @@ public class PotholeQueryDslRepository {
         // 최대만 입력
         if (minImportance == 0 && maxImportance != 100) {
             booleanBuilder.and(pothole.importance.loe(maxImportance));
+        }
+
+        return booleanBuilder;
+    }
+
+    private BooleanBuilder getRoadNameFilter(String roadName) {
+        BooleanBuilder booleanBuilder = new BooleanBuilder();
+
+        // 도로명 입력
+        if (roadName != null) {
+            booleanBuilder.and(pothole.roadName.eq(roadName));
         }
 
         return booleanBuilder;
