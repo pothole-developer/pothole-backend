@@ -9,41 +9,34 @@ import org.locationtech.jts.geom.GeometryFactory;
 import pothole_solution.core.domain.pothole.entity.Pothole;
 import pothole_solution.core.domain.pothole.entity.Progress;
 
+import java.util.Random;
+
 @Getter
 @NoArgsConstructor
 public class ReqPotRegPotMngrServDto {
-    private String roadName = "None";
-
     @NotNull(message = "위도의 값은 반드시 존재해야 합니다.")
     private double lat;
 
     @NotNull(message = "경도의 값은 반드시 존재해야 합니다.")
     private double lon;
 
-    private Integer dangerous;
-
-    private Integer importance;
-
     @Builder
-    public ReqPotRegPotMngrServDto(String roadName, double lat, double lon, Integer dangerous, Integer importance) {
-        if (roadName != null) {
-            this.roadName = roadName;
-        }
-
+    public ReqPotRegPotMngrServDto(double lat, double lon) {
         this.lat = lat;
         this.lon = lon;
-        this.importance = importance;
-        this.dangerous = dangerous;
     }
 
     public Pothole toPothole() {
         GeometryFactory geometryFactory = new GeometryFactory();
 
+        Integer randomImportance = new Random().nextInt(101);
+        Integer randomDangerous = new Random().nextInt(101);
+
         return Pothole.builder()
-                .roadName(roadName)
+                .roadName("강남로 1")
                 .point(geometryFactory.createPoint(new Coordinate(lon, lat)))
-                .importance(importance)
-                .dangerous(dangerous)
+                .importance(randomImportance)
+                .dangerous(randomDangerous)
                 .processStatus(Progress.REGISTER)
                 .build();
     }
