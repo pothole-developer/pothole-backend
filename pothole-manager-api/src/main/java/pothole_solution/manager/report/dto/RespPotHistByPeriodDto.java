@@ -13,8 +13,8 @@ public class RespPotHistByPeriodDto {
     Long potholeId;
     Progress previousProgress;
     Progress latestProgress;
-    List<RespPotHistWithDateDto> respPotHistWithDateDtos;
     int historyTotalCount;
+    List<RespPotHistWithDateDto> respPotHistWithDateDtos;
 
     public RespPotHistByPeriodDto(Long potholeId) {
         this.potholeId = potholeId;
