@@ -13,6 +13,7 @@ import pothole_solution.manager.report.entity.ReportPeriod;
 import pothole_solution.manager.report.repository.ReportQueryDslRepository;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,7 +54,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public List<RespPotHistByPeriodDto> getPeriodPotHist(LocalDate startDate, LocalDate endDate) {
+    public List<RespPotHistByPeriodDto> getPeriodPotHist(LocalDateTime startDate, LocalDateTime endDate) {
         Map<Long, RespPotHistByPeriodDto> mapOfDtos = new HashMap<>();
 
         // 기간 내 변화가 있는 포트홀 히스토리 목록 추출

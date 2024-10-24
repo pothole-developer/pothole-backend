@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import pothole_solution.core.domain.pothole.entity.PotholeHistory;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface PotholeHistoryRepository extends JpaRepository<PotholeHistory, Long> {
@@ -23,8 +23,8 @@ public interface PotholeHistoryRepository extends JpaRepository<PotholeHistory, 
     @Query("select ph from PotholeHistory ph " +
             "join fetch ph.pothole p " +
             "where ph.createdAt between :startDate and :endDate ")
-    List<PotholeHistory> findAllInPeriod(@Param("startDate") LocalDate startDate,
-                                         @Param("endDate") LocalDate endDate);
+    List<PotholeHistory> findAllInPeriod(@Param("startDate") LocalDateTime startDate,
+                                         @Param("endDate") LocalDateTime endDate);
 
 //    @Query("select ph from PotholeHistory ph " +
 //            "join fetch ph.pothole p " +
@@ -41,5 +41,5 @@ public interface PotholeHistoryRepository extends JpaRepository<PotholeHistory, 
                 "and ph.createdAt < :startDate " +
             "order by ph.createdAt desc")
     List<PotholeHistory> findPreviousDate(@Param("potholeIds") List<Long> potholeIds,
-                                          @Param("startDate") LocalDate startDate);
+                                          @Param("startDate") LocalDateTime startDate);
 }
